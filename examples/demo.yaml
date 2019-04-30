@@ -1,0 +1,82 @@
+# sciolyff 0.0.1 <- semantic versioning, may be checked for?
+#
+# An incomplete but demonstrative example file for the sciolyff standard.
+#
+# Text after '#' on a line are comments and are not needed as part of the
+# format. Order of items within lists do not matter. Blank lines between entries
+# is okay as well. All other YAML rules apply.
+#
+--- # triple dash indicates start of file, optional but recommended
+Tournament:
+  name: MIT # general name of tournament, not including level or year
+  level: Invitational # must be Invitational, Regionals, States, or Nationals
+  division: C # must be B or C
+  year: 2017 # year of the rules manual being used, not necessarily same as date
+  date: 2017-01-21 # YYYY-MM-DD format, other formats may work but aren't tested
+
+Events:
+  - name: Anatomy & Physiology
+    # next two lines are optional if the answer is no
+    trial: no   # event was originally intended to be a trial event
+    trialed: no # event became trial event because of unforeseen circumstances
+  - name: Astronomy
+  - name: Chemistry Lab
+  - name: Disease Detectives
+  - name: Dynamic Planet
+  - name: Ecology
+  - name: Electric Vehicle
+  - name: Experimental Design
+  - name: Forensics
+  - name: Game On
+  - name: Helicopters
+  - name: Hovercraft
+  - name: Hydrogeology
+  - name: Invasive Species
+  - name: Materials Science
+  - name: Microbe Mission
+  - name: Optics
+  - name: Remote Sensing
+  - name: Robot Arm
+  - name: Rocks & Minerals
+  - name: Towers
+  - name: Wind Power
+  - name: Write It Do It
+
+Teams:
+  - school: Solon High School # avoid abbreviations like 'LASA' or 'H.S.'
+    # next line is optional if there is only one team from that school
+    suffix: A # can be anything, not just A, B, C, etc.
+    number: 58
+    city: Solon
+    state: OH
+    # .
+    # .
+    # .
+    # (rest of teams not shown)
+
+Placings:
+  - event: Anatomy & Physiology # must be the name of an event in Events
+    team: 58 # a number of a team listed in Teams
+    # next two lines are optional if the answers are yes and no, respectively
+    participated: yes
+    disqualified: no
+    # next line is not necessary only if team was disqualified or DNP
+    place: 22
+  - event: Astronomy
+    team: 58
+    place: 9
+    # .
+    # .
+    # .
+    # (rest of placings not shown, each team must have a placing for each event)
+
+Penalties:
+  # Entries are here are optional if a team did not recieve penalties
+  - team: 58 # a number of a team listed in Teams
+    points: 0 # the number points to be added to the team score, >= 0
+
+--- # triple dash indicates end of file, optional but recommended
+#
+# no listing for overall team scores and placings because those should be able
+# to be calculated from solely the information above (when taking into account
+# tie-breaking rules)
