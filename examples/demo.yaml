@@ -19,6 +19,8 @@ Events:
     # next two lines are optional if the answer is no
     trial: no   # event was originally intended to be a trial event
     trialed: no # event became trial event because of unforeseen circumstances
+    # next line is only required if using Scores instead of Placings
+    scoring: high # must be either high or low, as in "(high|low)est-score wins"
   - name: Astronomy
   - name: Chemistry Lab
   - name: Disease Detectives
@@ -54,6 +56,7 @@ Teams:
     # .
     # (rest of teams not shown)
 
+# either a Placings section or a Scores section is required, but not both
 Placings:
   - event: Anatomy & Physiology # must be the name of an event in Events
     team: 58 # a number of a team listed in Teams
@@ -69,6 +72,22 @@ Placings:
     # .
     # .
     # (rest of placings not shown, each team must have a placing for each event)
+
+# Placings take priority over Scores, so the following section would be ignored
+Scores:
+  - event: Anatomy & Physiology
+    team: 58
+    # next two lines are optional if the answers are yes and no, respectively
+    participated: yes
+    disqualified: no
+    # next line is not necessary only if team was disqualified or DNP
+    score: 57 # raw score without tiebreakers
+    # next line is necessary only if there was a tie
+    tiebreaker place: 1 # range between 1 and # of teams involved in tie
+    # .
+    # .
+    # .
+    # (rest of Scores not shown, each team must have a score for each event)
 
 Penalties:
   # Entries are here are optional if a team did not recieve penalties
