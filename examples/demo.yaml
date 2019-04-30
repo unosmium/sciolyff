@@ -6,21 +6,21 @@
 # format. Order of items within lists do not matter. Blank lines between entries
 # is okay as well. All other YAML rules apply.
 #
---- # triple dash indicates start of file, optional but recommended
+---  # triple dash indicates start of file, optional but recommended
 Tournament:
-  name: MIT # general name of tournament, not including level or year
-  level: Invitational # must be Invitational, Regionals, States, or Nationals
-  division: C # must be B or C
-  year: 2017 # year of the rules manual being used, not necessarily same as date
-  date: 2017-01-21 # YYYY-MM-DD format, other formats may work but aren't tested
+  name: MIT  # general name of tournament, not including level or year
+  level: Invitational  # must be Invitational, Regionals, States, or Nationals
+  division: C  # must be B or C
+  year: 2017  # year of the rules manual being used, might not be same as date
+  date: 2017-01-21  # YYYY-MM-DD format, others may work but aren't tested
 
 Events:
   - name: Anatomy & Physiology
     # next two lines are optional if the answer is no
-    trial: no   # event was originally intended to be a trial event
-    trialed: no # event became trial event because of unforeseen circumstances
+    trial: false  # event was originally intended to be a trial event
+    trialed: false  # event became trial event due to unforeseen circumstances
     # next line is only required if using Scores instead of Placings
-    scoring: high # must be either high or low, as in "(high|low)est-score wins"
+    scoring: high  # must be either high or low, as in (high|low)est-score wins
   - name: Astronomy
   - name: Chemistry Lab
   - name: Disease Detectives
@@ -45,9 +45,9 @@ Events:
   - name: Write It Do It
 
 Teams:
-  - school: Solon High School # avoid abbreviations like 'LASA' or 'H.S.'
+  - school: Solon High School  # avoid abbreviations like 'LASA' or 'H.S.'
     # next line is optional if there is only one team from that school
-    suffix: A # can be anything, not just A, B, C, etc.
+    suffix: A  # can be anything, not just A, B, C, etc.
     number: 58
     city: Solon
     state: OH
@@ -58,13 +58,13 @@ Teams:
 
 # either a Placings section or a Scores section is required, but not both
 Placings:
-  - event: Anatomy & Physiology # must be the name of an event in Events
-    team: 58 # a number of a team listed in Teams, unique per event
+  - event: Anatomy & Physiology  # must be the name of an event in Events
+    team: 58  # a number of a team listed in Teams, unique per event
     # next two lines are optional if the answers are yes and no, respectively
-    participated: yes
-    disqualified: no
+    participated: true
+    disqualified: false
     # next line is not necessary only if team was disqualified or DNP
-    place: 22 # range between 1 and # of teams at tournament, unique per event
+    place: 22  # range between 1 and # of teams at tournament, unique per event
   - event: Astronomy
     team: 58
     place: 9
@@ -78,12 +78,12 @@ Scores:
   - event: Anatomy & Physiology
     team: 58
     # next two lines are optional if the answers are yes and no, respectively
-    participated: yes
-    disqualified: no
+    participated: true
+    disqualified: false
     # next line is not necessary only if team was disqualified or DNP
-    score: 57 # raw score without tiebreakers
+    score: 57  # raw score without tiebreakers
     # next line is necessary only if there was a tie
-    tiebreaker place: 1 # range between 1 and # of teams involved in tie
+    tiebreaker place: 1  # range between 1 and # of teams involved in tie
     # .
     # .
     # .
@@ -91,10 +91,10 @@ Scores:
 
 Penalties:
   # Entries are here are optional if a team did not receive penalties
-  - team: 58 # a number of a team listed in Teams
-    points: 0 # the number points to be added to the team score, >= 0
+  - team: 58  # a number of a team listed in Teams
+    points: 0  # the number points to be added to the team score, >= 0
 
---- # triple dash indicates end of file, optional but recommended
+---  # triple dash indicates end of file, optional but recommended
 #
 # no listing for overall team scores and placings because those should be able
 # to be calculated from solely the information above (when taking into account
