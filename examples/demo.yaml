@@ -59,19 +59,19 @@ Teams:
 # either a Placings section or a Scores section is required, but not both
 Placings:
   - event: Anatomy & Physiology # must be the name of an event in Events
-    team: 58 # a number of a team listed in Teams
+    team: 58 # a number of a team listed in Teams, unique per event
     # next two lines are optional if the answers are yes and no, respectively
     participated: yes
     disqualified: no
     # next line is not necessary only if team was disqualified or DNP
-    place: 22
+    place: 22 # range between 1 and # of teams at tournament, unique per event
   - event: Astronomy
     team: 58
     place: 9
     # .
     # .
     # .
-    # (rest of placings not shown, each team must have a placing for each event)
+    # (rest of Placings not shown, each team must have a placing for each event)
 
 # Placings take priority over Scores, so the following section would be ignored
 Scores:
@@ -90,7 +90,7 @@ Scores:
     # (rest of Scores not shown, each team must have a score for each event)
 
 Penalties:
-  # Entries are here are optional if a team did not recieve penalties
+  # Entries are here are optional if a team did not receive penalties
   - team: 58 # a number of a team listed in Teams
     points: 0 # the number points to be added to the team score, >= 0
 
