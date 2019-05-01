@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require 'optimist'
+require 'yaml'
 
 Optimist.options do
   version 'sciolyff 0.1.0'
@@ -21,6 +22,15 @@ if ARGV.first.nil? || !File.exist?(ARGV.first)
   exit
 end
 
+begin
+  file = File.read(ARGV.first)
+  $rep = YAML.load(file)
+rescue StandardError => exception
+  puts 'Error: could not read file as YAML.'
+  warn exception.message
+  exit
+end
+
 puts 'More than one file given, ignoring all but first.' if ARGV.length > 1
 
 puts <<~STRING
@@ -31,16 +41,11 @@ puts <<~STRING
 STRING
 
 require 'minitest/autorun'
-require 'yaml'
 
 # Tests that also serve as the specification for the sciolyff file format
 #
 class SciolyFFValidate < Minitest::Test
   def setup
-    @rep = File.read(ARGV.first)
-  end
-
-  def test_file_is_valid_yaml
-    YAML.safe_load(@rep) # raises exception and fails test if not valid YAML
+    @rep = $rep
   end
 end
