@@ -37,7 +37,8 @@ puts 'More than one file given, ignoring all but first.' if ARGV.length > 1
 puts <<~STRING
   Validating file with Minitest...
 
-  (overkill? maybe)
+  Overkill? Probably.
+  Doesn't give line numbers from original file? Yeah.
 
 STRING
 
