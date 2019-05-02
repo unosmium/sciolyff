@@ -8,7 +8,7 @@ module SciolyFF
   #
   class TournamentTest < Minitest::Test
     def setup
-      @tournament = $rep['Tournament']
+      @tournament = SciolyFF.rep['Tournament']
     end
 
     def test_has_tournament_info

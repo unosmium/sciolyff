@@ -7,8 +7,12 @@ require 'sciolyff/tournament_test'
 # API methods for the Scioly File Format
 #
 module SciolyFF
+  class << self
+    attr_accessor :rep
+  end
+
   def self.validate(rep)
-    $rep = rep
+    SciolyFF.rep = rep
     Minitest.run
   end
 

@@ -8,7 +8,7 @@ module SciolyFF
   #
   class TopLevelTest < Minitest::Test
     def setup
-      @rep = $rep
+      @rep = SciolyFF.rep
     end
 
     def test_has_tournament
