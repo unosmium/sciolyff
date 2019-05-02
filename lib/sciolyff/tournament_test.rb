@@ -8,8 +8,9 @@ module SciolyFF
   #
   class TournamentTest < Minitest::Test
     def setup
+      skip unless SciolyFF.rep.instance_of? Hash
       @tournament = SciolyFF.rep['Tournament']
-      skip if @tournament.nil?
+      skip unless @tournament.instance_of? Hash
     end
 
     def test_has_info

@@ -11,6 +11,7 @@ module SciolyFF
     attr_accessor :rep
   end
 
+  # Assumes rep is the output of YAML.load
   def self.validate(rep, opts: {})
     SciolyFF.rep = rep
 
