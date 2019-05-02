@@ -2,7 +2,9 @@
 
 require 'yaml'
 require 'sciolyff/top_level_test'
+require 'sciolyff/sections_test'
 require 'sciolyff/tournament_test'
+require 'sciolyff/events_test'
 
 # API methods for the Scioly File Format
 #

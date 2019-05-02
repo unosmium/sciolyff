@@ -1,0 +1,69 @@
+# frozen_string_literal: true
+
+require 'minitest/test'
+require 'set'
+
+module SciolyFF
+  # Tests that also serve as the specification for the sciolyff file format
+  #
+  class EventsTest < Minitest::Test
+    def setup
+      skip unless SciolyFF.rep.instance_of? Hash
+      @events = SciolyFF.rep['Events']
+      skip unless @events.instance_of? Array
+    end
+
+    def test_has_events
+      assert @events.count > 1
+    end
+
+    def test_has_valid_events
+      @events.each do |event|
+        assert_instance_of Hash, event
+      end
+    end
+
+    def test_each_event_has_name
+      @events.select { |e| e.instance_of? Hash }.each do |event|
+        refute_nil event['name']
+      end
+    end
+
+    def test_each_event_has_scoring
+      @events.select { |e| e.instance_of? Hash }.each do |event|
+        refute_nil event['scoring'] unless SciolyFF.rep['Placings']
+      end
+    end
+
+    def test_each_event_does_not_have_extra_info
+      @events.select { |e| e.instance_of? Hash }.each do |event|
+        info = Set.new %w[name trial trialed scoring]
+        assert Set.new(event.keys).subset? info
+      end
+    end
+
+    def test_each_event_has_valid_name
+      @events.select { |e| e.instance_of? Hash }.each do |event|
+        assert_instance_of String, event['name'] if event['name']
+      end
+    end
+
+    def test_each_event_has_valid_trial
+      @events.select { |e| e.instance_of? Hash }.each do |event|
+        assert_includes [true, false], event['trial'] if event['trial']
+      end
+    end
+
+    def test_each_event_has_valid_trialed
+      @events.select { |e| e.instance_of? Hash }.each do |event|
+        assert_includes [true, false], event['trialed'] if event['trialed']
+      end
+    end
+
+    def test_each_event_has_valid_scoring
+      @events.select { |e| e.instance_of? Hash }.each do |event|
+        assert_includes %w[high low], event['scoring'] if event['scoring']
+      end
+    end
+  end
+end
