@@ -9,7 +9,8 @@ implementation of parsers across many programming languages.
 
 A Ruby gem provided in this repositoy contains a command line utility that can
 validate if a given file meets the SciolyFF. The validation uses Minitest, and
-thus the files found in `lib` also serve as the specification for the format.
+thus the files found in `lib/sciolyff` also serve as the specification for the
+format.
 
 To run the command line utility without installing the gem:
 

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require 'yaml'
-require 'sciolyff_tester'
+require 'sciolyff/top_level_test'
+require 'sciolyff/tournament_test'
 
 # API methods for the Scioly File Format
 #
