@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'yaml'
-require_relative 'sciolyff_tester.rb'
+require 'sciolyff_tester'
 
 # API methods for the Scioly File Format
 #

@@ -3,7 +3,7 @@
 
 require 'optimist'
 require 'yaml'
-require_relative '../lib/sciolyff.rb'
+require 'sciolyff'
 
 Optimist.options do
   version 'sciolyff 0.1.0'
@@ -11,7 +11,7 @@ Optimist.options do
     Checks if a given file is in the Scioly File Format
 
     Usage:
-            bin/#{File.basename(__FILE__)} [options] <file>
+            #{File.basename(__FILE__)} [options] <file>
 
     where [options] are:
   STRING
