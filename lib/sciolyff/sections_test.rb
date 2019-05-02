@@ -13,23 +13,24 @@ module SciolyFF
     end
 
     def test_has_tournament
-      refute_nil @rep['Tournament']
+      assert_instance_of Hash, @rep['Tournament']
     end
 
     def test_has_events
-      refute_nil @rep['Events']
+      assert_instance_of Array, @rep['Events']
     end
 
     def test_has_teams
-      refute_nil @rep['Teams']
+      assert_instance_of Array, @rep['Teams']
     end
 
     def test_has_placings_or_scores
-      refute_nil @rep['Placings'] || @rep['Scores']
+      assert @rep['Placings'].instance_of?(Array) ||
+             @rep['Scores'].instance_of?(Array)
     end
 
     def test_has_penalties
-      refute_nil @rep['Penalties']
+      assert_includes @rep.keys, 'Penalties' # could be empty/nil
     end
 
     def test_does_not_have_extra_sections
