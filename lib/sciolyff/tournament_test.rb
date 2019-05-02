@@ -11,7 +11,7 @@ module SciolyFF
       @tournament = SciolyFF.rep['Tournament']
     end
 
-    def test_has_tournament_info
+    def test_has_info
       refute_nil @tournament['name']
       refute_nil @tournament['level']
       refute_nil @tournament['division']
@@ -19,29 +19,29 @@ module SciolyFF
       refute_nil @tournament['date']
     end
 
-    def test_does_not_have_extra_tournament_info
+    def test_does_not_have_extra_info
       info = Set.new %w[name level division year date]
       assert Set.new(@tournament.keys).subset? info
     end
 
-    def test_has_valid_tournament_name
+    def test_has_valid_name
       assert_instance_of String, @tournament['name']
     end
 
-    def test_has_valid_tournament_level
+    def test_has_valid_level
       level = @tournament['level']
       assert_includes %w[Invitational Regionals States Nationals], level
     end
 
-    def test_has_valid_tournament_division
+    def test_has_valid_division
       assert_includes %w[A B C], @tournament['division']
     end
 
-    def test_has_valid_tournament_year
+    def test_has_valid_year
       assert_instance_of Integer, @tournament['year']
     end
 
-    def test_has_valid_tournament_date
+    def test_has_valid_date
       assert_instance_of Date, @tournament['date']
     end
   end
