@@ -15,7 +15,7 @@ opts = Optimist.options do
 
     where [options] are:
   STRING
-  opt :verbose, "Run Minitest in verbose mode"
+  opt :verbose, 'Run Minitest in verbose mode'
 end
 
 if ARGV.first.nil? || !File.exist?(ARGV.first)
