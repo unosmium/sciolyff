@@ -7,7 +7,7 @@ implementation of parsers across many programming languages.
 
 ## File Specification / Validation
 
-A Ruby gem provided in this repositoy contains a command line utility that can
+A Ruby gem provided in this repository contains a command line utility that can
 validate if a given file meets the SciolyFF. The validation uses Minitest, and
 thus the files found in `lib/sciolyff` also serve as the specification for the
 format.
