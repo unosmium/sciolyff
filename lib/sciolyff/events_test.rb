@@ -13,25 +13,9 @@ module SciolyFF
       skip unless @events.instance_of? Array
     end
 
-    def test_has_events
-      assert @events.count > 1
-    end
-
     def test_has_valid_events
       @events.each do |event|
         assert_instance_of Hash, event
-      end
-    end
-
-    def test_each_event_has_name
-      @events.select { |e| e.instance_of? Hash }.each do |event|
-        refute_nil event['name']
-      end
-    end
-
-    def test_each_event_has_scoring
-      @events.select { |e| e.instance_of? Hash }.each do |event|
-        refute_nil event['scoring'] unless SciolyFF.rep['Placings']
       end
     end
 
@@ -44,25 +28,25 @@ module SciolyFF
 
     def test_each_event_has_valid_name
       @events.select { |e| e.instance_of? Hash }.each do |event|
-        assert_instance_of String, event['name'] if event['name']
+        assert_instance_of String, event['name']
       end
     end
 
     def test_each_event_has_valid_trial
       @events.select { |e| e.instance_of? Hash }.each do |event|
-        assert_includes [true, false], event['trial'] if event['trial']
+        assert_includes [true, false], event['trial'] if event.key? 'trial'
       end
     end
 
     def test_each_event_has_valid_trialed
       @events.select { |e| e.instance_of? Hash }.each do |event|
-        assert_includes [true, false], event['trialed'] if event['trialed']
+        assert_includes [true, false], event['trialed'] if event.key? 'trialed'
       end
     end
 
     def test_each_event_has_valid_scoring
       @events.select { |e| e.instance_of? Hash }.each do |event|
-        assert_includes %w[high low], event['scoring'] if event['scoring']
+        assert_includes %w[high low], event['scoring'] if event.key? 'scoring'
       end
     end
   end
