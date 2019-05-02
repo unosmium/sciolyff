@@ -11,12 +11,16 @@ module SciolyFF
     attr_accessor :rep
   end
 
-  def self.validate(rep)
+  def self.validate(rep, opts: {})
     SciolyFF.rep = rep
-    Minitest.run
+
+    mt_args = []
+    mt_args << '--verbose' if opts[:verbose]
+
+    Minitest.run mt_args
   end
 
-  def self.validate_file(path)
+  def self.validate_file(path, opts: {})
     file = File.read(path)
     rep = YAML.load(file)
   rescue StandardError => exception
@@ -30,6 +34,6 @@ module SciolyFF
       Doesn't give line numbers from original file? Yeah.
 
     STRING
-    validate(rep)
+    validate(rep, opts: opts)
   end
 end

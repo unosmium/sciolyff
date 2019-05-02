@@ -5,7 +5,7 @@ require 'optimist'
 require 'yaml'
 require 'sciolyff'
 
-Optimist.options do
+opts = Optimist.options do
   version 'sciolyff 0.1.0'
   banner <<~STRING
     Checks if a given file is in the Scioly File Format
@@ -15,6 +15,7 @@ Optimist.options do
 
     where [options] are:
   STRING
+  opt :verbose, "Run Minitest in verbose mode"
 end
 
 if ARGV.first.nil? || !File.exist?(ARGV.first)
@@ -25,4 +26,4 @@ end
 
 puts 'More than one file given, ignoring all but first.' if ARGV.length > 1
 
-SciolyFF.validate_file(ARGV.first)
+SciolyFF.validate_file(ARGV.first, opts: opts)

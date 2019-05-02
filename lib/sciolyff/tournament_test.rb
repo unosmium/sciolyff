@@ -9,6 +9,7 @@ module SciolyFF
   class TournamentTest < Minitest::Test
     def setup
       @tournament = SciolyFF.rep['Tournament']
+      skip if @tournament.nil?
     end
 
     def test_has_info
