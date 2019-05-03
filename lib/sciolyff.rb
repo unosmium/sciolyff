@@ -6,6 +6,7 @@ require 'sciolyff/sections'
 require 'sciolyff/tournament'
 require 'sciolyff/events'
 require 'sciolyff/placings'
+require 'sciolyff/scores'
 
 # API methods for the Scioly File Format
 #
