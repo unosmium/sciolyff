@@ -30,6 +30,8 @@ module SciolyFF
     def test_each_score_has_valid_event
       @scores.select { |s| s.instance_of? Hash }.each do |score|
         assert_instance_of String, score['event']
+        skip unless SciolyFF.rep['Events'].instance_of? Array
+
         event_names = SciolyFF.rep['Events'].map { |e| e['name'] }
         assert_includes event_names, score['event']
       end
@@ -95,12 +97,10 @@ module SciolyFF
     end
 
     def test_each_team_has_scores_for_all_events
-      skip unless SciolyFF.rep['Teams'].instance_of? Array
+      skip unless SciolyFF.rep['Teams'].instance_of?(Array) &&
+                  SciolyFF.rep['Events'].instance_of?(Array)
 
-      SciolyFF.rep['Teams'].each do |team|
-        next unless team.instance_of?(Hash) &&
-                    SciolyFF.rep['Events'].instance_of?(Array)
-
+      SciolyFF.rep['Teams'].select { |t| t.instance_of? Hash }.each do |team|
         events = SciolyFF.rep['Events'].select { |e| e.instance_of? Hash }
                          .map { |e| e['name'] }
 
