@@ -41,5 +41,11 @@ module SciolyFF
         assert_instance_of Integer, penalty['points']
       end
     end
+
+    def test_penalties_are_unique_for_team
+      teams = @penalties.select { |p| p.instance_of? Hash }
+                        .map { |p| p['team'] }
+      assert_nil teams.uniq!
+    end
   end
 end
