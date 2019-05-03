@@ -19,7 +19,7 @@ Events:
     # next two lines are optional if the answer is no
     trial: false  # event was originally intended to be a trial event
     trialed: false  # event became trial event due to unforeseen circumstances
-    # next line is only required if using Scores instead of Placings
+    # next line is only required if using Scores and scoring is lowest wins
     scoring: high  # must be either high or low, as in (high|low)est-score wins
   - name: Astronomy
   - name: Chemistry Lab
