@@ -8,6 +8,7 @@ require 'sciolyff/events'
 require 'sciolyff/teams'
 require 'sciolyff/placings'
 require 'sciolyff/scores'
+require 'sciolyff/penalties'
 
 # API methods for the Scioly File Format
 #
