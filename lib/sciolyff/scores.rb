@@ -93,5 +93,23 @@ module SciolyFF
                           .uniq!
       end
     end
+
+    def test_each_team_has_scores_for_all_events
+      skip unless SciolyFF.rep['Teams'].instance_of? Array
+
+      SciolyFF.rep['Teams'].each do |team|
+        next unless team.instance_of?(Hash) &&
+                    SciolyFF.rep['Events'].instance_of?(Array)
+
+        events = SciolyFF.rep['Events'].select { |e| e.instance_of? Hash }
+                         .map { |e| e['name'] }
+
+        events_with_scores = @scores.select { |s| s.instance_of? Hash }
+                                    .select { |s| s['team'] == team['number'] }
+                                    .map { |s| s['event'] }
+
+        assert_equal events, events_with_scores
+      end
+    end
   end
 end
