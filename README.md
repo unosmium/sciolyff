@@ -18,7 +18,8 @@ To run the command line utility without installing the gem:
 ruby -Ilib bin/sciolyff examples/demo.rb
 ```
 
-Installing the gem simplifies this to
+Installing the gem simplifies this to the following and will also install any
+missing dependencies:
 
 ```
 sciolyff examples/demo.rb
@@ -26,4 +27,15 @@ sciolyff examples/demo.rb
 
 ## Installation
 
-TBD
+After this gem is pushed to https://rubygems.org/ the installation will be:
+
+```
+gem install sciolyff
+``
+
+Until then, the gem can be built and installed locally:
+
+```
+gem build sciolyff.gemspec
+gem install ./sciolyff-0.1.1.gem
+```
