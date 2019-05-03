@@ -38,6 +38,8 @@ module SciolyFF
     def test_each_score_has_valid_team
       @scores.select { |s| s.instance_of? Hash }.each do |score|
         assert_instance_of Integer, score['team']
+        skip unless SciolyFF.rep['Teams'].instance_of? Array
+
         team_numbers = SciolyFF.rep['Teams'].map { |t| t['number'] }
         assert_includes team_numbers, score['team']
       end

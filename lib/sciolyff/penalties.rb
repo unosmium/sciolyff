@@ -29,6 +29,8 @@ module SciolyFF
     def test_each_penalty_has_valid_team
       @penalties.select { |p| p.instance_of? Hash }.each do |penalty|
         assert_instance_of Integer, penalty['team']
+        skip unless SciolyFF.rep['Teams'].instance_of? Array
+
         team_numbers = SciolyFF.rep['Teams'].map { |t| t['number'] }
         assert_includes team_numbers, penalty['team']
       end
