@@ -6,7 +6,7 @@ require 'set'
 module SciolyFF
   # Tests that also serve as the specification for the sciolyff file format
   #
-  class TopLevelTest < Minitest::Test
+  class TopLevel < Minitest::Test
     def test_is_hash
       assert_instance_of Hash, SciolyFF.rep
     end

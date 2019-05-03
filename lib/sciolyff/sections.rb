@@ -6,7 +6,7 @@ require 'set'
 module SciolyFF
   # Tests that also serve as the specification for the sciolyff file format
   #
-  class SectionsTest < Minitest::Test
+  class Sections < Minitest::Test
     def setup
       @rep = SciolyFF.rep
       skip unless @rep.instance_of? Hash

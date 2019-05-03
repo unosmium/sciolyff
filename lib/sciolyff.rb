@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require 'yaml'
-require 'sciolyff/top_level_test'
-require 'sciolyff/sections_test'
-require 'sciolyff/tournament_test'
-require 'sciolyff/events_test'
-require 'sciolyff/placings_test'
+require 'sciolyff/top_level'
+require 'sciolyff/sections'
+require 'sciolyff/tournament'
+require 'sciolyff/events'
+require 'sciolyff/placings'
 
 # API methods for the Scioly File Format
 #

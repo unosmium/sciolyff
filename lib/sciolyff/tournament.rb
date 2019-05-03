@@ -6,7 +6,7 @@ require 'set'
 module SciolyFF
   # Tests that also serve as the specification for the sciolyff file format
   #
-  class TournamentTest < Minitest::Test
+  class Tournament < Minitest::Test
     def setup
       skip unless SciolyFF.rep.instance_of? Hash
       @tournament = SciolyFF.rep['Tournament']
