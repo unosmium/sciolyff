@@ -47,7 +47,7 @@ Events:
 Teams:
   - school: Solon High School  # avoid abbreviations like 'LASA' or 'H.S.'
     # next line is optional if there is only one team from that school
-    suffix: A  # can be anything, not just A, B, C, etc.
+    suffix: A  # can be anything, not just A, B, C, etc. -- use quotes for nums
     number: 58
     city: Solon
     state: OH

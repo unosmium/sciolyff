@@ -5,6 +5,7 @@ require 'sciolyff/top_level'
 require 'sciolyff/sections'
 require 'sciolyff/tournament'
 require 'sciolyff/events'
+require 'sciolyff/teams'
 require 'sciolyff/placings'
 require 'sciolyff/scores'
 
