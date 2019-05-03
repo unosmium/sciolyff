@@ -47,7 +47,7 @@ module SciolyFF
     end
 
     def test_has_valid_date
-      skip unless @tournament['year']
+      skip unless @tournament['date']
       assert_instance_of Date, @tournament['date']
     end
   end
