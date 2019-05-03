@@ -55,5 +55,11 @@ module SciolyFF
         assert_instance_of String, team['state']
       end
     end
+
+    def test_each_team_has_unique_number
+      numbers = @teams.select { |e| e.instance_of? Hash }
+                      .map { |e| e['number'] }
+      assert_nil numbers.uniq!
+    end
   end
 end

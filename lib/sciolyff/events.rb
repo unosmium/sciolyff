@@ -49,5 +49,11 @@ module SciolyFF
         assert_includes %w[high low], event['scoring'] if event.key? 'scoring'
       end
     end
+
+    def test_each_event_has_unique_name
+      names = @events.select { |e| e.instance_of? Hash }
+                     .map { |e| e['name'] }
+      assert_nil names.uniq!
+    end
   end
 end
