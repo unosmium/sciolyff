@@ -20,45 +20,45 @@ module SciolyFF
     end
 
     def test_each_team_does_not_have_extra_info
-      @teams.select { |e| e.instance_of? Hash }.each do |team|
+      @teams.select { |t| t.instance_of? Hash }.each do |team|
         info = Set.new %w[school suffix number city state]
         assert Set.new(team.keys).subset? info
       end
     end
 
     def test_each_team_has_valid_school
-      @teams.select { |e| e.instance_of? Hash }.each do |team|
+      @teams.select { |t| t.instance_of? Hash }.each do |team|
         assert_instance_of String, team['school']
       end
     end
 
     def test_each_team_has_valid_suffix
-      @teams.select { |e| e.instance_of? Hash }.each do |team|
+      @teams.select { |t| t.instance_of? Hash }.each do |team|
         assert_instance_of String, team['suffix']
       end
     end
 
     def test_each_team_has_valid_number
-      @teams.select { |e| e.instance_of? Hash }.each do |team|
+      @teams.select { |t| t.instance_of? Hash }.each do |team|
         assert_instance_of Integer, team['number']
       end
     end
 
     def test_each_team_has_valid_city
-      @teams.select { |e| e.instance_of? Hash }.each do |team|
+      @teams.select { |t| t.instance_of? Hash }.each do |team|
         assert_instance_of String, team['city']
       end
     end
 
     def test_each_team_has_valid_state
-      @teams.select { |e| e.instance_of? Hash }.each do |team|
+      @teams.select { |t| t.instance_of? Hash }.each do |team|
         assert_instance_of String, team['state']
       end
     end
 
     def test_each_team_has_unique_number
-      numbers = @teams.select { |e| e.instance_of? Hash }
-                      .map { |e| e['number'] }
+      numbers = @teams.select { |t| t.instance_of? Hash }
+                      .map { |t| t['number'] }
       assert_nil numbers.uniq!
     end
   end
