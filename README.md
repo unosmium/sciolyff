@@ -31,7 +31,7 @@ After this gem is pushed to https://rubygems.org/ the installation will be:
 
 ```
 gem install sciolyff
-``
+```
 
 Until then, the gem can be built and installed locally:
 
