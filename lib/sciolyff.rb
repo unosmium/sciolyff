@@ -29,7 +29,7 @@ module SciolyFF
 
   def self.validate_file(path, opts: {})
     file = File.read(path)
-    rep = YAML.load(file)
+    rep = YAML.safe_load(file, permitted_classes: [Date])
   rescue StandardError => exception
     puts 'Error: could not read file as YAML.'
     warn exception.message
