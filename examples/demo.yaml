@@ -48,7 +48,9 @@ Teams:
   - school: Solon High School  # avoid abbreviations like 'LASA' or 'H.S.'
     # next two lines are optional
     suffix: A  # can be anything, not just A, B, C, etc. -- use quotes for nums
-    subdivision: V # can be anything, used for Varsity / Junior Varisity labels
+    subdivision: V  # can be anything, used for Varsity / Junior Varisity labels
+    # next line is optional if false
+    exhibition: false  # if the team's placings don't affect other team's scores
     number: 58
     city: Solon
     state: OH

@@ -21,8 +21,8 @@ module SciolyFF
 
     def test_each_team_does_not_have_extra_info
       @teams.select { |t| t.instance_of? Hash }.each do |team|
-        info = Set.new %w[school suffix number subdivision city state]
-        assert Set.new(team.keys).subset? info
+        fo = Set.new %w[school suffix subdivision exhibition number city state]
+        assert Set.new(team.keys).subset? fo
       end
     end
 
@@ -42,6 +42,13 @@ module SciolyFF
       @teams.select { |t| t.instance_of? Hash }.each do |team|
         assert_instance_of String, team['subdivision'] \
           if team.key? 'subdivision'
+      end
+    end
+
+    def test_each_team_has_valid_exhibition
+      @teams.select { |t| t.instance_of? Hash }.each do |team|
+        assert_includes [true, false], team['exhibition'] \
+          if team.key? 'exhibition'
       end
     end
 
