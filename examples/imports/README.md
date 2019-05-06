@@ -19,4 +19,7 @@ sketchiness of the whole thing, your exact experience may differ):
    - Re-add the event names (use the PDF as reference) as the top row, label
      trial events like "Sounds of Music (Trial)" and trialed events like "Sounds
      of Music (Trialed)"
-6. Use the converter included in this directory to convert from .csv to .yaml
+6. Do more cleanup from Linux command line
+   - Run `unix2dos` on all CSV files
+   - Replace `?` with `-` using in some CSV files using `sed`
+7. Use the converter included in this directory to convert from .csv to .yaml
