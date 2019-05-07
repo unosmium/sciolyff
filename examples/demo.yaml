@@ -8,7 +8,9 @@
 #
 ---  # triple dash indicates start of file, optional but recommended
 Tournament:
+  # next line is optional if it is the same as location or for Nats
   name: MIT  # general name of tournament, not including level or year
+  location: MIT
   level: Invitational  # must be Invitational, Regionals, States, or Nationals
   division: C  # must be B or C
   year: 2017  # year of the rules manual being used, might not be same as date

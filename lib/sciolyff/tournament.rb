@@ -14,7 +14,7 @@ module SciolyFF
     end
 
     def test_has_info
-      refute_nil @tournament['name']
+      refute_nil @tournament['location']
       refute_nil @tournament['level']
       refute_nil @tournament['division']
       refute_nil @tournament['year']
@@ -22,13 +22,18 @@ module SciolyFF
     end
 
     def test_does_not_have_extra_info
-      info = Set.new %w[name level division year date]
+      info = Set.new %w[name location level division year date]
       assert Set.new(@tournament.keys).subset? info
     end
 
     def test_has_valid_name
       skip unless @tournament['name']
       assert_instance_of String, @tournament['name']
+    end
+
+    def test_has_valid_location
+      skip unless @tournament['location']
+      assert_instance_of String, @tournament['location']
     end
 
     def test_has_valid_level
