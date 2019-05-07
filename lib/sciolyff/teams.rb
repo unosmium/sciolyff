@@ -60,7 +60,7 @@ module SciolyFF
 
     def test_each_team_has_valid_city
       @teams.select { |t| t.instance_of? Hash }.each do |team|
-        assert_instance_of String, team['city']
+        assert_instance_of String, team['city'] if team.key? 'city'
       end
     end
 

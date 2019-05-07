@@ -52,6 +52,7 @@ Teams:
     # next line is optional if false
     exhibition: false  # if the team's placings don't affect other team's scores
     number: 58
+    # next line is optional but strongly recommended
     city: Solon
     state: OH
     # .

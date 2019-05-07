@@ -65,7 +65,7 @@ module SciolyFF
     def test_each_placing_has_valid_place
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
         next if placing['disqualified'] == true ||
-                placing['participated'] == false
+                placing.key?('participated')
 
         assert_instance_of Integer, placing['place']
         max_place = @placings.count { |p| p['event'] == placing['event'] }
