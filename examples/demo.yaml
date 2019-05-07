@@ -95,6 +95,7 @@ Scores:
     # .
     # (rest of Scores not shown, each team must have a score for each event)
 
+# Penalties section is optional if no penalties were given to any teams
 Penalties:
   # Entries are here are optional if a team did not receive penalties
   - team: 58  # a number of a team listed in Teams

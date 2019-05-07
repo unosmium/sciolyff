@@ -27,7 +27,8 @@ sketchiness of the whole thing, your exact experience may differ):
    ./csv2sciolyff [the CSV file] > [name for output file .yaml]
    ```
 8. Manually add to the .yaml file
-   - Add Tournament and Penalties sections
+   - Add Tournament section (and the necessary info)
+   - Add Penalties sections only if there were teams that received penalties
 9. Do a validation of the file with `sciolyff`
    - Ties in event placing will trigger
      (`SciolyFF::Placings#test_placings_are_unique_for_event_and_place`) but

@@ -30,7 +30,7 @@ module SciolyFF
     end
 
     def test_has_penalties
-      assert_includes @rep.keys, 'Penalties' # could be empty/nil
+      assert_instance_of Array, @rep['Penalties'] if @rep.key? 'Penalties'
     end
 
     def test_does_not_have_extra_sections
