@@ -37,5 +37,5 @@ Until then, the gem can be built and installed locally:
 
 ```
 gem build sciolyff.gemspec
-gem install ./sciolyff-0.1.1.gem
+gem install ./sciolyff-0.2.0.gem
 ```
