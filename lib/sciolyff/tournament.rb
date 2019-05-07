@@ -27,32 +27,33 @@ module SciolyFF
     end
 
     def test_has_valid_name
-      skip unless @tournament['name']
+      skip unless @tournament.key? 'name'
       assert_instance_of String, @tournament['name']
     end
 
     def test_has_valid_location
-      skip unless @tournament['location']
+      skip unless @tournament.key? 'location'
       assert_instance_of String, @tournament['location']
     end
 
     def test_has_valid_level
-      skip unless (level = @tournament['level'])
+      skip unless @tournament.key? 'level'
+      level = @tournament['level']
       assert_includes %w[Invitational Regionals States Nationals], level
     end
 
     def test_has_valid_division
-      skip unless @tournament['division']
+      skip unless @tournament.key? 'division'
       assert_includes %w[A B C], @tournament['division']
     end
 
     def test_has_valid_year
-      skip unless @tournament['year']
+      skip unless @tournament.key? 'year'
       assert_instance_of Integer, @tournament['year']
     end
 
     def test_has_valid_date
-      skip unless @tournament['date']
+      skip unless @tournament.key? 'date'
       assert_instance_of Date, @tournament['date']
     end
   end
