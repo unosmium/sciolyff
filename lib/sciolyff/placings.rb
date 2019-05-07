@@ -79,10 +79,15 @@ module SciolyFF
       SciolyFF.rep['Events'].each do |event|
         next unless event.instance_of? Hash
 
-        assert_nil @placings.select { |p| p['event'] == event['name'] }
-                            .map { |p| p['place'] }
-                            .compact
-                            .uniq!, "Event: #{event['name']}"
+        places = @placings.select { |p| p['event'] == event['name'] }
+                          .map { |p| p['place'] }
+                          .compact
+
+        dups = places.select.with_index do |p, i|
+          places.index(p) != i
+        end
+
+        assert_empty dups, "The event #{event['name']} has ties at #{dups}"
       end
     end
 
