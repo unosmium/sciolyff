@@ -23,3 +23,14 @@ sketchiness of the whole thing, your exact experience may differ):
    - Run `unix2dos` on all CSV files
    - Replace `?` with `-` using in some CSV files using `sed`
 7. Use the converter included in this directory to convert from .csv to .yaml
+   ```
+   ./csv2sciolyff [the CSV file] > [name for output file .yaml]
+   ```
+8. Manually add to the .yaml file
+   - Add Tournament and Penalties sections
+   - Use the validator to check for teams with participation points only in
+     events (will trigger
+     `SciolyFF::Placings#test_placings_are_unique_for_event_and_place` with
+     information about which event is affected) and replace `place: 60` with
+     `participation: true`
+9. Do a double-check validation of the file with `sciolyff`
