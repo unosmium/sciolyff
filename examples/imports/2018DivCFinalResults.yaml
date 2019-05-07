@@ -1,10 +1,10 @@
 ---
 Tournament:
-  name: ''
+  name: 'Colorado State University'
   level: Nationals
   division: C
   year: 2018
-  date: 2018-05-06
+  date: 2018-05-19
 Events:
 - name: Code Busters
   trial: true
