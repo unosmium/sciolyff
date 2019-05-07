@@ -28,9 +28,8 @@ sketchiness of the whole thing, your exact experience may differ):
    ```
 8. Manually add to the .yaml file
    - Add Tournament and Penalties sections
-   - Use the validator to check for teams with participation points only in
-     events (will trigger
-     `SciolyFF::Placings#test_placings_are_unique_for_event_and_place` with
-     information about which event is affected) and replace `place: 60` with
-     `participation: true`
-9. Do a double-check validation of the file with `sciolyff`
+9. Do a validation of the file with `sciolyff`
+   - Ties in event placing will trigger
+     (`SciolyFF::Placings#test_placings_are_unique_for_event_and_place`) but
+     this can be ignored most of the timebecause Nationals scoring rules allow
+     for ties for places greater than 6. (See commit 3b9596e19)
