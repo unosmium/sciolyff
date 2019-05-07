@@ -46,6 +46,18 @@ placings = csv.drop(1).map do |csv_row|
   end
 end.flatten
 
+# Identify and fix placings that are just participations points
+events.map { |e| e['name'] }.each do |event_name|
+  last_place_placings = placings.select { |p| p['event'] == event_name &&
+                                              p['place'] == teams.count }
+  if last_place_placings.count > 1
+    last_place_placings.each do |placing|
+      placing.store('participated', true)
+      placing.delete('place')
+    end
+  end
+end
+
 rep = { 'Events' => events,
         'Teams' => teams,
         'Placings' => placings }
