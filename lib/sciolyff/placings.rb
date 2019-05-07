@@ -82,7 +82,7 @@ module SciolyFF
         assert_nil @placings.select { |p| p['event'] == event['name'] }
                             .map { |p| p['place'] }
                             .compact
-                            .uniq!
+                            .uniq!, "Event: #{event['name']}"
       end
     end
 
