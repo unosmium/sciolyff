@@ -23,6 +23,8 @@ Events:
     trialed: false  # event became trial event due to unforeseen circumstances
     # next line is only required if using Scores and scoring is lowest wins
     scoring: high  # must be either high or low, as in (high|low)est-score wins
+    # next line is only required if number of tiers > 1 and using Scores
+    tiers: 1  # number of tiers, higher tiers ranked behind lower tiers
   - name: Astronomy
   - name: Chemistry Lab
   - name: Disease Detectives
@@ -90,6 +92,8 @@ Scores:
     score: 57  # raw score without tiebreakers
     # next line is necessary only if there was a tie
     tiebreaker place: 1  # range between 1 and # of teams involved in tie
+    # next line is necessary only if tier > 1 and the event has a tiers value
+    tier: 1  # range between 1 and # of tiers specified in Events
     # .
     # .
     # .

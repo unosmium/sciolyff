@@ -21,7 +21,8 @@ module SciolyFF
 
     def test_each_score_does_not_have_extra_info
       @scores.select { |s| s.instance_of? Hash }.each do |score|
-        a = %w[event team participated disqualified score] << 'tiebreaker place'
+        a = %w[event team participated disqualified score tier]
+        a << 'tiebreaker place'
         info = Set.new a
         assert Set.new(score.keys).subset? info
       end
@@ -80,6 +81,23 @@ module SciolyFF
         end
         assert_instance_of Integer, score['tiebreaker place']
         assert_includes 1..max_place, score['tiebreaker place']
+      end
+    end
+
+    def test_each_score_has_valid_tier
+      skip unless SciolyFF.rep['Events'].instance_of? Array
+
+      @scores.select { |s| s.instance_of? Hash }.each do |score|
+        next unless score.key? 'tier'
+
+        assert_instance_of Integer, score['tier']
+
+        max_tier = SciolyFF.rep['Events'].find do |event|
+          event['name'] == score['event']
+        end['tiers']
+
+        refute_nil max_tier, "#{score['event']} does not have tiers"
+        assert_includes 1..max_tier, score['tier']
       end
     end
 
