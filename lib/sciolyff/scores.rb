@@ -75,6 +75,8 @@ module SciolyFF
 
     def test_each_score_has_valid_tiebreaker_place
       @scores.select { |s| s.instance_of? Hash }.each do |score|
+        next unless score.key? 'tiebreaker place'
+
         max_place = @scores.count do |s|
           s['event'] == score['event'] &&
             s['score'] == score['score']
