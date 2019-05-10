@@ -22,7 +22,7 @@ module SciolyFF
     end
 
     def test_does_not_have_extra_info
-      info = Set.new %w[name location level division year date]
+      info = Set.new %w[name location level division state year date]
       assert Set.new(@tournament.keys).subset? info
     end
 
@@ -45,6 +45,13 @@ module SciolyFF
     def test_has_valid_division
       skip unless @tournament.key? 'division'
       assert_includes %w[A B C], @tournament['division']
+    end
+
+    def test_has_valid_state
+      skip unless @tournament.key? 'level'
+      level = @tournament['level']
+      skip unless %[Regionals States].include? level
+      assert_instance_of String, @tournament['state']
     end
 
     def test_has_valid_year
