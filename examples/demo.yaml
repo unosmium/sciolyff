@@ -3,8 +3,8 @@
 # An incomplete but demonstrative example file for the sciolyff standard.
 #
 # Text after '#' on a line are comments and are not needed as part of the
-# format. Order of items within lists do not matter. Blank lines between entries
-# is okay as well. All other YAML rules apply.
+# format. Order of items within lists and hashes do not matter. Blank lines
+# between entries is okay as well. All other YAML rules apply.
 #
 ---  # triple dash indicates start of file, optional but recommended
 Tournament:
