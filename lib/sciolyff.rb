@@ -58,8 +58,8 @@ module SciolyFF
     end
 
     def event_points(team_number, event_name)
-      event_points_from_scores(team_number, event_name) if @rep.key? 'Scores'
-      event_points_from_placings(team_number, event_name)
+      event_points_from_placings(team_number, event_name) if @placings
+      event_points_from_scores(team_number, event_name)
     end
 
     def team_points(team_number)
@@ -81,17 +81,19 @@ module SciolyFF
     end
 
     def event_points_from_placings(team_number, event_name)
-      event_placings = @rep['Placings'].select { |p| p['event'] == event_name }
-      placing = event_placings.find { |p| p['team'] == team_number }
+      event_placings = @placings[event_name]
+      placing = event_placings[team_number]
 
-      return @rep['Teams'].count + 2 if placing['disqualified']
-      return @rep['Teams'].count + 1 unless placing['participated']
-      return @rep['Teams'].count + 0 unless placing['place']
+      return @teams.count + 2 if placing[:disqualified]
+      return @teams.count + 1 unless placing[:participated] || placing[:place]
+      return @teams.count + 0 unless placing[:place]
 
       # Points is place minus number of exhibition teams with a better place
-      placing['place'] - event_placings.count do |p|
-        p['place'] < placing['place'] &&
-          @rep['Teams'].find { |t| t['number'] == p['team'] }['exhibition']
+      placing[:place] - event_placings.count do |p|
+        p = p.last
+        p[:place] &&
+          p[:place] < placing[:place] &&
+          @teams[p[:team]][:exhibition]
       end
     end
 
