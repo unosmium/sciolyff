@@ -46,8 +46,15 @@ module SciolyFF
 
   class Helper
     def initialize(rep)
-      @tournament = rep['Tournament']
-      @teams = rep['Teams']
+      @rep = rep
+      @tournament = rep[:Tournament]
+      @events = index_array(rep[:Events], [:name])
+      @teams = index_array(rep[:Teams], [:number])
+      @placings = index_array(rep[:Placings], %i[event team]).merge \
+                  index_array(rep[:Placings], %i[team event]) if rep[:Placings]
+      @scores = index_array(rep[:Scores], %i[event team]).merge \
+                index_array(rep[:Scores], %i[team event]) if rep[:Scores]
+      @penalties = index_array(rep[:Penalties], [:team]) if rep[:Penalties]
     end
 
     def event_points(team_number, event_name)
@@ -62,6 +69,16 @@ module SciolyFF
     end
 
     private
+
+    def index_array(arr, index_keys)
+      return arr.first if index_keys.empty?
+
+      indexed_hash = arr.group_by { |x| x[index_keys.first] }
+
+      indexed_hash.transform_values do |a|
+        index_array(a, index_keys.drop(1))
+      end
+    end
 
     def event_points_from_placings(team_number, event_name)
       event_placings = @rep['Placings'].select { |p| p['event'] == event_name }
