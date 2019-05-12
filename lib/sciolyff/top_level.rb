@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'minitest/test'
-require 'set'
 
 module SciolyFF
   # Tests that also serve as the specification for the sciolyff file format

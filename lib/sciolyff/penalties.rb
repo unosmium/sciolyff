@@ -9,7 +9,7 @@ module SciolyFF
   class Penalties < Minitest::Test
     def setup
       skip unless SciolyFF.rep.instance_of? Hash
-      @penalties = SciolyFF.rep['Penalties']
+      @penalties = SciolyFF.rep[:Penalties]
       skip unless @penalties.instance_of? Array
     end
 
@@ -21,30 +21,30 @@ module SciolyFF
 
     def test_each_penalty_does_not_have_extra_info
       @penalties.select { |p| p.instance_of? Hash }.each do |penalty|
-        info = Set.new %w[team points]
+        info = Set.new %i[team points]
         assert Set.new(penalty.keys).subset? info
       end
     end
 
     def test_each_penalty_has_valid_team
       @penalties.select { |p| p.instance_of? Hash }.each do |penalty|
-        assert_instance_of Integer, penalty['team']
-        skip unless SciolyFF.rep['Teams'].instance_of? Array
+        assert_instance_of Integer, penalty[:team]
+        skip unless SciolyFF.rep[:Teams].instance_of? Array
 
-        team_numbers = SciolyFF.rep['Teams'].map { |t| t['number'] }
-        assert_includes team_numbers, penalty['team']
+        team_numbers = SciolyFF.rep[:Teams].map { |t| t[:number] }
+        assert_includes team_numbers, penalty[:team]
       end
     end
 
     def test_each_penalty_has_valid_points
       @penalties.select { |p| p.instance_of? Hash }.each do |penalty|
-        assert_instance_of Integer, penalty['points']
+        assert_instance_of Integer, penalty[:points]
       end
     end
 
     def test_penalties_are_unique_for_team
       teams = @penalties.select { |p| p.instance_of? Hash }
-                        .map { |p| p['team'] }
+                        .map { |p| p[:team] }
       assert_nil teams.uniq!
     end
   end
