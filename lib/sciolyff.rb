@@ -50,10 +50,8 @@ module SciolyFF
       @tournament = rep[:Tournament]
       @events = index_array(rep[:Events], [:name])
       @teams = index_array(rep[:Teams], [:number])
-      @placings = index_array(rep[:Placings], %i[event team]).merge \
-                  index_array(rep[:Placings], %i[team event]) if rep[:Placings]
-      @scores = index_array(rep[:Scores], %i[event team]).merge \
-                index_array(rep[:Scores], %i[team event]) if rep[:Scores]
+      @placings = index_array(rep[:Placings], %i[event team]) if rep[:Placings]
+      @scores = index_array(rep[:Scores], %i[event team]) if rep[:Scores]
       @penalties = index_array(rep[:Penalties], [:team]) if rep[:Penalties]
     end
 
