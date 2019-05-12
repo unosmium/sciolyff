@@ -58,8 +58,11 @@ module SciolyFF
     end
 
     def event_points(team_number, event_name)
-      event_points_from_placings(team_number, event_name) if @placings
-      event_points_from_scores(team_number, event_name)
+      if @placings
+        event_points_from_placings(team_number, event_name)
+      else
+        event_points_from_scores(team_number, event_name)
+      end
     end
 
     def team_points(team_number)
