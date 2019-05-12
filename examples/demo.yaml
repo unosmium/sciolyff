@@ -1,4 +1,4 @@
-# sciolyff 0.2.0 <- (kinda) semantic versioning, may be checked for?
+# sciolyff 0.3.0 <- (kinda) semantic versioning, may be checked for?
 #
 # An incomplete but demonstrative example file for the sciolyff standard.
 #
@@ -66,7 +66,7 @@ Teams:
     # .
     # (rest of teams not shown)
 
-# either a Placings section or a Scores section is required, but not both
+# (Event) Placings
 Placings:
   - event: Anatomy & Physiology  # must be the name of an event in Events
     team: 58  # a number of a team listed in Teams, unique per event
@@ -75,6 +75,12 @@ Placings:
     disqualified: false
     # next line is not necessary only if team was disqualified or DNP
     place: 22  # range between 1 and # of teams at tournament, unique per event
+    # next section is optional, but must exist for all placings with places
+    # if included (can be left out if team was disqualified or DNP)
+    raw score:  # obviously, should correspond to place relative to other scores
+      points: 57  # raw points without tiebreakers and tiers
+      tier: 1  # range between 1 and # of tiers for event specified in Events
+      tiebreaker place: 1  # range between 1 and # of teams involved in tie
   - event: Astronomy
     team: 58
     place: 9
@@ -83,25 +89,7 @@ Placings:
     # .
     # (rest of Placings not shown, each team must have a placing for each event)
 
-# Placings take priority over Scores, so the following section would be ignored
-Scores:
-  - event: Anatomy & Physiology
-    team: 58
-    # next two lines are optional if the answers are yes and no, respectively
-    participated: true
-    disqualified: false
-    # next line is not necessary only if team was disqualified or DNP
-    score: 57  # raw score without tiebreakers
-    # next line is necessary only if there was a tie
-    tiebreaker place: 1  # range between 1 and # of teams involved in tie
-    # next line is necessary only if tier > 1 and the event has a tiers value
-    tier: 1  # range between 1 and # of tiers specified in Events
-    # .
-    # .
-    # .
-    # (rest of Scores not shown, each team must have a score for each event)
-
-# Penalties section is optional if no penalties were given to any teams
+# (Team) Penalties section is optional if no penalties were given to any teams
 Penalties:
   # Entries are here are optional if a team did not receive penalties
   - team: 58  # a number of a team listed in Teams
