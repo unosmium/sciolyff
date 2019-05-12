@@ -91,9 +91,9 @@ module SciolyFF
       # Points is place minus number of exhibition teams with a better place
       placing[:place] - event_placings.count do |p|
         p = p.last
-        p[:place] &&
-          p[:place] < placing[:place] &&
-          @teams[p[:team]][:exhibition]
+        @teams[p[:team]][:exhibition] &&
+          p[:place] &&
+          p[:place] < placing[:place]
       end
     end
 
