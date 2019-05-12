@@ -43,4 +43,42 @@ module SciolyFF
     STRING
     validate(rep, opts: opts)
   end
+
+  class Helper
+    def initialize(rep)
+      @tournament = rep['Tournament']
+      @teams = rep['Teams']
+    end
+
+    def event_points(team_number, event_name)
+      event_points_from_scores(team_number, event_name) if @rep.key? 'Scores'
+      event_points_from_placings(team_number, event_name)
+    end
+
+    def team_points(team_number)
+    end
+
+    def rank_teams
+    end
+
+    private
+
+    def event_points_from_placings(team_number, event_name)
+      event_placings = @rep['Placings'].select { |p| p['event'] == event_name }
+      placing = event_placings.find { |p| p['team'] == team_number }
+
+      return @rep['Teams'].count + 2 if placing['disqualified']
+      return @rep['Teams'].count + 1 unless placing['participated']
+      return @rep['Teams'].count + 0 unless placing['place']
+
+      # Points is place minus number of exhibition teams with a better place
+      placing['place'] - event_placings.count do |p|
+        p['place'] < placing['place'] &&
+          @rep['Teams'].find { |t| t['number'] == p['team'] }['exhibition']
+      end
+    end
+
+    def event_points_from_scores(team_number, event_name)
+    end
+  end
 end
