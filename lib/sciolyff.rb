@@ -90,12 +90,11 @@ module SciolyFF
 
     def calculate_event_points(placing)
       # Points is place minus number of exhibition teams with a better place
-      placing[:place] - @placings_by_event[placing[:event]].count do |p|
-        p = p.last
-        @teams[p[:team]][:exhibition] &&
-          p[:place] &&
-          p[:place] < placing[:place]
-      end
+      placing[:place] -
+        @placings_by_event[placing[:event]]
+        .values
+        .select { |p| @teams[p[:team]][:exhibition] && p[:place] }
+        .count { |p| p[:place] < placing[:place] }
     end
 
     def team_points_from_penalties(team_number)
