@@ -34,16 +34,20 @@ module SciolyFF
     puts 'Error: could not read file as YAML.'
     warn e.message
   else
-    puts <<~STRING
-      Validating file with Minitest...
-
-      Overkill? Probably.
-      Doesn't give line numbers from original file? Yeah.
-
-    STRING
+    puts FILE_VALIDATION_MESSAGE
     validate(rep, opts: opts)
   end
 
+  FILE_VALIDATION_MESSAGE <<~STRING
+    Validating file with Minitest...
+
+    Overkill? Probably.
+    Doesn't give line numbers from original file? Yeah.
+
+  STRING
+
+  # Wrapper class around a SciolyFF Ruby object representation with utility
+  # methods to help in displaying results
   class Helper
     def initialize(rep)
       @rep = rep
