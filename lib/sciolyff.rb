@@ -71,6 +71,7 @@ module SciolyFF
         .reject { |p| @events[p[:event]][:trial] }
         .reject { |p| @events[p[:event]][:trialed] }
         .sum { |p| event_points(team_number, p[:event]) }
+      + team_points_from_penalties(team_number)
     end
 
     def rank_teams; end
@@ -94,6 +95,12 @@ module SciolyFF
         @teams[p[:team]][:exhibition] &&
           p[:place] &&
           p[:place] < placing[:place]
+      end
+    end
+
+    def team_points_from_penalties(team_number)
+      if @penalties.nil? || @penalties[team_number].nil? then 0
+      else @penalties[team_number][:points]
       end
     end
   end
