@@ -49,22 +49,27 @@ module SciolyFF
   # Wrapper class around a SciolyFF Ruby object representation with utility
   # methods to help in displaying results
   class Helper
+    attr_reader :rep, :tournament, :events_by_name, :teams_by_number
+    attr_reader :placings_by_event, :placings_by_team, :penalties_by_team
+
     def initialize(rep)
       @rep = rep
       @tournament = rep[:Tournament]
-      @events = index_array(rep[:Events], [:name])
-      @teams = index_array(rep[:Teams], [:number])
+      @events_by_name = index_array(rep[:Events], [:name])
+      @teams_by_number = index_array(rep[:Teams], [:number])
       @placings_by_event = index_array(rep[:Placings], %i[event team])
       @placings_by_team = index_array(rep[:Placings], %i[team event])
-      @penalties = index_array(rep[:Penalties], [:team]) if rep[:Penalties]
+      return unless rep[:Penalties]
+
+      @penalties_by_team = index_array(rep[:Penalties], [:team])
     end
 
     def event_points(team_number, event_name)
       placing = @placings_by_event[event_name][team_number]
 
-      if placing[:disqualified] then @teams.count + 2
-      elsif placing[:participated] == false then @teams.count + 1
-      elsif placing[:place].nil? then @teams.count
+      if placing[:disqualified] then @teams_by_number.count + 2
+      elsif placing[:participated] == false then @teams_by_number.count + 1
+      elsif placing[:place].nil? then @teams_by_number.count
       else calculate_event_points(placing)
       end
     end
@@ -72,14 +77,14 @@ module SciolyFF
     def team_points(team_number)
       @placings_by_team[team_number]
         .values
-        .reject { |p| @events[p[:event]][:trial] }
-        .reject { |p| @events[p[:event]][:trialed] }
+        .reject { |p| @events_by_name[p[:event]][:trial] }
+        .reject { |p| @events_by_name[p[:event]][:trialed] }
         .sum { |p| event_points(team_number, p[:event]) } \
       + team_points_from_penalties(team_number)
     end
 
     def sort_teams_by_rank
-      @teams
+      @teams_by_number
         .values
         .sort do |a, b|
         cmp = team_points(a[:number]) - team_points(b[:number])
@@ -88,8 +93,8 @@ module SciolyFF
     end
 
     def medal_counts(team_number)
-      (1..(@teams.count + 2)).map do |m|
-        @events
+      (1..(@teams_by_number.count + 2)).map do |m|
+        @events_by_name
           .values
           .reject { |e| e[:trial] || e[:trialed] }
           .count { |e| event_points(team_number, e[:name]) == m }
@@ -113,13 +118,13 @@ module SciolyFF
       placing[:place] -
         @placings_by_event[placing[:event]]
         .values
-        .select { |p| @teams[p[:team]][:exhibition] && p[:place] }
+        .select { |p| @teams_by_number[p[:team]][:exhibition] && p[:place] }
         .count { |p| p[:place] < placing[:place] }
     end
 
     def team_points_from_penalties(team_number)
-      if @penalties.nil? || @penalties[team_number].nil? then 0
-      else @penalties[team_number][:points]
+      if @penalties_by_team.nil? || @penalties_by_team[team_number].nil? then 0
+      else @penalties_by_team[team_number][:points]
       end
     end
 
