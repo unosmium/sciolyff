@@ -24,9 +24,8 @@ module SciolyFF
       assert_instance_of Array, @rep[:Teams]
     end
 
-    def test_has_placings_or_scores
-      assert @rep[:Placings].instance_of?(Array) ||
-             @rep[:Scores].instance_of?(Array)
+    def test_has_placings
+      assert_instance_of Array, @rep[:Placings]
     end
 
     def test_has_penalties
