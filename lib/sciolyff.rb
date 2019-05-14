@@ -56,27 +56,18 @@ module SciolyFF
     end
 
     def event_points(team_number, event_name)
-      event_placings = @placings[event_name]
-      placing = event_placings[team_number]
+      placing = @placings[event_name][team_number]
 
-      return @teams.count + 2 if placing[:disqualified]
-      return @teams.count + 1 unless placing[:participated] || placing[:place]
-      return @teams.count + 0 unless placing[:place]
-
-      # Points is place minus number of exhibition teams with a better place
-      placing[:place] - event_placings.count do |p|
-        p = p.last
-        @teams[p[:team]][:exhibition] &&
-          p[:place] &&
-          p[:place] < placing[:place]
+      if placing[:disqualified] then @teams.count + 2
+      elsif placing[:participated] == false then @teams.count + 1
+      elsif placing[:place].nil? then @teams.count
+      else calculate_event_points(placing)
       end
     end
 
-    def team_points(team_number)
-    end
+    def team_points(team_number); end
 
-    def rank_teams
-    end
+    def rank_teams; end
 
     private
 
@@ -87,6 +78,16 @@ module SciolyFF
 
       indexed_hash.transform_values do |a|
         index_array(a, index_keys.drop(1))
+      end
+    end
+
+    def calculate_event_points(placing)
+      # Points is place minus number of exhibition teams with a better place
+      placing[:place] - @placings[placing[:event]].count do |p|
+        p = p.last
+        @teams[p[:team]][:exhibition] &&
+          p[:place] &&
+          p[:place] < placing[:place]
       end
     end
   end
