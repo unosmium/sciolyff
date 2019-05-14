@@ -38,7 +38,7 @@ module SciolyFF
     validate(rep, opts: opts)
   end
 
-  FILE_VALIDATION_MESSAGE <<~STRING
+  FILE_VALIDATION_MESSAGE = <<~STRING
     Validating file with Minitest...
 
     Overkill? Probably.
