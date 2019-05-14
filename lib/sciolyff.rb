@@ -78,7 +78,23 @@ module SciolyFF
       + team_points_from_penalties(team_number)
     end
 
-    def rank_teams; end
+    def sort_teams_by_rank
+      @teams
+        .values
+        .sort do |a, b|
+        cmp = team_points(a[:number]) - team_points(b[:number])
+        cmp.zero? ? break_tie(a[:number], b[:number]) : cmp
+      end
+    end
+
+    def medal_counts(team_number)
+      (1..(@teams.count + 2)).map do |m|
+        @events
+          .values
+          .reject { |e| e[:trial] || e[:trialed] }
+          .count { |e| event_points(team_number, e[:name]) == m }
+      end
+    end
 
     private
 
@@ -105,6 +121,13 @@ module SciolyFF
       if @penalties.nil? || @penalties[team_number].nil? then 0
       else @penalties[team_number][:points]
       end
+    end
+
+    def break_tie(team_number_a, team_number_b)
+      medal_counts(team_number_a)
+        .zip(medal_counts(team_number_b))
+        .map { |count| count.last - count.first }
+        .find(proc { team_number_a <=> team_number_b }, &:nonzero?)
     end
   end
 end
