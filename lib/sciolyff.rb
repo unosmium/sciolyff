@@ -70,7 +70,7 @@ module SciolyFF
         .values
         .reject { |p| @events[p[:event]][:trial] }
         .reject { |p| @events[p[:event]][:trialed] }
-        .sum { |p| event_points(team_number, p[:event]) }
+        .sum { |p| event_points(team_number, p[:event]) } \
       + team_points_from_penalties(team_number)
     end
 
