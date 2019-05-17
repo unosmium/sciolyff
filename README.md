@@ -15,14 +15,14 @@ format.
 To run the command line utility without installing the gem:
 
 ```
-ruby -Ilib bin/sciolyff examples/demo.rb
+ruby -Ilib bin/sciolyff examples/demo.yaml
 ```
 
 Installing the gem simplifies this to the following and will also install any
 missing dependencies:
 
 ```
-sciolyff examples/demo.rb
+sciolyff examples/demo.yaml
 ```
 
 ## Installation
