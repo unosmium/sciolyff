@@ -1,4 +1,4 @@
-# Science Olympiad File Format
+# SciolyFF (Science Olympiad File Format)
 
 [![Gem Version](https://badge.fury.io/rb/sciolyff.svg)](https://badge.fury.io/rb/sciolyff)
 
