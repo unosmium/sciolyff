@@ -1,41 +1,84 @@
-# Science Olympiad File Formats
+# Science Olympiad File Format
 
-We propose standardized file formats for Science Olympiad scoring to allow for a
-more universal record of tournament results and thus make it easier to do
-sabermetric-like stats and stuff. The formats are a subset of YAML for easy
-implementation of parsers across many programming languages.
+[![Gem Version](https://badge.fury.io/rb/sciolyff.svg)](https://badge.fury.io/rb/sciolyff)
 
-## File Specification / Validation
+We propose a standardized file format called SciolyFF for Science Olympiad
+results to allow for a more universal record of tournament performance and also
+to make it easier to do sabermetric-like stats and stuff. The format is a subset
+of YAML for easy implementation of parsers across many programming languages.
+
+## Specification
+
+Reading through the demo file [here](examples/demo.yaml) is probably the fastest
+way to get acquainted with the format. Officially, any file that passes the
+validation (see Usage -- Validation) is valid, but the intentions of the format
+outlined in the comments of the demo file should be respected.
+
+## Installation
+
+```
+gem install sciolyff
+```
+
+This gem is currently in an alpha stage. To get the latest changes before
+official releases, build from source:
+
+```
+git clone https://github.com/unosmium/sciolyff.git && cd sciolyff
+gem build sciolyff.gemspec
+gem install ./sciolyff-0.2.0.gem
+```
+
+## Usage
+
+### Validation
 
 A Ruby gem provided in this repository contains a command line utility that can
 validate if a given file meets the SciolyFF. The validation uses Minitest, and
 thus the files found in `lib/sciolyff` also serve as the specification for the
 format.
 
-To run the command line utility without installing the gem:
-
-```
-ruby -Ilib bin/sciolyff examples/demo.yaml
-```
-
-Installing the gem simplifies this to the following and will also install any
-missing dependencies:
+From the command line, e.g.
 
 ```
 sciolyff examples/demo.yaml
 ```
 
-## Installation
+Inside Ruby code, e.g.
 
-After this gem is pushed to https://rubygems.org/ the installation will be:
+```ruby
+require 'sciolyff'
 
-```
-gem install sciolyff
+SciolyFF.validate_file('example/demo.yaml')
 ```
 
-Until then, the gem can be built and installed locally:
+### Parsing
 
+Although the SciolyFF makes the results file human-readable without the
+ambiguity of spreadsheet results, it can be a bit awkward to parse overall
+results -- for instance, when trying to regenerate a results spreadsheet from a
+SciolyFF file.
+
+To make this easier, a `SciolyFF::Helper` class has been provided to wrap the
+output of Ruby's yaml parser. For example:
+
+```ruby
+require 'sciolyff'
+require 'yaml'
+
+rep = YAML.load(File.read('examples/nats_c_2017.yaml'), symbolize_names: true)
+t = SciolyFF::Helper.new(rep)
+
+t.events_by_name['Anatomy and Physiology'][:trialed] == true #=> false
+t.event_points(1, 'Astronomy') #=> 5
+t.team_points(1) #=> 448
+
+t.sort_teams_by_rank #=> [{:school=>"Troy H.S.", :number=>3, :state=>"CA"}, ... ]
 ```
-gem build sciolyff.gemspec
-gem install ./sciolyff-0.2.0.gem
-```
+
+A fuller example can be found here in the code for the Unosmium Results website,
+found
+[here](https://github.com/unosmium/unosmium.github.io/blob/master/source/results/template.html.erb).
+There is also of course the
+[documentation](https://www.rubydoc.info/gems/sciolyff/0.2.0), a bit sparse
+currently.
