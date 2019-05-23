@@ -2,10 +2,15 @@
 
 [![Gem Version](https://badge.fury.io/rb/sciolyff.svg)](https://badge.fury.io/rb/sciolyff)
 
-We propose a standardized file format called SciolyFF for Science Olympiad
-results to allow for a more universal record of tournament performance and also
-to make it easier to do sabermetric-like stats and stuff. The format is a subset
-of YAML for easy implementation of parsers across many programming languages.
+We propose a standardized file format called SciolyFF to represent Science
+Olympiad tournament results. This will allow for a more universal record of
+tournament performance and also make it easier to do sabermetric-like stats and
+other fun stuff. The format is a subset of YAML for easy implementation of
+parsers across many programming languages.
+
+A website that generates results tables based off SciolyFF files can be found
+here:
+[https://unosmium.netlify.com/results/](https://unosmium.netlify.com/results/)
 
 ## Specification
 
