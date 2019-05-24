@@ -9,8 +9,8 @@ other fun stuff. The format is a subset of YAML for easy implementation of
 parsers across many programming languages.
 
 A website that generates results tables based off SciolyFF files can be found
-here:
-[https://unosmium.netlify.com/results/](https://unosmium.netlify.com/results/)
+[here](https://unosmium.netlify.com/results/) and the source code for the website
+[here](https://github.com/unosmium/unosmium.github.io).
 
 ## Specification
 
