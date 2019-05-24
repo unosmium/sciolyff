@@ -32,5 +32,5 @@ sketchiness of the whole thing, your exact experience may differ):
 9. Do a validation of the file with `sciolyff`
    - Ties in event placing will trigger
      (`SciolyFF::Placings#test_placings_are_unique_for_event_and_place`) but
-     this can be ignored most of the timebecause Nationals scoring rules allow
+     this can be ignored most of the time because Nationals scoring rules allow
      for ties for places greater than 6. (See commit 3b9596e19)
