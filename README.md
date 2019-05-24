@@ -46,7 +46,7 @@ format.
 From the command line, e.g.
 
 ```
-sciolyff examples/demo.yaml
+sciolyff examples/nats_c_2017.yaml
 ```
 
 Inside Ruby code, e.g.
@@ -54,7 +54,7 @@ Inside Ruby code, e.g.
 ```ruby
 require 'sciolyff'
 
-SciolyFF.validate_file('example/demo.yaml')
+SciolyFF.validate_file('examples/nats_c_2017.yaml') #=> true
 ```
 
 ### Parsing
