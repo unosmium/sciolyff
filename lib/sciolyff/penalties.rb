@@ -39,6 +39,7 @@ module SciolyFF
     def test_each_penalty_has_valid_points
       @penalties.select { |p| p.instance_of? Hash }.each do |penalty|
         assert_instance_of Integer, penalty[:points]
+        assert penalty[:points] >= 0
       end
     end
 
