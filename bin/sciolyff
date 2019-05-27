@@ -6,7 +6,7 @@ require 'yaml'
 require 'sciolyff'
 
 opts = Optimist.options do
-  version 'sciolyff 0.2.0'
+  version 'sciolyff 0.2.1'
   banner <<~STRING
     Checks if a given file is in the Scioly File Format
 
