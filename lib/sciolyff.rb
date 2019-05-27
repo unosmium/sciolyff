@@ -83,6 +83,12 @@ module SciolyFF
       + team_points_from_penalties(team_number)
     end
 
+    def team_points_from_penalties(team_number)
+      if @penalties_by_team.nil? || @penalties_by_team[team_number].nil? then 0
+      else @penalties_by_team[team_number][:points]
+      end
+    end
+
     def sort_teams_by_rank
       @teams_by_number
         .values
@@ -120,12 +126,6 @@ module SciolyFF
         .values
         .select { |p| @teams_by_number[p[:team]][:exhibition] && p[:place] }
         .count { |p| p[:place] < placing[:place] }
-    end
-
-    def team_points_from_penalties(team_number)
-      if @penalties_by_team.nil? || @penalties_by_team[team_number].nil? then 0
-      else @penalties_by_team[team_number][:points]
-      end
     end
 
     def break_tie(team_number_a, team_number_b)
