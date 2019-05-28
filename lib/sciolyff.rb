@@ -70,10 +70,11 @@ module SciolyFF
 
     def event_points(team_number, event_name)
       placing = @placings_by_event[event_name][team_number]
+      number_of_teams = number_of_competing_teams(event_name)
 
-      if placing[:disqualified] then nonexhibition_teams.count + 2
-      elsif placing[:participated] == false then nonexhibition_teams.count + 1
-      elsif placing[:place].nil? then nonexhibition_teams.count
+      if placing[:disqualified] then number_of_teams + 2
+      elsif placing[:participated] == false then number_of_teams + 1
+      elsif placing[:place].nil? then number_of_teams
       else calculate_event_points(placing)
       end
     end
@@ -121,6 +122,12 @@ module SciolyFF
       indexed_hash.transform_values do |a|
         index_array(a, index_keys.drop(1))
       end
+    end
+
+    def number_of_competing_teams(event_name)
+      return @teams_by_number.count if @events_by_name[event_name][:trial]
+
+      nonexhibition_teams.count
     end
 
     def calculate_event_points(placing)
