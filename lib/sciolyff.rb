@@ -124,6 +124,8 @@ module SciolyFF
     end
 
     def calculate_event_points(placing)
+      return placing[:place] if @events_by_name[placing[:event]][:trial]
+
       # Points is place minus number of exhibition teams with a better place
       placing[:place] -
         @placings_by_event[placing[:event]]
