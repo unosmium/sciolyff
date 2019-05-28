@@ -64,12 +64,16 @@ module SciolyFF
       @penalties_by_team = index_array(rep[:Penalties], [:team])
     end
 
+    def nonexhibition_teams
+      @teams_by_number.reject { |_, t| t[:exhibition] }
+    end
+
     def event_points(team_number, event_name)
       placing = @placings_by_event[event_name][team_number]
 
-      if placing[:disqualified] then @teams_by_number.count + 2
-      elsif placing[:participated] == false then @teams_by_number.count + 1
-      elsif placing[:place].nil? then @teams_by_number.count
+      if placing[:disqualified] then nonexhibition_teams.count + 2
+      elsif placing[:participated] == false then nonexhibition_teams.count + 1
+      elsif placing[:place].nil? then nonexhibition_teams.count
       else calculate_event_points(placing)
       end
     end
@@ -99,7 +103,7 @@ module SciolyFF
     end
 
     def medal_counts(team_number)
-      (1..(@teams_by_number.count + 2)).map do |m|
+      (1..(nonexhibition_teams.count + 2)).map do |m|
         @events_by_name
           .values
           .reject { |e| e[:trial] || e[:trialed] }
