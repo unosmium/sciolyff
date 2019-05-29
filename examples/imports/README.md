@@ -13,14 +13,16 @@ sketchiness of the whole thing, your exact experience may differ):
 4. Open the .html file in Excel
 5. Clean up extra information and save as a CSV (see the CSV files in this
    directory as examples)
-   - Delete the first four header rows
+   - Delete the first three/four header rows
+   - Delete the last row with the timestamp
+   - Delete the Team Penalties, Team Rank, and Total Team Points columns
    - Unmerge the first two columns after row 10, then use "Text to Columns" with
      fixed width to separate team numbers from team name
    - Re-add the event names (use the PDF as reference) as the top row, label
      trial events like "Sounds of Music (Trial)" and trialed events like "Sounds
      of Music (Trialed)"
 6. Do more cleanup from Linux command line
-   - Run `unix2dos` on all CSV files
+   - Run `dos2unix` on all CSV files
    - Replace `?` with `-` using in some CSV files using `sed`
 7. Use the converter included in this directory to convert from .csv to .yaml
    ```
