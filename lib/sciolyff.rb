@@ -98,6 +98,9 @@ module SciolyFF
       @teams_by_number
         .values
         .sort do |a, b|
+        next  1 if  a[:exhibition] && !b[:exhibition]
+        next -1 if !a[:exhibition] &&  b[:exhibition]
+
         cmp = team_points(a[:number]) - team_points(b[:number])
         cmp.zero? ? break_tie(a[:number], b[:number]) : cmp
       end
