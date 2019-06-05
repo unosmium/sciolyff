@@ -73,7 +73,8 @@ module SciolyFF
           !p[:disqualified] &&
           p[:participated] != false
         end
-        assert_includes 1..max_place, placing[:place]
+        assert_includes 1..max_place, placing[:place],
+          "The event #{placing[:event]} has an out-of-range placing"
       end
     end
 
