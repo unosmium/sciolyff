@@ -51,14 +51,14 @@ Events:
   - name: Write It Do It
 
 Teams:
-  - school: Solon High School  # avoid abbreviations like 'LASA' or 'H.S.'
+  - school: Solon H.S  # try to match format of name in earlier tournaments
     # next two lines are optional
     suffix: A  # can be anything, not just A, B, C, etc. -- use quotes for nums
     subdivision: V  # can be anything, used for Varsity / Junior Varisity labels
     # next line is optional if false
     exhibition: false  # if the team's placings don't affect other team's scores
     number: 58
-    # next line is optional but strongly recommended
+    # next line is optional
     city: Solon
     state: OH
     # .
