@@ -68,7 +68,11 @@ module SciolyFF
                 placing.key?(:participated)
 
         assert_instance_of Integer, placing[:place]
-        max_place = @placings.count { |p| p[:event] == placing[:event] }
+        max_place = @placings.count do |p|
+          p[:event] == placing[:event] &&
+          !p[:disqualified] &&
+          p[:participated] != false
+        end
         assert_includes 1..max_place, placing[:place]
       end
     end
