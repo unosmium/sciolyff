@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.license  = 'MIT'
   s.name     = 'sciolyff'
   s.summary  = 'A file format for Science Olympiad tournament results.'
-  s.version  = '0.3.0'
+  s.version  = '0.3.1'
   s.executables << 'sciolyff'
   s.add_runtime_dependency 'minitest', '~> 5.11'
   s.add_runtime_dependency 'optimist', '~> 3.0'
