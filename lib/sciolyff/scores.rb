@@ -96,7 +96,7 @@ module SciolyFF
 
         max_tier = SciolyFF.rep[:Events].find do |event|
           event[:name] == score[:event]
-        end[:tiers]
+        end&.[](:tiers)
 
         refute_nil max_tier, "#{score[:event]} does not have tiers"
         assert_includes 1..max_tier, score[:tier]
