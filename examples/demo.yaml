@@ -19,7 +19,7 @@ Tournament:
   date: 2017-01-21  # YYYY-MM-DD format, others may work but aren't tested
 
 Events:
-  - name: Anatomy & Physiology
+  - name: Anatomy and Physiology
     # next two lines are optional if the answer is no
     trial: false  # event was originally intended to be a trial event
     trialed: false  # event became trial event due to unforeseen circumstances
@@ -67,7 +67,7 @@ Teams:
     # (rest of teams not shown)
 
 Placings:
-  - event: Anatomy & Physiology  # must be the name of an event in Events
+  - event: Anatomy and Physiology  # must be the name of an event in Events
     team: 58  # a number of a team listed in Teams, unique per event
     # next two lines are optional if the answers are yes and no, respectively
     participated: true
@@ -84,7 +84,7 @@ Placings:
 
 # Optional, should correspond directly to Placings but this is not verified
 Scores:
-  - event: Anatomy & Physiology
+  - event: Anatomy and Physiology
     team: 58
     # next two lines are optional if the answers are yes and no, respectively
     participated: true
