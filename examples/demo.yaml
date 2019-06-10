@@ -51,8 +51,9 @@ Events:
   - name: Write It Do It
 
 Teams:
-  - school: Solon H.S  # try to match format of name in earlier tournaments
-    # next two lines are optional
+  - school: Solon High School  # full school name, no abbreviations (see below)
+    # next three lines are optional
+    school abbreviation: SHS  # only for long, unique names, e.g. TJHSST or LASA
     suffix: A  # can be anything, not just A, B, C, etc. -- use quotes for nums
     subdivision: V  # can be anything, used for Varsity / Junior Varisity labels
     # next line is optional if false
