@@ -9,8 +9,8 @@ other fun stuff. The format is a subset of YAML for easy implementation of
 parsers across many programming languages.
 
 A website that generates results tables based off SciolyFF files can be found
-[here](https://unosmium.netlify.com/results/) and the source code for the website
-[here](https://github.com/unosmium/unosmium.github.io).
+[here](https://unosmium.org/results/) and the source code for the website
+[here](https://github.com/unosmium/unosmium.org).
 
 ## Specification
 
@@ -83,7 +83,7 @@ t.sort_teams_by_rank #=> [{:school=>"Troy H.S.", :number=>3, :state=>"CA"}, ... 
 
 A fuller example can be found here in the code for the Unosmium Results website,
 found
-[here](https://github.com/unosmium/unosmium.github.io/blob/master/source/results/template.html.erb).
+[here](https://github.com/unosmium/unosmium.org/blob/master/source/results/template.html.erb).
 There is also of course the
 [documentation](https://www.rubydoc.info/gems/sciolyff/0.4.0), a bit sparse
 currently.
