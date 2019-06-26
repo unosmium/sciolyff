@@ -54,6 +54,8 @@ module SciolyFF
 
     def initialize(rep)
       @rep = rep
+      @exhibition_teams_count = rep[:Teams].count { |t| t[:exhibition] }
+
       @tournament = rep[:Tournament]
       @events_by_name = index_array(rep[:Events], [:name])
       @teams_by_number = index_array(rep[:Teams], [:number])
@@ -134,7 +136,7 @@ module SciolyFF
     end
 
     def calculate_event_points(placing)
-      return placing[:place] if @events_by_name[placing[:event]][:trial]
+      return placing[:place] if simple_placing?(placing)
 
       # Points is place minus number of exhibition teams with a better place
       placing[:place] -
@@ -142,6 +144,10 @@ module SciolyFF
         .values
         .select { |p| @teams_by_number[p[:team]][:exhibition] && p[:place] }
         .count { |p| p[:place] < placing[:place] }
+    end
+
+    def simple_placing?(placing)
+      @exhibition_teams_count.zero? || @events_by_name[placing[:event]][:trial]
     end
 
     def break_tie(team_number_a, team_number_b)
