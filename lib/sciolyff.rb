@@ -55,6 +55,7 @@ module SciolyFF
     def initialize(rep)
       @rep = rep
       @exhibition_teams_count = rep[:Teams].count { |t| t[:exhibition] }
+      @team_points_cache = {}
 
       @tournament = rep[:Tournament]
       @events_by_name = index_array(rep[:Events], [:name])
@@ -82,12 +83,9 @@ module SciolyFF
     end
 
     def team_points(team_number)
-      @placings_by_team[team_number]
-        .values
-        .reject { |p| @events_by_name[p[:event]][:trial] }
-        .reject { |p| @events_by_name[p[:event]][:trialed] }
-        .sum { |p| event_points(team_number, p[:event]) } \
-      + team_points_from_penalties(team_number)
+      return @team_points_cache[team_number] if @team_points_cache[team_number]
+
+      @team_points_cache[team_number] = calculate_team_points(team_number)
     end
 
     def team_points_from_penalties(team_number)
@@ -144,6 +142,15 @@ module SciolyFF
         .values
         .select { |p| @teams_by_number[p[:team]][:exhibition] && p[:place] }
         .count { |p| p[:place] < placing[:place] }
+    end
+
+    def calculate_team_points(team_number)
+      @placings_by_team[team_number]
+        .values
+        .reject { |p| @events_by_name[p[:event]][:trial] }
+        .reject { |p| @events_by_name[p[:event]][:trialed] }
+        .sum { |p| event_points(team_number, p[:event]) } \
+      + team_points_from_penalties(team_number)
     end
 
     def simple_placing?(placing)
