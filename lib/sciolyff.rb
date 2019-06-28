@@ -78,6 +78,7 @@ module SciolyFF
       if placing[:exempt] then 0
       elsif placing[:disqualified] then number_of_teams + 2
       elsif placing[:participated] == false then number_of_teams + 1
+      elsif placing[:unknown] then number_of_teams - 1
       elsif placing[:place].nil? then number_of_teams
       else calculate_event_points(placing)
       end

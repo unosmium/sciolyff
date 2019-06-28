@@ -70,10 +70,11 @@ Teams:
 Placings:
   - event: Anatomy and Physiology  # must be the name of an event in Events
     team: 58  # a number of a team listed in Teams, unique per event
-    # next three lines are optional if the answers are yes-no-no, respectively
+    # next four lines are optional if answers are yes-no-no-no, respectively
     participated: true
     disqualified: false
     exempt: false  # team does not earn any points for the event if exempt
+    unknown: true # if place is unknown, only allowed for Trial/Trialed events
     # next line is optional only if PO, NS, DQ, or exempt
     place: 22  # range between 1 and # of teams at tournament, unique per event
   - event: Astronomy
@@ -88,10 +89,11 @@ Placings:
 Scores:
   - event: Anatomy and Physiology
     team: 58
-    # next three lines are optional if the answers are yes-no-no, respectively
+    # next four lines are optional if the answers are yes-no-no, respectively
     participated: true
     disqualified: false
     exempt: false  # team does not earn any points for the event if exempt
+    unknown: false # if score is unknown, allowed for any event
     # next line is optional only if PO, NS, DQ, or exempt
     score: 57  # raw score without tiebreakers
     # next line is necessary only if there was a tie

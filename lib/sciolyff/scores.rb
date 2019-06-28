@@ -21,7 +21,7 @@ module SciolyFF
 
     def test_each_score_does_not_have_extra_info
       @scores.select { |s| s.instance_of? Hash }.each do |score|
-        a = %i[event team participated disqualified exempt score tier]
+        a = %i[event team participated disqualified exempt unknown score tier]
         a << :'tiebreaker place'
         info = Set.new a
         assert Set.new(score.keys).subset? info
@@ -68,6 +68,14 @@ module SciolyFF
       @scores.select { |s| s.instance_of? Hash }.each do |score|
         if score.key? :exempt
           assert_includes [true, false], score[:exempt]
+        end
+      end
+    end
+
+    def test_each_score_has_valid_unknown
+      @scores.select { |s| s.instance_of? Hash }.each do |score|
+        if score.key? :unknown
+          assert_includes [true, false], score[:unknown]
         end
       end
     end

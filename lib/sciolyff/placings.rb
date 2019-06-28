@@ -22,6 +22,7 @@ module SciolyFF
     def test_each_placing_does_not_have_extra_info
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
         info = Set.new %i[event team participated disqualified exempt place]
+        info << :unknown
         assert Set.new(placing.keys).subset? info
       end
     end
@@ -66,6 +67,18 @@ module SciolyFF
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
         if placing.key? :exempt
           assert_includes [true, false], placing[:exempt]
+        end
+      end
+    end
+
+    def test_each_placing_has_valid_unknown
+      @placings.select { |p| p.instance_of? Hash }.each do |placing|
+        if placing.key? :unknown
+          assert_includes [true, false], placing[:unknown]
+          if placing[:unknown]
+            assert placing[:trial] || placing[:trial],
+              'Cannot have unknown place for non-trial/trialed event'
+          end
         end
       end
     end
