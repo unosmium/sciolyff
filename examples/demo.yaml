@@ -73,8 +73,8 @@ Placings:
     # next three lines are optional if the answers are yes-no-no, respectively
     participated: true
     disqualified: false
-    exempt: true  # team does not earn any points for the event if exempt
-    # next line is not necessary only if team was disqualified or DNP or exempt
+    exempt: false  # team does not earn any points for the event if exempt
+    # next line is optional only if PO, NS, DQ, or exempt
     place: 22  # range between 1 and # of teams at tournament, unique per event
   - event: Astronomy
     team: 58
@@ -91,8 +91,8 @@ Scores:
     # next three lines are optional if the answers are yes-no-no, respectively
     participated: true
     disqualified: false
-    exempt: true  # team does not earn any points for the event if exempt
-    # next line is not necessary only if team was disqualified or DNP or exempt
+    exempt: false  # team does not earn any points for the event if exempt
+    # next line is optional only if PO, NS, DQ, or exempt
     score: 57  # raw score without tiebreakers
     # next line is necessary only if there was a tie
     tiebreaker place: 1  # range between 1 and # of teams involved in tie
