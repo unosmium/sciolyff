@@ -21,7 +21,7 @@ module SciolyFF
 
     def test_each_placing_does_not_have_extra_info
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
-        info = Set.new %i[event team participated disqualified place]
+        info = Set.new %i[event team participated disqualified exempt place]
         assert Set.new(placing.keys).subset? info
       end
     end
@@ -62,10 +62,19 @@ module SciolyFF
       end
     end
 
+    def test_each_placing_has_valid_exempt
+      @placings.select { |p| p.instance_of? Hash }.each do |placing|
+        if placing.key? :exempt
+          assert_includes [true, false], placing[:exempt]
+        end
+      end
+    end
+
     def test_each_placing_has_valid_place
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
         next if placing[:disqualified] == true ||
-                placing.key?(:participated)
+                placing.key?(:participated) ||
+                placing[:exempt] == true
 
         assert_instance_of Integer, placing[:place]
         max_place = @placings.count do |p|

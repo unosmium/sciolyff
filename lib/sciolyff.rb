@@ -75,7 +75,8 @@ module SciolyFF
       placing = @placings_by_event[event_name][team_number]
       number_of_teams = number_of_competing_teams(event_name)
 
-      if placing[:disqualified] then number_of_teams + 2
+      if placing[:exempt] then 0
+      elsif placing[:disqualified] then number_of_teams + 2
       elsif placing[:participated] == false then number_of_teams + 1
       elsif placing[:place].nil? then number_of_teams
       else calculate_event_points(placing)
