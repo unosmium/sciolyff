@@ -55,6 +55,7 @@ module SciolyFF
     def initialize(rep)
       @rep = rep
       @exhibition_teams_count = rep[:Teams].count { |t| t[:exhibition] }
+      @exempt_placings_count = rep[:Placings].count { |p| p[:exempt] }
       @team_points_cache = {}
 
       @tournament = rep[:Tournament]
@@ -138,11 +139,12 @@ module SciolyFF
     def calculate_event_points(placing)
       return placing[:place] if simple_placing?(placing)
 
-      # Points is place minus number of exhibition teams with a better place
+      # Points is place minus number of exhibition and exempt teams with a
+      # better place
       placing[:place] -
         @placings_by_event[placing[:event]]
         .values
-        .select { |p| @teams_by_number[p[:team]][:exhibition] && p[:place] }
+        .select { |p| p[:place] && exhibition_or_exempt_placing?(p) }
         .count { |p| p[:place] < placing[:place] }
     end
 
@@ -156,7 +158,12 @@ module SciolyFF
     end
 
     def simple_placing?(placing)
-      @exhibition_teams_count.zero? || @events_by_name[placing[:event]][:trial]
+      @events_by_name[placing[:event]][:trial] ||
+        (@exhibition_teams_count.zero? && @exempt_placings_count.zero?)
+    end
+
+    def exhibition_or_exempt_placing?(placing)
+      @teams_by_number[placing[:team]][:exhibition] || placing[:exempt]
     end
 
     def break_tie(team_number_a, team_number_b)
