@@ -76,7 +76,12 @@ module SciolyFF
         if placing.key? :unknown
           assert_includes [true, false], placing[:unknown]
           if placing[:unknown]
-            assert placing[:trial] || placing[:trial],
+            skip unless SciolyFF.rep[:Events].instance_of? Array
+
+            event = SciolyFF.rep[:Events].find do |e|
+              e[:name] == placing[:event]
+            end
+            assert event[:trial] || event[:trialed] || event.nil?,
               'Cannot have unknown place for non-trial/trialed event'
           end
         end
@@ -87,6 +92,7 @@ module SciolyFF
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
         next if placing[:disqualified] == true ||
                 placing.key?(:participated) ||
+                placing[:unknown] == true ||
                 placing[:exempt] == true
 
         assert_instance_of Integer, placing[:place]
