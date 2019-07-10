@@ -21,7 +21,7 @@ module SciolyFF
 
     def test_each_placing_does_not_have_extra_info
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
-        info = Set.new %i[event team participated disqualified exempt place]
+        info = Set.new %i[event team participated disqualified exempt place tie]
         info << :unknown
         assert Set.new(placing.keys).subset? info
       end
@@ -69,6 +69,27 @@ module SciolyFF
       end
     end
 
+    def test_each_placing_has_valid_tie
+      @placings.select { |p| p.instance_of? Hash }.each do |placing|
+        next unless placing.key? :tie
+
+        assert_includes [true, false], placing[:tie]
+        next unless placing[:tie]
+
+        has_pair = @placings.find do |p_other|
+          p_other.instance_of?(Hash) &&
+            p_other != placing &&
+            p_other[:event] == placing[:event] &&
+            p_other[:event] == placing[:event] &&
+            p_other[:place] == placing[:place] &&
+            p_other[:tie]
+        end
+        assert has_pair,
+               "The event #{placing[:event]} has unpaired ties at "\
+               "#{placing[:place]}"
+      end
+    end
+
     def test_each_placing_has_valid_unknown
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
         next unless placing.key? :unknown
@@ -112,6 +133,7 @@ module SciolyFF
         next unless event.instance_of? Hash
 
         places = @placings.select { |p| p[:event] == event[:name] }
+                          .reject { |p| p[:tie] }
                           .map { |p| p[:place] }
                           .compact
 
@@ -119,7 +141,8 @@ module SciolyFF
           places.index(p) != i
         end
 
-        assert_empty dups, "The event #{event[:name]} has ties at #{dups}"
+        assert_empty dups,
+                     "The event #{event[:name]} has unmarked ties at #{dups}"
       end
     end
 
