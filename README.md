@@ -31,7 +31,7 @@ official releases, build from source:
 ```
 git clone https://github.com/unosmium/sciolyff.git && cd sciolyff
 gem build sciolyff.gemspec
-gem install ./sciolyff-0.5.1.gem
+gem install ./sciolyff-0.5.2.gem
 ```
 
 ## Usage
@@ -85,5 +85,5 @@ A fuller example can be found here in the code for the Unosmium Results website,
 found
 [here](https://github.com/unosmium/unosmium.org/blob/master/source/results/template.html.erb).
 There is also of course the
-[documentation](https://www.rubydoc.info/gems/sciolyff/0.5.1), a bit sparse
+[documentation](https://www.rubydoc.info/gems/sciolyff/0.5.2), a bit sparse
 currently.
