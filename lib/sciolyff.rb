@@ -76,8 +76,7 @@ module SciolyFF
       placing = @placings_by_event[event_name][team_number]
       number_of_teams = number_of_competing_teams(event_name)
 
-      if placing[:exempt] then 0
-      elsif placing[:disqualified] then number_of_teams + 2
+      if placing[:disqualified] then number_of_teams + 2
       elsif placing[:participated] == false then number_of_teams + 1
       elsif placing[:unknown] then number_of_teams - 1
       elsif placing[:place].nil? then number_of_teams
@@ -153,6 +152,7 @@ module SciolyFF
         .values
         .reject { |p| @events_by_name[p[:event]][:trial] }
         .reject { |p| @events_by_name[p[:event]][:trialed] }
+        .reject { |p| p[:exempt] }
         .sum { |p| event_points(team_number, p[:event]) } \
       + team_points_from_penalties(team_number)
     end
