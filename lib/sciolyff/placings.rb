@@ -65,26 +65,24 @@ module SciolyFF
 
     def test_each_placing_has_valid_exempt
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
-        if placing.key? :exempt
-          assert_includes [true, false], placing[:exempt]
-        end
+        assert_includes [true, false], placing[:exempt] if placing.key? :exempt
       end
     end
 
     def test_each_placing_has_valid_unknown
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
-        if placing.key? :unknown
-          assert_includes [true, false], placing[:unknown]
-          if placing[:unknown]
-            skip unless SciolyFF.rep[:Events].instance_of? Array
+        next unless placing.key? :unknown
 
-            event = SciolyFF.rep[:Events].find do |e|
-              e[:name] == placing[:event]
-            end
-            assert event[:trial] || event[:trialed] || event.nil?,
-              'Cannot have unknown place for non-trial/trialed event'
-          end
+        assert_includes [true, false], placing[:unknown]
+        next unless placing[:unknown]
+
+        skip unless SciolyFF.rep[:Events].instance_of? Array
+
+        event = SciolyFF.rep[:Events].find do |e|
+          e[:name] == placing[:event]
         end
+        assert event[:trial] || event[:trialed] || event.nil?,
+               'Cannot have unknown place for non-trial/trialed event'
       end
     end
 
@@ -98,11 +96,12 @@ module SciolyFF
         assert_instance_of Integer, placing[:place]
         max_place = @placings.count do |p|
           p[:event] == placing[:event] &&
-          !p[:disqualified] &&
-          p[:participated] != false
+            !p[:disqualified] &&
+            p[:participated] != false
         end
         assert_includes 1..max_place, placing[:place],
-          "The event #{placing[:event]} has an out-of-range placing"
+                        "The event #{placing[:event]} "\
+                        'has an out-of-range placing'
       end
     end
 
