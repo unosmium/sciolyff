@@ -76,15 +76,14 @@ module SciolyFF
         assert_includes [true, false], placing[:tie]
         next unless placing[:tie]
 
-        has_pair = @placings.find do |p_other|
+        all_paired = @placings.select do |p_other|
           p_other.instance_of?(Hash) &&
             p_other != placing &&
             p_other[:event] == placing[:event] &&
-            p_other[:event] == placing[:event] &&
-            p_other[:place] == placing[:place] &&
-            p_other[:tie]
-        end
-        assert has_pair,
+            p_other[:place] == placing[:place]
+        end.all? { |p_other| p_other[:tie] }
+
+        assert all_paired,
                "The event #{placing[:event]} has unpaired ties at "\
                "#{placing[:place]}"
       end
