@@ -170,7 +170,36 @@ module SciolyFF
       medal_counts(team_number_a)
         .zip(medal_counts(team_number_b))
         .map { |count| count.last - count.first }
+        .find(proc { break_second_tie(team_number_a, team_number_b) },
+              &:nonzero?)
+    end
+
+    def break_second_tie(team_number_a, team_number_b)
+      cmp = points_from_trial(team_number_a) - points_from_trial(team_number_b)
+      cmp.zero? ? break_third_tie(team_number_a, team_number_b) : cmp
+    end
+
+    def break_third_tie(team_number_a, team_number_b)
+      medal_counts_from_trial(team_number_a)
+        .zip(medal_counts_from_trial(team_number_b))
+        .map { |count| count.last - count.first }
         .find(proc { team_number_a <=> team_number_b }, &:nonzero?)
+    end
+
+    def points_from_trial(team_number)
+      @placings_by_team[team_number]
+        .values
+        .select { |p| @events_by_name[p[:event]][:trial] }
+        .sum { |p| event_points(team_number, p[:event]) }
+    end
+
+    def medal_counts_from_trial(team_number)
+      (1..(@teams_by_number.count + 2)).map do |m|
+        @events_by_name
+          .values
+          .select { |e| e[:trial] }
+          .count { |e| event_points(team_number, e[:name]) == m }
+      end
     end
   end
 end
