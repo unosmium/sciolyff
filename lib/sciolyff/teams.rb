@@ -83,5 +83,14 @@ module SciolyFF
                       .map { |t| t[:number] }
       assert_nil numbers.uniq!
     end
+
+    def test_each_suffix_is_unique_per_school
+      @teams.select { |t| t.instance_of? Hash }
+            .group_by { |t| [t[:school], t[:state], t[:city]] }
+            .each do |group, teams|
+        assert_nil teams.map { |t| t[:suffix] }.compact.uniq!,
+                   "#{group} has the same suffix for multiple teams"
+      end
+    end
   end
 end
