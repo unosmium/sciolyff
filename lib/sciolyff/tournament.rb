@@ -23,12 +23,23 @@ module SciolyFF
 
     def test_does_not_have_extra_info
       info = Set.new %i[name location level division state year date]
+      info << :'short name'
       assert Set.new(@tournament.keys).subset? info
     end
 
     def test_has_valid_name
       skip unless @tournament.key? :name
       assert_instance_of String, @tournament[:name]
+    end
+
+    def test_has_valid_short_name
+      skip unless @tournament.key? :'short name'
+      assert @tournament.key?(:name), 'Cannot have short name without name'
+      assert_instance_of String, @tournament[:'short name']
+
+      skip unless @tournament[:name].instance_of? String
+      assert @tournament[:'short name'].length < @tournament[:name].length,
+             'Length of short name must be shorter than length of name'
     end
 
     def test_has_valid_location

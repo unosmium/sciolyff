@@ -8,9 +8,10 @@
 #
 ---  # triple dash indicates start of file, optional but recommended
 Tournament:
-  # next line is optional if it is the same as location or for Nats
-  name: MIT  # not including level or year or state, the region for Regionals
-  location: MIT
+  # next line is optional for Nats or States
+  name: MIT Science Olympiad Invitational  # full name of the tournament
+  short name: MIT Invitational  # shorter, colloquial name of the tournament
+  location: Massachusetts Institute of Technology
   level: Invitational  # must be Invitational, Regionals, States, or Nationals
   # next line is required for Regionals and States, optional otherwise
   state: MA  # two-character state code
