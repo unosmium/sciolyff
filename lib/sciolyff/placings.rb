@@ -171,7 +171,7 @@ module SciolyFF
                    .select { |p| p[:team] == team[:number] }
                    .map { |p| p[:event] }
 
-        assert_equal events, events_with_placings
+        assert_equal events.sort, events_with_placings.sort
       end
     end
   end
