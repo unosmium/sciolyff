@@ -75,7 +75,7 @@ Placings:
     participated: true
     disqualified: false
     exempt: false  # team does not earn any points for the event if exempt
-    unknown: false  # if place is unknown, only allowed for Trial/Trialed events
+    unknown: false  # only allowed for Trial/Trialed events or exempt placings
     tie: false  # if placing has identical place as another placing in the event
     # next line is optional only if PO, NS, DQ, or exempt
     place: 22  # range between 1 and # of teams at tournament, unique per event

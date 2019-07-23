@@ -101,8 +101,9 @@ module SciolyFF
         event = SciolyFF.rep[:Events].find do |e|
           e[:name] == placing[:event]
         end
-        assert event[:trial] || event[:trialed] || event.nil?,
-               'Cannot have unknown place for non-trial/trialed event'
+        assert event[:trial] || event[:trialed] || placing[:exempt],
+               "Cannot have unknown place for non-trial/trialed event "\
+               "or non-exempt place"
       end
     end
 
