@@ -6,6 +6,17 @@ module SciolyFF
       @rep = rep[:Tournament]
     end
 
+    def link_to_other_models(interpreter)
+      @events = interpreter.events
+      @teams = interpreter.teams
+      @placings = interpreter.placings
+      @penalties = interpreter.penalties
+    end
+
+    attr_reader :events, :teams, :placings, :penalties
+
+    undef tournament
+
     def name
       @rep[:name]
     end
@@ -36,6 +47,12 @@ module SciolyFF
 
     def date
       @rep[:date]
+    end
+
+    def max_points_per_event(trial: false)
+      return @teams.size + 2 if trial
+
+      @teams.count { |t| !t.exhibition? } + 2
     end
   end
 end

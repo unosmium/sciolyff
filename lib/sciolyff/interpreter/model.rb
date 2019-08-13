@@ -3,7 +3,14 @@ module SciolyFF
   class Interpreter::Model
     def initialize(rep, index)
       @rep = rep[pluralize_for_key(self.class)][index]
+      @cache = {}
     end
+
+    def link_to_other_models(interpreter)
+      @tournament = interpreter.tournament
+    end
+
+    attr_reader :tournament
 
     # prevents infinite loop due caused by intentional circular references
     def inspect
