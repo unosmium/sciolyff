@@ -24,7 +24,7 @@ module SciolyFF
     end
 
     def short_name
-      @rep[:short_name]
+      @rep[:'short name']
     end
 
     def location
