@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SciolyFF
   # Parent class for other nested classes within Interpreter
   class Interpreter::Model
