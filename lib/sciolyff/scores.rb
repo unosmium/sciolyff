@@ -66,17 +66,13 @@ module SciolyFF
 
     def test_each_score_has_valid_exempt
       @scores.select { |s| s.instance_of? Hash }.each do |score|
-        if score.key? :exempt
-          assert_includes [true, false], score[:exempt]
-        end
+        assert_includes [true, false], score[:exempt] if score.key? :exempt
       end
     end
 
     def test_each_score_has_valid_unknown
       @scores.select { |s| s.instance_of? Hash }.each do |score|
-        if score.key? :unknown
-          assert_includes [true, false], score[:unknown]
-        end
+        assert_includes [true, false], score[:unknown] if score.key? :unknown
       end
     end
 
