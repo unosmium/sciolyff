@@ -49,6 +49,16 @@ module SciolyFF
       @rep[:date]
     end
 
+    def worst_placings_dropped?
+      @rep[:'worst placings dropped'].instance_of? Integer
+    end
+
+    def worst_placings_dropped
+      return 0 unless @rep[:'worst placings dropped']
+
+      @rep[:'worst placings dropped']
+    end
+
     def max_points_per_event(trial: false)
       return @teams.size + 2 if trial
 

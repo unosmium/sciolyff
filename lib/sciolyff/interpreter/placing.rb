@@ -56,6 +56,10 @@ module SciolyFF
         end
     end
 
+    def considered_for_team_points?
+      !(event.trial? || event.trialed? || exempt?)
+    end
+
     private
 
     def calculate_points

@@ -57,10 +57,17 @@ module SciolyFF
     def points
       return @cache[:points] if @cache[:points]
 
+      counted_placings = placings.select(&:considered_for_team_points?)
+
+      if @tournament.worst_placings_dropped?
+        counted_placings
+          .sort!(&:points)
+          .reverse!
+          .drop!(@tournament.worst_placings_dropped)
+      end
+
       @cache[:points] =
-        placings.reject { |p| p.event.trial? || p.event.trialed? || p.exempt? }
-                .sum(&:points) \
-        + penalties.sum(&:points)
+        counted_placings.sum(&:points) + penalties.sum(&:points)
     end
 
     def trial_event_points
@@ -69,7 +76,7 @@ module SciolyFF
 
     def medal_counts
       (1..@tournament.max_points_per_event).map do |medal_points|
-        placings.reject { |p| p.event.trial? || p.event.trialed? || p.exempt? }
+        placings.select(&:considered_for_team_points?)
                 .count { |p| p.points == medal_points }
       end
     end
