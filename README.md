@@ -64,21 +64,25 @@ ambiguity of spreadsheet results, it can be a bit awkward to parse overall
 results -- for instance, when trying to regenerate a results spreadsheet from a
 SciolyFF file.
 
-To make this easier, a `SciolyFF::Helper` class has been provided to wrap the
-output of Ruby's yaml parser. For example:
+To make this easier, a `SciolyFF::Interpreter` class has been provided to wrap
+the output of Ruby's yaml parser. For example:
 
 ```ruby
 require 'sciolyff'
 require 'yaml'
 
 rep = YAML.load(File.read('examples/nats_c_2017.yaml'), symbolize_names: true)
-t = SciolyFF::Helper.new(rep)
+i = SciolyFF::Interpreter.new(rep)
 
-t.events_by_name['Anatomy and Physiology'][:trialed] == true #=> false
-t.event_points(1, 'Astronomy') #=> 5
-t.team_points(1) #=> 448
+a_and_p = i.events.find { |e| e.name == 'Anatomy and Physiology' }
+a_and_p.trialed? #=> false
 
-t.sort_teams_by_rank #=> [{:school=>"Troy H.S.", :number=>3, :state=>"CA"}, ... ]
+team_one = i.teams.find { |t| t.number == 1 }
+team_one.placing_for(a_and_p).points #=> 7
+team_one.points #=> 448
+
+# sorted by rank
+i.teams #=> [#<...{:school=>"Troy H.S.", :number=>3, :state=>"CA"}>, ... ]
 ```
 
 A fuller example can be found here in the code for the Unosmium Results website,
