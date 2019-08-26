@@ -47,6 +47,8 @@ module SciolyFF
 
   STRING
 
+  # Deprecated: Please use `SciolyFF::Interpreter` instead
+  #
   # Wrapper class around a SciolyFF Ruby object representation with utility
   # methods to help in displaying results
   class Helper
@@ -54,6 +56,9 @@ module SciolyFF
     attr_reader :placings_by_event, :placings_by_team, :penalties_by_team
 
     def initialize(rep)
+      warn 'Class `SciolyFF::Helper` is deprecated. '\
+           'Please use `SciolyFF::Interpreter` instead.'
+
       @rep = rep
       @exhibition_teams_count = rep[:Teams].count { |t| t[:exhibition] }
       @exempt_placings_count = rep[:Placings].count { |p| p[:exempt] }
