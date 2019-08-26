@@ -2,7 +2,7 @@ AllCops:
   TargetRubyVersion: 2.6
   # Ignore test script
   Exclude:
-    - 'lib/sciolyff/interpreter/ztestscript.rb'
+    - !ruby/regexp /ztestscript\.rb$/
 
 # Ignore mix of compact and nested styles
 Style/ClassAndModuleChildren:
