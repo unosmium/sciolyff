@@ -9,6 +9,7 @@ require 'sciolyff/teams'
 require 'sciolyff/placings'
 require 'sciolyff/scores'
 require 'sciolyff/penalties'
+require 'sciolyff/interpreter'
 
 # API methods for the Scioly File Format
 #
