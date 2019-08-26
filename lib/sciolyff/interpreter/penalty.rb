@@ -3,6 +3,7 @@
 require 'sciolyff/interpreter/model'
 
 module SciolyFF
+  # Models a team penalty for a Science Olympiad team at a tournament
   class Interpreter::Penalty < Interpreter::Model
     def link_to_other_models(interpreter)
       super

@@ -3,6 +3,7 @@
 require 'sciolyff/interpreter/model'
 
 module SciolyFF
+  # Models a Science Olympiad tournament
   class Interpreter::Tournament < Interpreter::Model
     def initialize(rep)
       @rep = rep[:Tournament]

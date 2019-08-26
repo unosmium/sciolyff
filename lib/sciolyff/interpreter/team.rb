@@ -3,6 +3,7 @@
 require 'sciolyff/interpreter/model'
 
 module SciolyFF
+  # Models an instance of a Science Olympiad team at a specific tournament
   class Interpreter::Team < Interpreter::Model
     def link_to_other_models(interpreter)
       super

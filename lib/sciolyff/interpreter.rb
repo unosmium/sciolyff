@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module SciolyFF
+  # Interprets the YAML representation of a SciolyFF file through objects that
+  # respond to idiomatic Ruby method calls
   class Interpreter
     require 'sciolyff/interpreter/tournament'
     require 'sciolyff/interpreter/event'

@@ -3,6 +3,7 @@
 require 'sciolyff/interpreter/model'
 
 module SciolyFF
+  # Models the result of a team participating (or not) in an event
   class Interpreter::Placing < Interpreter::Model
     def link_to_other_models(interpreter)
       super
