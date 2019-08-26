@@ -17,7 +17,7 @@ module SciolyFF
     end
 
     def disqualified?
-      @rep[:disqualitied] == true
+      @rep[:disqualified] == true
     end
 
     def exempt?
