@@ -7,7 +7,8 @@ module SciolyFF
     def link_to_other_models(interpreter)
       super
       @placings = interpreter.placings.select { |p| p.event == self }
-      @placings_by_team = @placings.group_by(&:team)
+      @placings_by_team =
+        @placings.group_by(&:team).transform_values!(&:first)
 
       @placings.freeze
     end

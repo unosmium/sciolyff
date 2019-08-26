@@ -8,7 +8,8 @@ module SciolyFF
       super
       @placings  = interpreter.placings .select { |p| p.team == self }
       @penalties = interpreter.penalties.select { |p| p.team == self }
-      @placings_by_event = @placings.group_by(&:event)
+      @placings_by_event =
+        @placings.group_by(&:event).transform_values!(&:first)
 
       @placings.freeze
       @penalties.freeze
