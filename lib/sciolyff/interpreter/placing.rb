@@ -46,6 +46,12 @@ module SciolyFF
     end
 
     def points
+      return 0 unless considered_for_team_points?
+
+      isolated_points
+    end
+
+    def isolated_points
       return @cache[:points] if @cache[:points]
 
       n = event.competing_teams.count
@@ -60,6 +66,11 @@ module SciolyFF
     end
 
     def considered_for_team_points?
+      initially_considered_for_team_points? &&
+        !team.worst_placings_to_be_dropped.include?(self)
+    end
+
+    def initially_considered_for_team_points?
       !(event.trial? || event.trialed? || exempt?)
     end
 

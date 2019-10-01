@@ -61,21 +61,21 @@ module SciolyFF
     def points
       return @cache[:points] if @cache[:points]
 
-      counted_placings = placings.select(&:considered_for_team_points?)
+      @cache[:points] = placings.sum(&:points) + penalties.sum(&:points)
+    end
 
-      if @tournament.worst_placings_dropped?
-        counted_placings
-          .sort!(&:points)
-          .reverse!
-          .drop!(@tournament.worst_placings_dropped)
-      end
+    def worst_placings_to_be_dropped
+      return [] if @tournament.worst_placings_dropped.zero?
 
-      @cache[:points] =
-        counted_placings.sum(&:points) + penalties.sum(&:points)
+      placings
+        .select(&:initially_considered_for_team_points?)
+        .sort(&:points)
+        .reverse
+        .take(@tournament.worst_placings_dropped)
     end
 
     def trial_event_points
-      placings.select { |p| p.event.trial? }.sum(&:points)
+      placings.select { |p| p.event.trial? }.sum(&:isolated_points)
     end
 
     def medal_counts
