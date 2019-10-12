@@ -18,6 +18,8 @@ Tournament:
   division: C  # must be B or C
   year: 2017  # year of the rules manual being used, might not be same as date
   date: 2017-01-21  # YYYY-MM-DD format, others may work but aren't tested
+  # next line is optional if worst placings are not dropped (value of zero)
+  worst placings dropped: 5  # ignore x worst placings for team points
 
 Events:
   - name: Anatomy and Physiology

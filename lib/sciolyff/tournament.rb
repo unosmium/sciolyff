@@ -23,7 +23,7 @@ module SciolyFF
 
     def test_does_not_have_extra_info
       info = Set.new %i[name location level division state year date]
-      info << :'short name'
+      info << :'short name' << :'worst placings dropped'
       assert Set.new(@tournament.keys).subset? info
     end
 
@@ -73,6 +73,11 @@ module SciolyFF
     def test_has_valid_date
       skip unless @tournament.key? :date
       assert_instance_of Date, @tournament[:date]
+    end
+
+    def test_has_valid_worst_placings_dropped
+      skip unless @tournament.key? :'worst placings dropped'
+      assert_instance_of Integer, @tournament[:'worst placings dropped']
     end
   end
 end
