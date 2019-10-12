@@ -69,6 +69,23 @@ module SciolyFF
       end
     end
 
+    def test_each_team_has_correct_number_of_exempt_placings
+      skip unless SciolyFF.rep.instance_of? Hash
+      skip unless SciolyFF.rep[:Tournament].instance_of? Hash
+
+      exempt_placings = SciolyFF.rep[:Tournament][:'exempt placings']
+      exempt_placings = 0 if exempt_placings.nil?
+      skip unless exempt_placings.instance_of? Integer
+
+      @placings.select { |p| p.instance_of?(Hash) && p[:'exempt'] }
+               .group_by { |p| p[:team] }
+               .each do |team_number, placings|
+        assert placings.count == exempt_placings,
+               "Team number #{team_number} has the incorrect number of exempt "\
+               "placings (#{placings.count} instead of #{exempt_placings})"
+      end
+    end
+
     def test_each_placing_has_valid_tie
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
         next unless placing.key? :tie

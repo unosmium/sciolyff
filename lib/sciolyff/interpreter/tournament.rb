@@ -58,7 +58,14 @@ module SciolyFF
 
     def worst_placings_dropped
       worst_placings_dropped? ? @rep[:'worst placings dropped'] : 0
+    end
 
+    def exempt_placings?
+      @rep.key? :'exempt placings'
+    end
+
+    def exempt_placings
+      exempt_placings? ? @rep[:'exempt placings'] : 0
     end
 
     def max_points_per_event(trial: false)

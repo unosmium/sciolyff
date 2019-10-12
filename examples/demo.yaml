@@ -20,6 +20,8 @@ Tournament:
   date: 2017-01-21  # YYYY-MM-DD format, others may work but aren't tested
   # next line is optional if worst placings are not dropped (value of zero)
   worst placings dropped: 5  # ignore x worst placings for team points
+  # next line is optional if no events are allowed to exempted (audited)
+  exempt placings: 5  # exempt placings per team (those not counted for points)
 
 Events:
   - name: Anatomy and Physiology
