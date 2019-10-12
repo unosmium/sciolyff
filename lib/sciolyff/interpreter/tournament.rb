@@ -53,13 +53,12 @@ module SciolyFF
     end
 
     def worst_placings_dropped?
-      @rep[:'worst placings dropped'].instance_of? Integer
+      @rep.key? :'worst placings dropped'
     end
 
     def worst_placings_dropped
-      return 0 unless @rep[:'worst placings dropped']
+      worst_placings_dropped? ? @rep[:'worst placings dropped'] : 0
 
-      @rep[:'worst placings dropped']
     end
 
     def max_points_per_event(trial: false)
