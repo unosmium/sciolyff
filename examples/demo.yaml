@@ -97,7 +97,7 @@ Scores:
     participated: true
     disqualified: false
     exempt: false  # team does not earn any points for the event if exempt
-    unknown: false # if score is unknown, allowed for any event
+    unknown: false  # if score is unknown, allowed for any event
     # next line is optional only if PO, NS, DQ, or exempt
     score: 57  # raw score without tiebreakers
     # next line is necessary only if there was a tie
