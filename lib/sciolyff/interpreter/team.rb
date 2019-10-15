@@ -69,7 +69,7 @@ module SciolyFF
 
       placings
         .select(&:initially_considered_for_team_points?)
-        .sort(&:points)
+        .sort_by(&:isolated_points)
         .reverse
         .take(@tournament.worst_placings_dropped)
     end
