@@ -45,6 +45,10 @@ module SciolyFF
       participated? && !place && !unknown?
     end
 
+    def dropped_as_part_of_worst_placings?
+      team.worst_placings_to_be_dropped.include?(self)
+    end
+
     def points
       return 0 unless considered_for_team_points?
 
@@ -67,7 +71,7 @@ module SciolyFF
 
     def considered_for_team_points?
       initially_considered_for_team_points? &&
-        !team.worst_placings_to_be_dropped.include?(self)
+        !dropped_as_part_of_worst_placings?
     end
 
     def initially_considered_for_team_points?
