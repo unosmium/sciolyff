@@ -38,11 +38,11 @@ module SciolyFF
     end
 
     def did_not_participate?
-      !participated? && !disqualified?
+      !participated?
     end
 
     def participation_only?
-      participated? && !place && !unknown?
+      participated? && !place && !disqualified? && !unknown?
     end
 
     def dropped_as_part_of_worst_placings?
