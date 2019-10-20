@@ -107,6 +107,8 @@ module SciolyFF
     end
 
     def test_each_placing_has_valid_unknown
+      skip if SciolyFF.rep[:Tournament]&.key? :'maximum place'
+
       @placings.select { |p| p.instance_of? Hash }.each do |placing|
         next unless placing.key? :unknown
 
