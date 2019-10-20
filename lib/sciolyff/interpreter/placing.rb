@@ -78,9 +78,9 @@ module SciolyFF
       place && !exhibition_placings_behind.zero?
     end
 
-    def maximum_place?
-      (unknown? && tournament.custom_maximum_place?) ||
-        (place && calculate_points >= event.maximum_place)
+    def points_limited_by_maximum_place?
+      tournament.custom_maximum_place? &&
+        (unknown? || (place && calculate_points >= event.maximum_place))
     end
 
     private
