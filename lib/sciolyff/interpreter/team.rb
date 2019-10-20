@@ -79,14 +79,14 @@ module SciolyFF
     end
 
     def medal_counts
-      (1..@tournament.max_points_per_event).map do |medal_points|
+      (1..@tournament.events.first.maximum_points).map do |medal_points|
         placings.select(&:considered_for_team_points?)
                 .count { |p| p.points == medal_points }
       end
     end
 
     def trial_event_medal_counts
-      (1..@tournament.max_points_per_event(trial: true)).map do |medal_points|
+      (1..@tournament.events.last.maximum_points).map do |medal_points|
         placings.select { |p| p.event.trial? }
                 .count { |p| p.isolated_points == medal_points }
       end

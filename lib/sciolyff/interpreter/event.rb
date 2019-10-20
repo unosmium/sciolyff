@@ -40,10 +40,14 @@ module SciolyFF
       @placings_by_team[team]
     end
 
-    def competing_teams
-      return placings.map(&:team) if trial?
+    def maximum_place
+      return placings.size if trial?
 
-      placings.map(&:team).reject(&:exhibition?)
+      tournament.maximum_place
+    end
+
+    def maximum_points
+      maximum_place + 2
     end
   end
 end

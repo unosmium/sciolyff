@@ -50,23 +50,21 @@ module SciolyFF
     end
 
     def points
-      return 0 unless considered_for_team_points?
+      return @cache[:points] if @cache[:points]
 
-      isolated_points
+      @cache[:points] = if !considered_for_team_points? then 0
+                        else isolated_points
+                        end
     end
 
     def isolated_points
-      return @cache[:points] if @cache[:points]
+      n = event.maximum_place
 
-      n = event.competing_teams.count
-
-      @cache[:points] =
-        if    disqualified?        then n + 2
-        elsif did_not_participate? then n + 1
-        elsif participation_only?  then n
-        elsif unknown?             then n - 1
-        else  calculate_points
-        end
+      if    disqualified? then n + 2
+      elsif did_not_participate? then n + 1
+      elsif participation_only? || unknown? then n
+      else  [calculate_points, n].min
+      end
     end
 
     def considered_for_team_points?
@@ -78,12 +76,22 @@ module SciolyFF
       !(event.trial? || event.trialed? || exempt?)
     end
 
+    def placed_behind_exhibition?
+      !exhibition_placings_behind.zero?
+    end
+
     private
 
     def calculate_points
       return place if event.trial?
 
-      place - event.placings.count do |p|
+      place - exhibition_placings_behind
+    end
+
+    def exhibition_placings_behind
+      return @cache[:epb] if @cache[:epb]
+
+      @cache[:epb] = event.placings.count do |p|
         (p.exempt? || p.team.exhibition?) &&
           p.place &&
           p.place < place

@@ -68,10 +68,10 @@ module SciolyFF
       exempt_placings? ? @rep[:'exempt placings'] : 0
     end
 
-    def max_points_per_event(trial: false)
-      return @teams.size + 2 if trial
+    def maximum_place
+      return @rep[:'maximum place'] if @rep[:'maximum place']
 
-      @teams.count { |t| !t.exhibition? } + 2
+      @teams.count { |t| !t.exhibition? }
     end
   end
 end
