@@ -74,13 +74,13 @@ module SciolyFF
       !(event.trial? || event.trialed? || exempt?)
     end
 
-    def placed_behind_exhibition?
-      place && !exhibition_placings_behind.zero?
+    def points_affected_by_exhibition?
+      considered_for_team_points? && place && !exhibition_placings_behind.zero?
     end
 
     def points_limited_by_maximum_place?
       tournament.custom_maximum_place? &&
-        (unknown? || (place && calculate_points >= event.maximum_place))
+        (unknown? || (place && calculate_points > event.maximum_place))
     end
 
     private
