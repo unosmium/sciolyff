@@ -22,6 +22,8 @@ Tournament:
   worst placings dropped: 5  # ignore x worst placings for team points
   # next line is optional if no events are allowed to exempted (audited)
   exempt placings: 5  # exempt placings per team (those not counted for points)
+  # next line is optional if equal to the number of competing teams
+  maximum place: 50
 
 Events:
   - name: Anatomy and Physiology
