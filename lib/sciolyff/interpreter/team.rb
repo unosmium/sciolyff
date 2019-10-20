@@ -59,9 +59,7 @@ module SciolyFF
     end
 
     def points
-      return @cache[:points] if @cache[:points]
-
-      @cache[:points] = placings.sum(&:points) + penalties.sum(&:points)
+      @points ||= placings.sum(&:points) + penalties.sum(&:points)
     end
 
     def worst_placings_to_be_dropped

@@ -5,7 +5,6 @@ module SciolyFF
   class Interpreter::Model
     def initialize(rep, index)
       @rep = rep[pluralize_for_key(self.class)][index]
-      @cache = {}
     end
 
     def link_to_other_models(interpreter)

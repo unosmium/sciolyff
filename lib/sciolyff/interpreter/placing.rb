@@ -50,11 +50,9 @@ module SciolyFF
     end
 
     def points
-      return @cache[:points] if @cache[:points]
-
-      @cache[:points] = if !considered_for_team_points? then 0
-                        else isolated_points
-                        end
+      @points ||= if !considered_for_team_points? then 0
+                  else isolated_points
+                  end
     end
 
     def isolated_points
@@ -89,9 +87,7 @@ module SciolyFF
     end
 
     def exhibition_placings_behind
-      return @cache[:epb] if @cache[:epb]
-
-      @cache[:epb] = event.placings.count do |p|
+      @exhibition_placings_behind ||= event.placings.count do |p|
         (p.exempt? || p.team.exhibition?) &&
           p.place &&
           p.place < place
