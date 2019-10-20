@@ -75,7 +75,7 @@ module SciolyFF
     end
 
     def placed_behind_exhibition?
-      !exhibition_placings_behind.zero?
+      place && !exhibition_placings_behind.zero?
     end
 
     def maximum_place?
