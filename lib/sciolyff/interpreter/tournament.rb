@@ -68,6 +68,10 @@ module SciolyFF
       exempt_placings? ? @rep[:'exempt placings'] : 0
     end
 
+    def custom_maximum_place?
+      maximum_place != @teams.count { |t| !t.exhibition? }
+    end
+
     def maximum_place
       return @rep[:'maximum place'] if @rep[:'maximum place']
 
