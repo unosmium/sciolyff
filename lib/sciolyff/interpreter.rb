@@ -26,10 +26,10 @@ module SciolyFF
 
     def create_models(rep)
       @tournament = Tournament.new(rep)
-      @events    = map_array_to_models rep[:Events],    Event,   rep
-      @teams     = map_array_to_models rep[:Teams],     Team,    rep
-      @placings  = map_array_to_models rep[:Placings],  Placing, rep
-      @penalties = map_array_to_models rep[:Penalties], Penalty, rep
+      @events     = map_array_to_models rep[:Events],    Event,   rep
+      @teams      = map_array_to_models rep[:Teams],     Team,    rep
+      @placings   = map_array_to_models rep[:Placings],  Placing, rep
+      @penalties  = map_array_to_models rep[:Penalties], Penalty, rep
     end
 
     def map_array_to_models(arr, object_class, rep)
