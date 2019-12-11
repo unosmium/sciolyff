@@ -62,21 +62,22 @@ module SciolyFF
     end
 
     def sort_events_naturally
-      @events.sort! do |a, b|
-        next  1 if  a.trial? && !b.trial?
-        next -1 if !a.trial? &&  b.trial?
-
-        a.name <=> b.name
-      end
+      @events.sort_by! { |e| [e.trial?.to_s, e.name] }
     end
 
     def sort_teams_by_rank
-      @teams.sort! do |team_a, team_b|
-        next  1 if  team_a.disqualified?  && !team_b.disqualified?
-        next  1 if  team_a.exhibition?    && !team_b.exhibition?
-        next -1 if !team_a.disqualified?  &&  team_b.disqualified?
-        next -1 if !team_a.exhibition?    &&  team_b.exhibition?
+      sorted =
+        @teams
+        .group_by { |t| [t.disqualified?.to_s, t.exhibition?.to_s] }
+        .map { |key, teams| [key, sort_teams_by_points(teams)] }
+        .sort_by(&:first)
+        .map(&:last)
+        .flatten
+      @teams.map!.with_index { |_, i| sorted[i] }
+    end
 
+    def sort_teams_by_points(teams)
+      teams.sort do |team_a, team_b|
         cmp = team_a.points <=> team_b.points
         cmp.zero? ? break_tie(team_a, team_b) : cmp
       end
