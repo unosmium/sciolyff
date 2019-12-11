@@ -72,8 +72,10 @@ module SciolyFF
 
     def sort_teams_by_rank
       @teams.sort! do |team_a, team_b|
-        next  1 if  team_a.exhibition? && !team_b.exhibition?
-        next -1 if !team_a.exhibition? &&  team_b.exhibition?
+        next  1 if  team_a.disqualified?  && !team_b.disqualified?
+        next  1 if  team_a.exhibition?    && !team_b.exhibition?
+        next -1 if !team_a.disqualified?  &&  team_b.disqualified?
+        next -1 if !team_a.exhibition?    &&  team_b.exhibition?
 
         cmp = team_a.points <=> team_b.points
         cmp.zero? ? break_tie(team_a, team_b) : cmp

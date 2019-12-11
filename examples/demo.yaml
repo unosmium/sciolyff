@@ -65,6 +65,7 @@ Teams:
     subdivision: V  # can be anything, used for Varsity / Junior Varisity labels
     # next line is optional if false
     exhibition: false  # if the team's placings don't affect other team's scores
+    disqualified: false  # if a team should rank behind all other non-DQ teams
     number: 58
     # next line is optional
     city: Solon

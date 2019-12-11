@@ -38,6 +38,10 @@ module SciolyFF
       @rep[:exhibition] == true
     end
 
+    def disqualified?
+      @rep[:disqualified] == true
+    end
+
     def number
       @rep[:number]
     end

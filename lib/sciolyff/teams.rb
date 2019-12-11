@@ -22,7 +22,7 @@ module SciolyFF
     def test_each_team_does_not_have_extra_info
       @teams.select { |t| t.instance_of? Hash }.each do |team|
         fo = Set.new %i[school suffix subdivision exhibition number city state]
-        fo << :'school abbreviation'
+        fo << :'school abbreviation' << :'disqualified'
         assert Set.new(team.keys).subset? fo
       end
     end
@@ -57,6 +57,13 @@ module SciolyFF
       @teams.select { |t| t.instance_of? Hash }.each do |team|
         assert_includes [true, false], team[:exhibition] \
           if team.key? :exhibition
+      end
+    end
+
+    def test_each_team_has_valid_disqualified
+      @teams.select { |t| t.instance_of? Hash }.each do |team|
+        assert_includes [true, false], team[:disqualified] \
+          if team.key? :disqualified
       end
     end
 
