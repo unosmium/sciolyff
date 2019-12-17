@@ -81,5 +81,9 @@ module SciolyFF
     def per_event_n?
       @rep[:'per-event n']
     end
+
+    def has_ties?
+      @has_ties ||= placings.map(&:tie?).any?
+    end
   end
 end
