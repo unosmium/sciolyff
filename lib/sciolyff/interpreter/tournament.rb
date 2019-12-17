@@ -77,5 +77,9 @@ module SciolyFF
 
       @teams.count { |t| !t.exhibition? }
     end
+
+    def per_event_n?
+      @rep[:'per-event n']
+    end
   end
 end

@@ -41,9 +41,13 @@ module SciolyFF
     end
 
     def maximum_place
-      return placings.size if trial?
-
-      tournament.maximum_place
+      if trial?
+        placings.size
+      elsif tournament.per_event_n?
+        placings.map(&:place).count { |p| !p.nil? }
+      else
+        tournament.maximum_place
+      end
     end
 
     def maximum_points
