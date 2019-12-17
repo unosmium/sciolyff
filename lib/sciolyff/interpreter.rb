@@ -23,10 +23,11 @@ module SciolyFF
     end
 
     def subdivisions
-      teams.map(&:subdivision)
-           .uniq
-           .compact
-           .map { |sub| Interpreter.new(subdivision_rep(sub)) }
+      @subdivisions ||=
+        teams.map(&:subdivision)
+             .uniq
+             .compact
+             .map { |sub| Interpreter.new(subdivision_rep(sub)) }
     end
 
     private
