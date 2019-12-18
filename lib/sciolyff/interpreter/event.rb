@@ -44,7 +44,7 @@ module SciolyFF
       if trial?
         placings.size
       elsif tournament.per_event_n?
-        placings.map(&:place).count { |p| !p.nil? }
+        placings.map(&:place).count { |p| !p.nil? } + 1
       else
         tournament.maximum_place
       end
