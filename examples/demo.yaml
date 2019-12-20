@@ -24,6 +24,8 @@ Tournament:
   exempt placings: 5  # exempt placings per team (those not counted for points)
   # next line is optional if equal to the number of competing teams
   maximum place: 50
+  # next line is optional if not using Delaware-style scoring for non-placings
+  per-event n: false
 
 Events:
   - name: Anatomy and Physiology
