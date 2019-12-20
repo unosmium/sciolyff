@@ -53,7 +53,7 @@ module SciolyFF
     def test_each_event_has_valid_tiers
       @events.select { |e| e.instance_of? Hash }.each do |event|
         assert_instance_of Integer, event[:tiers] if event.key? :tiers
-        assert_includes (1..), event[:tiers] if event.key? :tiers
+        assert event[:tiers] >= 1 if event.key? :tiers
       end
     end
 

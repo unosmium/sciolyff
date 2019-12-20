@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.executables << 'sciolyff'
   s.add_runtime_dependency 'minitest', '~> 5.11'
   s.add_runtime_dependency 'optimist', '~> 3.0'
+  s.add_runtime_dependency 'psych', '~> 3.1'
   s.add_development_dependency 'rake', '~> 12.3'
-  s.required_ruby_version = '>= 2.6.0'
+  s.required_ruby_version = '>= 2.5.0'
 end

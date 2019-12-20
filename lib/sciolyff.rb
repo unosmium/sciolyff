@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'yaml'
+require 'psych'
 require 'date'
 require 'sciolyff/top_level'
 require 'sciolyff/sections'
@@ -31,7 +31,9 @@ module SciolyFF
 
   def self.validate_file(path, opts: {})
     file = File.read(path)
-    rep = YAML.safe_load(file, permitted_classes: [Date], symbolize_names: true)
+    rep = Psych.safe_load(
+      file, permitted_classes: [Date], symbolize_names: true
+    )
   rescue StandardError => e
     puts 'Error: could not read file as YAML.'
     warn e.message
