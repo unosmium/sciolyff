@@ -26,6 +26,8 @@ Tournament:
   maximum place: 50
   # next line is optional if not using Delaware-style scoring for non-placings
   per-event n: false
+  # next line is optional if zero
+  n offset: 0  # points to add to standard PO, NS, and DQ point values
 
 Events:
   - name: Anatomy and Physiology

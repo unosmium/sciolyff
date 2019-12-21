@@ -82,6 +82,12 @@ module SciolyFF
       @rep[:'per-event n']
     end
 
+    def n_offset
+      return 0 unless @rep.key? :'n offset'
+
+      @rep[:'n offset']
+    end
+
     def has_ties?
       @has_ties ||= placings.map(&:tie?).any?
     end

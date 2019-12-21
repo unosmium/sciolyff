@@ -56,12 +56,12 @@ module SciolyFF
     end
 
     def isolated_points
-      n = event.maximum_place
+      n = event.maximum_place + tournament.n_offset
 
       if    disqualified? then n + 2
       elsif did_not_participate? then n + 1
       elsif participation_only? || unknown? then n
-      else  [calculate_points, n].min
+      else  [calculate_points, event.maximum_place].min
       end
     end
 

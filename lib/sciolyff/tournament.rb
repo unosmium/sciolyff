@@ -24,7 +24,7 @@ module SciolyFF
     def test_does_not_have_extra_info
       info = Set.new %i[name location level division state year date]
       info << :'short name' << :'worst placings dropped' << :'exempt placings'
-      info << :'maximum place' << :'per-event n'
+      info << :'maximum place' << :'per-event n' << :'n offset'
       assert Set.new(@tournament.keys).subset? info
     end
 
@@ -94,6 +94,11 @@ module SciolyFF
     def test_has_valid_per_event_n
       skip unless @tournament.key? :'per-event n'
       assert_includes [true, false], @tournament[:'per-event n']
+    end
+
+    def test_has_n_offset
+      skip unless @tournament.key? :'n offset'
+      assert_instance_of Integer, @tournament[:'n offset']
     end
   end
 end
