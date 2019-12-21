@@ -88,8 +88,8 @@ module SciolyFF
       @rep[:'n offset']
     end
 
-    def has_ties?
-      @has_ties ||= placings.map(&:tie?).any?
+    def ties?
+      @ties ||= placings.map(&:tie?).any?
     end
   end
 end
