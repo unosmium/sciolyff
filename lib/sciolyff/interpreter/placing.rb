@@ -10,7 +10,7 @@ module SciolyFF
       @event = interpreter.events.find { |e| e.name   == @rep[:event] }
       @team  = interpreter.teams .find { |t| t.number == @rep[:team]  }
 
-      link_to_placing_in_subdivision_interpreter
+      link_to_placing_in_subdivision_interpreter(interpreter)
     end
 
     attr_reader :event, :team, :subdivision
@@ -102,7 +102,7 @@ module SciolyFF
       end
     end
 
-    def link_to_placing_in_subdivision_interpreter
+    def link_to_placing_in_subdivision_interpreter(interpreter)
       return @subdivision = nil unless (sub = @team.subdivision)
 
       @subdivision = interpreter.subdivisions[sub].placings.find do |p|
