@@ -18,8 +18,6 @@ module SciolyFF
 
       sort_events_naturally
       sort_teams_by_rank
-
-      freeze_models
     end
 
     def subdivisions
@@ -53,13 +51,6 @@ module SciolyFF
       @teams    .each { |m| m.link_to_other_models(interpreter) }
       @events   .each { |m| m.link_to_other_models(interpreter) }
       @tournament.link_to_other_models(interpreter)
-    end
-
-    def freeze_models
-      @events.freeze
-      @teams.freeze
-      @placings.freeze
-      @penalties.freeze
     end
 
     def sort_events_naturally
