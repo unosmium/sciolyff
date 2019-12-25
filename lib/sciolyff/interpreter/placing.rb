@@ -106,7 +106,7 @@ module SciolyFF
       return @subdivision = nil unless (sub = @team.subdivision)
 
       @subdivision = interpreter.subdivisions[sub].placings.find do |p|
-        p.event.name = @rep[:event] && p.team.number = @rep[:team]
+        p.event.name == @rep[:event] && p.team.number == @rep[:team]
       end
     end
   end
