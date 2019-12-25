@@ -11,6 +11,7 @@ Style/ClassAndModuleChildren:
     - 'lib/sciolyff/interpreter/model.rb'
     - 'lib/sciolyff/interpreter/penalty.rb'
     - 'lib/sciolyff/interpreter/placing.rb'
+    - 'lib/sciolyff/interpreter/raw.rb'
     - 'lib/sciolyff/interpreter/team.rb'
     - 'lib/sciolyff/interpreter/tournament.rb'
 
