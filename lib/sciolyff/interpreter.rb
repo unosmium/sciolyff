@@ -25,7 +25,8 @@ module SciolyFF
         teams.map(&:subdivision)
              .uniq
              .compact
-             .map { |sub| Interpreter.new(subdivision_rep(sub)) }
+             .map { |sub| [sub, Interpreter.new(subdivision_rep(sub))] }
+             .to_h
     end
 
     private
@@ -97,7 +98,7 @@ module SciolyFF
     def subdivision_rep(sub)
       # make a deep copy of rep and remove teams not in the subdivision
       rep = Marshal.load(Marshal.dump(@rep))
-      rep[:Teams].select! { |t| t[:subdivision] == sub }
+      rep[:Teams].select! { |t| t.delete(:subdivision) == sub }
 
       team_numbers = rep[:Teams].map { |t| t[:number] }
       rep[:Placings].select! { |p| team_numbers.include? p[:team] }
