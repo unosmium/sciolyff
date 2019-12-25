@@ -53,19 +53,19 @@ module SciolyFF
     end
 
     def worst_placings_dropped?
-      @rep.key? :'worst placings dropped'
+      worst_placings_dropped.positive?
     end
 
     def worst_placings_dropped
-      worst_placings_dropped? ? @rep[:'worst placings dropped'] : 0
+      @rep[:'worst placings dropped'] || 0
     end
 
     def exempt_placings?
-      @rep.key? :'exempt placings'
+      exempt_placings.positive?
     end
 
     def exempt_placings
-      exempt_placings? ? @rep[:'exempt placings'] : 0
+      @rep[:'exempt placings'] || 0
     end
 
     def custom_maximum_place?
@@ -83,9 +83,7 @@ module SciolyFF
     end
 
     def n_offset
-      return 0 unless @rep.key? :'n offset'
-
-      @rep[:'n offset']
+      @rep[:'n offset'] || 0
     end
 
     def ties?
