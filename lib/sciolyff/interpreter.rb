@@ -118,11 +118,17 @@ module SciolyFF
     def fix_placings_for_existing_teams(rep)
       rep[:Placings]
         .group_by { |p| p[:event] }
-        .each do |_, event_placings|
-        event_placings
-          .select { |p| p[:place] }
-          .sort_by { |p| p[:place] }
-          .each_with_index { |p, i| p[:place] = i + 1 }
+        .each { |_, ep| fix_event_placings_and_ties(ep) }
+    end
+
+    def fix_event_placings_and_ties(event_placings)
+      event_placings
+        .select { |p| p[:place] }
+        .sort_by { |p| p[:place] }
+        .each_with_index do |p, i|
+        tie_count = event_placings.count { |o| o[:place] == p[:place] } - 1
+        p[:place] = i + 1 - tie_count
+        tie_count.positive? ? p[:tie] = true : p.delete(:tie)
       end
     end
   end
