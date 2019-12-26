@@ -11,9 +11,6 @@ module SciolyFF
       @penalties = interpreter.penalties.select { |p| p.team == self }
       @placings_by_event =
         @placings.group_by(&:event).transform_values!(&:first)
-
-      @placings.freeze
-      @penalties.freeze
     end
 
     attr_reader :placings, :penalties

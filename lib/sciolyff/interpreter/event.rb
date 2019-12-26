@@ -10,8 +10,6 @@ module SciolyFF
       @placings = interpreter.placings.select { |p| p.event == self }
       @placings_by_team =
         @placings.group_by(&:team).transform_values!(&:first)
-
-      @placings.freeze
     end
 
     attr_reader :placings
