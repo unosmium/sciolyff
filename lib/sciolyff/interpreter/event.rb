@@ -29,11 +29,11 @@ module SciolyFF
     end
 
     def high_score_wins?
-      @rep[:scoring] == 'high'
+      !low_score_wins?
     end
 
     def low_score_wins?
-      !high_score_wins?
+      @rep[:scoring] == 'low'
     end
 
     def placing_for(team)
