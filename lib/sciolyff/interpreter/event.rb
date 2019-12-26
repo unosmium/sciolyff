@@ -10,7 +10,7 @@ module SciolyFF
       @placings = interpreter.placings.select { |p| p.event == self }
       @placings_by_team =
         @placings.group_by(&:team).transform_values!(&:first)
-      @raws = @placings.select(&:raw?).sort_by(&:raw)
+      @raws = @placings.select(&:raw?).map(&:raw).sort
       @raws.reverse! if low_score_wins?
     end
 

@@ -34,11 +34,11 @@ module SciolyFF
     end
 
     def tie?
-      raw? ? tied_raws.positive? : @rep[:tie] == true
+      raw? ? @tie ||= event.raws.count(raw) > 1 : @rep[:tie] == true
     end
 
     def place
-      raw? ? @place ||= event.raws.find_index(self) - tied_raws : @rep[:place]
+      raw? ? @place ||= event.raws.find_index(raw) : @rep[:place]
     end
 
     def raw
@@ -97,10 +97,6 @@ module SciolyFF
     end
 
     private
-
-    def tied_raws
-      @tied_raws ||= event.raws.count(@raw) - 1
-    end
 
     def calculate_points
       return place if event.trial?
