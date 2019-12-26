@@ -10,9 +10,11 @@ module SciolyFF
       @placings = interpreter.placings.select { |p| p.event == self }
       @placings_by_team =
         @placings.group_by(&:team).transform_values!(&:first)
+      @raws = @placings.select(&:raw?).sort_by(&:raw)
+      @raws.reverse! if low_score_wins?
     end
 
-    attr_reader :placings
+    attr_reader :placings, :raws
 
     def name
       @rep[:name]

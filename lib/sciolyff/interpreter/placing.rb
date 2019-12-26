@@ -34,11 +34,19 @@ module SciolyFF
     end
 
     def tie?
-      @rep[:tie] == true
+      raw? ? tied_raws.positive? : @rep[:tie] == true
     end
 
     def place
-      @rep[:place]
+      raw? ? @place ||= event.raws.find_index(self) - tied_raws : @rep[:place]
+    end
+
+    def raw
+      @raw ||= Raw.new(@rep[:raw]) if raw?
+    end
+
+    def raw?
+      @rep.key? :raw
     end
 
     def did_not_participate?
@@ -89,6 +97,10 @@ module SciolyFF
     end
 
     private
+
+    def tied_raws
+      @tied_raws ||= event.raws.count(@raw) - 1
+    end
 
     def calculate_points
       return place if event.trial?
