@@ -38,7 +38,7 @@ module SciolyFF
     end
 
     def place
-      raw? ? @place ||= event.raws.find_index(raw) : @rep[:place]
+      raw? ? @place ||= event.raws.find_index(raw) + 1 : @rep[:place]
     end
 
     def raw
