@@ -93,7 +93,11 @@ module SciolyFF
 
     def points_limited_by_maximum_place?
       tournament.custom_maximum_place? &&
-        (unknown? || (place && calculate_points >= event.maximum_place))
+        (unknown? ||
+         (place &&
+          (calculate_points > event.maximum_place ||
+           calculate_points == event.maximum_place && tie?
+          )))
     end
 
     private
