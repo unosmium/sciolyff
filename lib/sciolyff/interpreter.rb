@@ -124,7 +124,7 @@ module SciolyFF
 
     def fix_placing_ties(placing, event_placings)
       ties = event_placings.select { |o| o[:place] == placing[:place] }
-      placing[:place] = ties.max_by { |t| t[:temp_place] } - ties.count + 1
+      placing[:place] = ties.map { |t| t[:temp_place] }.max - ties.count + 1
       ties.count > 1 ? placing[:tie] = true : placing.delete(:tie)
     end
   end
