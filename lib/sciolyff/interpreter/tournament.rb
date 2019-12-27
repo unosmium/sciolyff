@@ -89,5 +89,11 @@ module SciolyFF
     def ties?
       @ties ||= placings.map(&:tie?).any?
     end
+
+    def ties_outside_of_maximum_places?
+      @ties_outside_of_maximum_places ||= placings.map do |p|
+        p.tie? && !p.points_limited_by_maximum_place?
+      end.any?
+    end
   end
 end
