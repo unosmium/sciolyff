@@ -42,7 +42,7 @@ module SciolyFF
     end
 
     def raw
-      @raw ||= Raw.new(@rep[:raw]) if raw?
+      @raw ||= Raw.new(@rep[:raw], event.low_score_wins?) if raw?
     end
 
     def raw?

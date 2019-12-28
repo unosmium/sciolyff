@@ -3,8 +3,9 @@
 module SciolyFF
   # Models the raw score representation for a Placing
   class Interpreter::Placing::Raw
-    def initialize(rep)
+    def initialize(rep, low_score_wins)
       @rep = rep
+      @low_score_wins = low_score_wins
     end
 
     def score
@@ -34,8 +35,16 @@ module SciolyFF
     end
 
     def <=>(other)
-      [tier, -score, tiebreaker_rank] <=>
-        [other.tier, -other.score, other.tiebreaker_rank]
+      [
+        tier,
+        @low_score_wins ? score : -score,
+        tiebreaker_rank
+      ] <=>
+        [
+          other.tier,
+          @low_score_wins ? other.score : -other.score,
+          other.tiebreaker_rank
+        ]
     end
   end
 end
