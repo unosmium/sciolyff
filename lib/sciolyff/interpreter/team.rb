@@ -15,7 +15,7 @@ module SciolyFF
       link_to_team_in_subdivision_interpreter(interpreter)
     end
 
-    attr_reader :placings, :penalties
+    attr_reader :placings, :penalties, :subdivision_team
 
     def school
       @rep[:school]
