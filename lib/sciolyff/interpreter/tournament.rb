@@ -14,6 +14,7 @@ module SciolyFF
       @teams = interpreter.teams
       @placings = interpreter.placings
       @penalties = interpreter.penalties
+      @subdivisions = interpreter.subdivisions
     end
 
     attr_reader :events, :teams, :placings, :penalties
@@ -94,6 +95,10 @@ module SciolyFF
       @ties_outside_of_maximum_places ||= placings.map do |p|
         p.tie? && !p.points_limited_by_maximum_place?
       end.any?
+    end
+
+    def subdivisions?
+      !@subdivisions.empty?
     end
   end
 end
