@@ -17,7 +17,7 @@ module SciolyFF
       @subdivisions = interpreter.subdivisions
     end
 
-    attr_reader :events, :teams, :placings, :penalties
+    attr_reader :events, :teams, :placings, :penalties, :subdivisions
 
     undef tournament
 
