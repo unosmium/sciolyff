@@ -15,7 +15,7 @@ module SciolyFF
       link_to_placing_in_subdivision_interpreter(interpreter)
     end
 
-    attr_reader :event, :team, :subdivision
+    attr_reader :event, :team, :subdivision_placing
 
     def participated?
       @rep[:participated] == true || @rep[:participated].nil?
@@ -117,10 +117,10 @@ module SciolyFF
     end
 
     def link_to_placing_in_subdivision_interpreter(interpreter)
-      return @subdivision = nil unless (sub = @team.subdivision)
+      return @subdivision_placing = nil unless (sub = team.subdivision)
 
-      @subdivision = interpreter.subdivisions[sub].placings.find do |p|
-        p.event.name == @rep[:event] && p.team.number == @rep[:team]
+      @subdivision_placing = interpreter.subdivisions[sub].placings.find do |p|
+        p.event.name == event.name && p.team.number == team.number
       end
     end
   end

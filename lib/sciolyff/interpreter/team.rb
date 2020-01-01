@@ -11,6 +11,8 @@ module SciolyFF
       @penalties = interpreter.penalties.select { |p| p.team == self }
       @placings_by_event =
         @placings.group_by(&:event).transform_values!(&:first)
+
+      link_to_team_in_subdivision_interpreter(interpreter)
     end
 
     attr_reader :placings, :penalties
@@ -88,6 +90,16 @@ module SciolyFF
       (1..@tournament.events.last.maximum_points).map do |medal_points|
         placings.select { |p| p.event.trial? }
                 .count { |p| p.isolated_points == medal_points }
+      end
+    end
+
+    private
+
+    def link_to_team_in_subdivision_interpreter(interpreter)
+      return @subdivision_team = nil unless (sub = subdivision)
+
+      @subdivision_team = interpreter.subdivisions[sub].teams.find do |t|
+        t.number == number
       end
     end
   end
