@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
   # Ignore test script
   Exclude:
     - !ruby/regexp /ztestscript\.rb$/
@@ -15,5 +15,12 @@ Style/ClassAndModuleChildren:
     - 'lib/sciolyff/interpreter/team.rb'
     - 'lib/sciolyff/interpreter/tournament.rb'
 
+Style/HashEachMethods:
+  Enabled: true
 
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
 
