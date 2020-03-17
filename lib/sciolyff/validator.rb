@@ -12,6 +12,7 @@ module SciolyFF
     require 'sciolyff/validator/sections'
 
     require 'sciolyff/validator/top_level'
+    require 'sciolyff/validator/tournament'
 
     def initialize(loglevel = Logger::WARN)
       @logger = Logger.new loglevel
@@ -51,8 +52,14 @@ module SciolyFF
         return false
       end
 
-      anon = TopLevel.new
-      checks = TopLevel.instance_methods - Checker.instance_methods
+      # intentionally (ab)use short-circuiting (&&) or lack of (&)
+      check(TopLevel, rep, logger) &&
+        check(Tournament, rep[:Tournament], logger)
+    end
+
+    def check(klass, rep, logger)
+      anon = klass.new
+      checks = klass.instance_methods - Checker.instance_methods
       checks.all? { |im| anon.send im, rep, logger }
     end
   end

@@ -21,9 +21,13 @@ module SciolyFF
     def sections_are_correct_type?(rep, logger)
       correct_types = self.class::REQUIRED.merge(self.class::OPTIONAL)
       rep.all? do |key, value|
-        next true if value.instance_of? correct_types[key]
-
-        logger.error "section is not #{correct_type}: #{key}"
+        if correct_types[key].instance_of? Array
+          correct_types[key].include? value
+        elsif value.instance_of? correct_types[key]
+          true
+        else
+          logger.error "section is not #{correct_type}: #{key}"
+        end
       end
     end
   end

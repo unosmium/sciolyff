@@ -7,18 +7,8 @@ AllCops:
 # Ignore mix of compact and nested styles
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'lib/sciolyff/interpreter/event.rb'
-    - 'lib/sciolyff/interpreter/model.rb'
-    - 'lib/sciolyff/interpreter/penalty.rb'
-    - 'lib/sciolyff/interpreter/placing.rb'
-    - 'lib/sciolyff/interpreter/raw.rb'
-    - 'lib/sciolyff/interpreter/team.rb'
-    - 'lib/sciolyff/interpreter/tournament.rb'
-
-    - 'lib/sciolyff/validator/logger.rb'
-    - 'lib/sciolyff/validator/checker.rb'
-    - 'lib/sciolyff/validator/sections.rb'
-    - 'lib/sciolyff/validator/top_level.rb'
+    - 'lib/sciolyff/interpreter/*'
+    - 'lib/sciolyff/validator/*'
 
 Style/HashEachMethods:
   Enabled: true
