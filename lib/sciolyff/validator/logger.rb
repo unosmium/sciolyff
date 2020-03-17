@@ -23,6 +23,7 @@ module SciolyFF
       return if loglevel < ERROR
 
       @log << "ERROR (invalid SciolyFF): #{msg.capitalize}\n"
+      false # convenient for using logging the error as return value
     end
 
     def warn(msg)

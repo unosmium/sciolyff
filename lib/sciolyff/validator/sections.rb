@@ -19,7 +19,6 @@ module SciolyFF
       return true if missing_sections.empty?
 
       logger.error "missing required sections: #{missing_sections}"
-      false
     end
 
     def no_extra_sections?(rep, logger)
@@ -27,7 +26,6 @@ module SciolyFF
       return true if extras_sections.empty?
 
       logger.error "extra section(s) found: #{extra_sections}"
-      false
     end
 
     def sections_are_lists?(rep, logger)
@@ -35,7 +33,6 @@ module SciolyFF
         next true if value.instance_of? Array
 
         logger.error "section is not a list: #{key}"
-        false
       end
     end
   end
