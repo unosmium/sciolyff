@@ -8,11 +8,12 @@ Gem::Specification.new do |s|
   s.files    = FileList['lib/sciolyff.rb',
                         'lib/sciolyff/*.rb',
                         'lib/sciolyff/interpreter/*.rb',
+                        'lib/sciolyff/validator/*.rb',
                         'bin/*']
   s.license  = 'MIT'
   s.name     = 'sciolyff'
   s.summary  = 'A file format for Science Olympiad tournament results.'
-  s.version  = '0.8.0'
+  s.version  = '1.0.0'
   s.executables << 'sciolyff'
   s.add_runtime_dependency 'minitest', '~> 5.11'
   s.add_runtime_dependency 'optimist', '~> 3.0'

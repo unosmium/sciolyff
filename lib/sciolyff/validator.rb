@@ -9,12 +9,6 @@ module SciolyFF
   class Validator
     require 'sciolyff/validator/logger'
     require 'sciolyff/validator/sections'
-    require 'sciolyff/validator/tournament'
-    require 'sciolyff/validator/event'
-    require 'sciolyff/validator/team'
-    require 'sciolyff/validator/placing'
-    require 'sciolyff/validator/placings'
-    require 'sciolyff/validator/penalty'
 
     def initialize(loglevel = Logger::WARN)
       @logger = Logger.new loglevel
@@ -24,9 +18,9 @@ module SciolyFF
       @logger.flush
 
       if rep_or_file.instance_of? String
-        valid_file?(rep, @logger)
+        valid_file?(rep_or_file, @logger)
       else
-        valid_rep?(rep, @logger)
+        valid_rep?(rep_or_file, @logger)
       end
     end
 
@@ -48,13 +42,14 @@ module SciolyFF
       valid_rep?(rep, logger)
     end
 
-    def valid_rep?(rep, _logger)
+    def valid_rep?(rep, logger)
       unless rep.instance_of? Hash
         logger.error 'improper file structure'
         return false
       end
 
-      true
+      anon = Class.new.extend(Sections)
+      Sections.instance_methods.all? { |im| anon.send im, rep, logger }
     end
   end
 end

@@ -4,7 +4,7 @@ module SciolyFF
   # Top-level sections of a SciolyFF file
   module Validator::Sections
     REQUIRED = %i[
-      Tornament
+      Tournament
       Events
       Teams
       Placings
@@ -18,14 +18,14 @@ module SciolyFF
       missing_sections = REQUIRED - rep.keys
       return true if missing_sections.empty?
 
-      logger.error "missing required sections: #{missing_sections}"
+      logger.error "missing required sections: #{missing_sections.join ', '}"
     end
 
     def no_extra_sections?(rep, logger)
-      extra_sections = REQUIRED + OPTIONAL - rep.keys
-      return true if extras_sections.empty?
+      extra_sections = rep.keys - (REQUIRED + OPTIONAL)
+      return true if extra_sections.empty?
 
-      logger.error "extra section(s) found: #{extra_sections}"
+      logger.error "extra section(s) found: #{extra_sections.join ', '}"
     end
 
     def sections_are_lists?(rep, logger)

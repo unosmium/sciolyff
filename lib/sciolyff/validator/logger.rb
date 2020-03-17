@@ -16,32 +16,32 @@ module SciolyFF
     end
 
     def flush
-      @log = ''
+      @log = String.new
     end
 
     def error(msg)
-      return if loglevel < ERROR
+      return if @loglevel < ERROR
 
-      @log << "ERROR (invalid SciolyFF): #{msg.capitalize}\n"
+      @log << "ERROR (invalid SciolyFF): #{msg}\n"
       false # convenient for using logging the error as return value
     end
 
     def warn(msg)
-      return if loglevel < WARN
+      return if @loglevel < WARN
 
-      @log << "WARNING (still valid SciolyFF): #{msg.capitalize}\n"
+      @log << "WARNING (still valid SciolyFF): #{msg}\n"
     end
 
     def info(msg)
-      return if loglevel < INFO
+      return if @loglevel < INFO
 
-      @log << "INFO: #{msg.capitalize}\n"
+      @log << "INFO: #{msg}\n"
     end
 
     def debug(msg)
-      return if loglevel < DEBUG
+      return if @loglevel < DEBUG
 
-      @log << "DEBUG: #{msg.capitalize}\n"
+      @log << "DEBUG: #{msg}\n"
     end
   end
 end

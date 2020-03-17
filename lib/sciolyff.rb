@@ -11,6 +11,7 @@ require 'sciolyff/placings'
 require 'sciolyff/scores'
 require 'sciolyff/penalties'
 require 'sciolyff/interpreter'
+require 'sciolyff/validator'
 
 # API methods for the Scioly File Format
 #
