@@ -16,7 +16,9 @@ Style/ClassAndModuleChildren:
     - 'lib/sciolyff/interpreter/tournament.rb'
 
     - 'lib/sciolyff/validator/logger.rb'
+    - 'lib/sciolyff/validator/checker.rb'
     - 'lib/sciolyff/validator/sections.rb'
+    - 'lib/sciolyff/validator/top_level.rb'
 
 Style/HashEachMethods:
   Enabled: true

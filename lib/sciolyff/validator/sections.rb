@@ -1,37 +1,27 @@
 # frozen_string_literal: true
 
 module SciolyFF
-  # Top-level sections of a SciolyFF file
+  # Generic tests for (sub-)sections and types. Including classes must define
+  # two hashes REQUIRED and OPTIONAL (see other files in this dir for examples)
   module Validator::Sections
-    REQUIRED = {
-      Tournament: Hash,
-      Events: Array,
-      Teams: Array,
-      Placings: Array
-    }.freeze
-
-    OPTIONAL = {
-      Penalties: Array
-    }.freeze
-
     def all_required_sections?(rep, logger)
-      missing_sections = REQUIRED.keys - rep.keys
-      return true if missing_sections.empty?
+      missing = self.class::REQUIRED.keys - rep.keys
+      return true if missing.empty?
 
-      logger.error "missing required sections: #{missing_sections.join ', '}"
+      logger.error "missing required sections: #{missing.join ', '}"
     end
 
     def no_extra_sections?(rep, logger)
-      extra_sections = rep.keys - (REQUIRED.keys + OPTIONAL.keys)
-      return true if extra_sections.empty?
+      extra = rep.keys - (self.class::REQUIRED.keys + self.class::OPTIONAL.keys)
+      return true if extra.empty?
 
-      logger.error "extra section(s) found: #{extra_sections.join ', '}"
+      logger.error "extra section(s) found: #{extra.join ', '}"
     end
 
     def sections_are_correct_type?(rep, logger)
+      correct_types = self.class::REQUIRED.merge(self.class::OPTIONAL)
       rep.all? do |key, value|
-        correct_type = (REQUIRED.merge OPTIONAL)[key]
-        next true if value.instance_of? correct_type
+        next true if value.instance_of? correct_types[key]
 
         logger.error "section is not #{correct_type}: #{key}"
       end

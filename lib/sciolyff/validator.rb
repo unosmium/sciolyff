@@ -8,7 +8,10 @@ module SciolyFF
   # be directly converted to YAML) comply with spec (i.e. safe for interpreting)
   class Validator
     require 'sciolyff/validator/logger'
+    require 'sciolyff/validator/checker'
     require 'sciolyff/validator/sections'
+
+    require 'sciolyff/validator/top_level'
 
     def initialize(loglevel = Logger::WARN)
       @logger = Logger.new loglevel
@@ -48,8 +51,9 @@ module SciolyFF
         return false
       end
 
-      anon = Class.new.extend(Sections)
-      Sections.instance_methods.all? { |im| anon.send im, rep, logger }
+      anon = TopLevel.new
+      checks = TopLevel.instance_methods - Checker.instance_methods
+      checks.all? { |im| anon.send im, rep, logger }
     end
   end
 end
