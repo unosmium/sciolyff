@@ -6,8 +6,9 @@ require 'date'
 module SciolyFF
   # Checks if SciolyFF YAML files and/or representations (i.e. hashes that can
   # be directly converted to YAML) comply with spec (i.e. safe for interpreting)
-  module Validator
+  class Validator
     require 'sciolyff/validator/logger'
+    require 'sciolyff/validator/sections'
     require 'sciolyff/validator/tournament'
     require 'sciolyff/validator/event'
     require 'sciolyff/validator/team'
@@ -15,14 +16,22 @@ module SciolyFF
     require 'sciolyff/validator/placings'
     require 'sciolyff/validator/penalty'
 
-    def self.valid?(rep_or_file, loglevel = WARN)
-      logger = Logger.new loglevel
+    def initialize(loglevel = Logger::WARN)
+      @logger = Logger.new loglevel
+    end
+
+    def valid?(rep_or_file)
+      @logger.flush
 
       if rep_or_file.instance_of? String
-        valid_file?(rep, logger)
+        valid_file?(rep, @logger)
       else
-        valid_rep?(rep, logger)
+        valid_rep?(rep, @logger)
       end
+    end
+
+    def last_log
+      @logger.log
     end
 
     private
@@ -34,14 +43,16 @@ module SciolyFF
         symbolize_names: true
       )
     rescue StandardError => e
-      puts 'Error: could not read file as YAML.'
-      warn e.message
+      logger.error "could not read file as YAML:\n#{e.message}"
     else
       valid_rep?(rep, logger)
     end
 
     def valid_rep?(rep, _logger)
-      return false unless rep.instance_of? Hash
+      unless rep.instance_of? Hash
+        logger.error 'improper file structure'
+        return false
+      end
 
       true
     end

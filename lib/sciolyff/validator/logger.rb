@@ -1,41 +1,46 @@
 # frozen_string_literal: true
 
 module SciolyFF
-  module Validator
+  # Prints extra information produced by validation process
+  class Validator::Logger
     ERROR = 0
     WARN  = 1
     INFO  = 2
     DEBUG = 3
 
-    # Prints extra information produced by validation process
-    class Logger
-      def initialize(loglevel)
-        @loglevel = loglevel
-      end
+    attr_reader :log
 
-      def error(msg)
-        return if loglevel < ERROR
+    def initialize(loglevel)
+      @loglevel = loglevel
+      flush
+    end
 
-        puts "ERROR (invalid SciolyFF): #{msg}"
-      end
+    def flush
+      @log = ''
+    end
 
-      def warn(msg)
-        return if loglevel < WARN
+    def error(msg)
+      return if loglevel < ERROR
 
-        puts "WARNING (still valid SciolyFF): #{msg}"
-      end
+      @log << "ERROR (invalid SciolyFF): #{msg.capitalize}\n"
+    end
 
-      def info(msg)
-        return if loglevel < INFO
+    def warn(msg)
+      return if loglevel < WARN
 
-        puts "INFO: #{msg}"
-      end
+      @log << "WARNING (still valid SciolyFF): #{msg.capitalize}\n"
+    end
 
-      def debug(msg)
-        return if loglevel < DEBUG
+    def info(msg)
+      return if loglevel < INFO
 
-        puts "DEBUG: #{msg}"
-      end
+      @log << "INFO: #{msg.capitalize}\n"
+    end
+
+    def debug(msg)
+      return if loglevel < DEBUG
+
+      @log << "DEBUG: #{msg.capitalize}\n"
     end
   end
 end
