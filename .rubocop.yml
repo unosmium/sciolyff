@@ -14,6 +14,10 @@ Metrics/AbcSize:
   Exclude:
     - 'lib/sciolyff/validator.rb'
 
+Metrics/MethodLength:
+  Exclude:
+    - 'lib/sciolyff/validator/*'
+
 Style/HashEachMethods:
   Enabled: true
 
