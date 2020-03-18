@@ -6,14 +6,15 @@ require 'sciolyff/validator/sections'
 module SciolyFF
   # One raw of a placing in the Placings section of a SciolyFF file
   class Validator::Raw < Validator::Checker
-    REQUIRED = {
-      score: Float
-    }.freeze
-
-    OPTIONAL = {
-      'tiebreaker rank': Integer
-    }.freeze
-
     include Validator::Sections
+
+    def initialize
+      @required = {
+        score: Float
+      }
+      @optional = {
+        'tiebreaker rank': Integer
+      }
+    end
   end
 end
