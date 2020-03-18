@@ -10,6 +10,10 @@ Style/ClassAndModuleChildren:
     - 'lib/sciolyff/interpreter/*'
     - 'lib/sciolyff/validator/*'
 
+Metrics/AbcSize:
+  Exclude:
+    - 'lib/sciolyff/validator.rb'
+
 Style/HashEachMethods:
   Enabled: true
 
