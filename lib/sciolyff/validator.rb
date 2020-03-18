@@ -64,11 +64,13 @@ module SciolyFF
     end
 
     def level_two_checks(rep, logger)
+      events = rep[:Events]
+      teams = rep[:Teams]
       [
-        check(Events, rep[:Events], logger),
-        check(Teams, rep[:Teams], logger),
-        rep[:Placings].all? { |p| check(Placing, p, logger) },
-        rep[:Penalties]&.all? { |p| check(Penalty, p, logger) }
+        check(Events, events, logger),
+        check(Teams, teams, logger),
+        rep[:Placings].all? { |p| check(Placing, p, logger, events, teams) },
+        rep[:Penalties]&.all? { |p| check(Penalty, p, logger, teams) }
       ].compact.all?
     end
 
@@ -97,8 +99,8 @@ module SciolyFF
       valid_rep?(rep, logger)
     end
 
-    def check(klass, rep, logger)
-      anon = klass.new
+    def check(klass, rep, logger, *restrictions)
+      anon = klass.new(*restrictions)
       checks = klass.instance_methods - Checker.instance_methods
       checks.all? { |im| anon.send im, rep, logger }
     end

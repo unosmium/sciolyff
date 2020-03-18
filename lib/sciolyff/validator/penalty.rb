@@ -8,9 +8,9 @@ module SciolyFF
   class Validator::Penalty < Validator::Checker
     include Validator::Sections
 
-    def initialize
+    def initialize(teams)
       @required = {
-        team: Integer,
+        team: teams.map { |t| t[:number] },
         points: Integer
       }
       @optional = {

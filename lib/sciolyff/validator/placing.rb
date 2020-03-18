@@ -8,10 +8,10 @@ module SciolyFF
   class Validator::Placing < Validator::Checker
     include Validator::Sections
 
-    def initialize
+    def initialize(events, teams)
       @required = {
-        event: String,
-        team: Integer
+        event: events.map { |e| e[:name] },
+        team: teams.map { |t| t[:number] }
       }
       @optional = {
         place: Integer,
