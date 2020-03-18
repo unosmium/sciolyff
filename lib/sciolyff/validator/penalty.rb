@@ -11,6 +11,9 @@ module SciolyFF
       points: Integer
     }.freeze
 
+    OPTIONAL = {
+    }.freeze
+
     include Validator::Sections
   end
 end

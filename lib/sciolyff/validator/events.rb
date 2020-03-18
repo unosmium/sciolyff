@@ -6,5 +6,13 @@ require 'sciolyff/validator/sections'
 module SciolyFF
   # All events in the Events section of a SciolyFF file
   class Validator::Events < Validator::Checker
+    def unique_names?(events, logger)
+      names = events.map { |event| event[:name] }
+      events.all? do |event|
+        next true if names.count event[:name] == 1
+
+        logger.error "duplicate event name: #{event[:name]}"
+      end
+    end
   end
 end

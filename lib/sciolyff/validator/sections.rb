@@ -26,7 +26,7 @@ module SciolyFF
         elsif value.instance_of? correct_types[key]
           true
         else
-          logger.error "section is not #{correct_types[key]}: #{key}"
+          logger.error "#{key}: #{value} is not #{correct_types[key]}"
         end
       end
     end
