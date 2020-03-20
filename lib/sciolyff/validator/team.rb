@@ -8,19 +8,18 @@ module SciolyFF
   class Validator::Team < Validator::Checker
     include Validator::Sections
 
-    def initialize
-      @required = {
-        number: Integer,
-        school: String,
-        state: String
-      }
-      @optional = {
-        'school abbreviation': String,
-        suffix: String,
-        city: String,
-        disqualified: [true, false],
-        exhibition: [true, false]
-      }
-    end
+    REQUIRED = {
+      number: Integer,
+      school: String,
+      state: String
+    }.freeze
+
+    OPTIONAL = {
+      'school abbreviation': String,
+      suffix: String,
+      city: String,
+      disqualified: [true, false],
+      exhibition: [true, false]
+    }.freeze
   end
 end

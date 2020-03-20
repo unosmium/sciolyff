@@ -8,20 +8,19 @@ module SciolyFF
   class Validator::Placing < Validator::Checker
     include Validator::Sections
 
-    def initialize(events, teams)
-      @required = {
-        event: events.map { |e| e[:name] },
-        team: teams.map { |t| t[:number] }
-      }
-      @optional = {
-        place: Integer,
-        participated: [true, false],
-        disqualified: [true, false],
-        exempt: [true, false],
-        tie: [true, false],
-        unknown: [true, false],
-        raw: Hash
-      }
-    end
+    REQUIRED = {
+      event: String,
+      team: Integer
+    }.freeze
+
+    OPTIONAL = {
+      place: (1..teams.count).to_a,
+      participated: [true, false],
+      disqualified: [true, false],
+      exempt: [true, false],
+      tie: [true, false],
+      unknown: [true, false],
+      raw: Hash
+    }.freeze
   end
 end

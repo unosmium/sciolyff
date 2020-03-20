@@ -8,16 +8,15 @@ module SciolyFF
   class Validator::TopLevel < Validator::Checker
     include Validator::Sections
 
-    def initialize
-      @required = {
-        Tournament: Hash,
-        Events: Array,
-        Teams: Array,
-        Placings: Array
-      }
-      @optional = {
-        Penalties: Array
-      }
-    end
+    REQUIRED = {
+      Tournament: Hash,
+      Events: Array,
+      Teams: Array,
+      Placings: Array
+    }.freeze
+
+    OPTIONAL = {
+      Penalties: Array
+    }.freeze
   end
 end

@@ -8,15 +8,14 @@ module SciolyFF
   class Validator::Event < Validator::Checker
     include Validator::Sections
 
-    def initialize
-      @required = {
-        name: String
-      }
-      @optional = {
-        trial: [true, false],
-        trialed: [true, false],
-        scoring: %w[high low]
-      }
-    end
+    REQUIRED = {
+      name: String
+    }.freeze
+
+    OPTIONAL = {
+      trial: [true, false],
+      trialed: [true, false],
+      scoring: %w[high low]
+    }.freeze
   end
 end

@@ -8,13 +8,12 @@ module SciolyFF
   class Validator::Raw < Validator::Checker
     include Validator::Sections
 
-    def initialize
-      @required = {
-        score: Float
-      }
-      @optional = {
-        'tiebreaker rank': Integer
-      }
-    end
+    REQUIRED = {
+      score: Float
+    }.freeze
+
+    OPTIONAL = {
+      'tiebreaker rank': Integer
+    }.freeze
   end
 end

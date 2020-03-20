@@ -8,24 +8,23 @@ module SciolyFF
   class Validator::Tournament < Validator::Checker
     include Validator::Sections
 
-    def initialize
-      @required = {
-        location: String,
-        level: %w[Invitational Regionals States Nationals],
-        division: %w[A B C],
-        year: Integer,
-        date: Date
-      }
-      @optional = {
-        name: String,
-        state: String,
-        'short name': String,
-        'worst placings dropped': Integer,
-        'exempt placings dropped': Integer,
-        'maximum place': Integer,
-        'per-event n': [true, false],
-        'n offset': Integer
-      }
-    end
+    REQUIRED = {
+      location: String,
+      level: %w[Invitational Regionals States Nationals],
+      division: %w[A B C],
+      year: Integer,
+      date: Date
+    }.freeze
+
+    OPTIONAL = {
+      name: String,
+      state: String,
+      'short name': String,
+      'worst placings dropped': Integer,
+      'exempt placings dropped': Integer,
+      'maximum place': Integer,
+      'per-event n': [true, false],
+      'n offset': Integer
+    }.freeze
   end
 end
