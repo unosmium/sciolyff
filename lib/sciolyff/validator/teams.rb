@@ -25,7 +25,7 @@ module SciolyFF
     def initialize(rep)
       @teams = rep[:Teams]
       @numbers = @teams.map { |t| t[:number] }
-      @schools = @teams.group_by { |t| [t[:school], t[:state], t[:city]] }
+      @schools = @teams.group_by { |t| [t[:school], t[:city], t[:state]] }
     end
 
     def unique_number?(team, logger)
@@ -35,10 +35,24 @@ module SciolyFF
     end
 
     def unique_suffix_per_school?(team, logger)
-      full_school = [team[:school], team[:state], team[:city]]
-      return true if @schools[full_school].count(team[:suffix]) <= 1
+      full_school = [team[:school], team[:city], team[:state]]
+      return true if @schools[full_school].count do |other|
+        !other[:suffix].nil? && other[:suffix] == team[:suffix]
+      end <= 1
 
-      logger.error "#{team[:school]} has the same suffix for multiple teams"
+      logger.error "team number #{team[:number]} has the same suffix "\
+        'as another team from the same school'
+    end
+
+    def unambiguous_cities_per_school?(team, logger)
+      return true unless @schools.keys.find do |other|
+        team[:city].nil? && !other[1].nil? &&
+        team[:school] == other[0] &&
+        team[:state] == other[2]
+      end
+
+      logger.error "city for team number #{team[:number]} is ambiguous, "\
+        'value is required for unambiguity'
     end
   end
 end
