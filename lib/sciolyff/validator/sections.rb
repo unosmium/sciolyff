@@ -22,8 +22,8 @@ module SciolyFF
       correct_types = self.class::REQUIRED.merge self.class::OPTIONAL
       rep.all? do |key, value|
         correct = correct_types[key]
-        next if (correct.instance_of?(Array) && correct.include?(value)) ||
-                (value.instance_of? correct)
+        next true if (correct.instance_of?(Array) && correct.include?(value)) ||
+                     (value.instance_of? correct)
 
         logger.error "#{key}: #{value} is not #{correct}"
       end

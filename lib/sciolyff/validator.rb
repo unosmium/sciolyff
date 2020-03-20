@@ -13,17 +13,15 @@ module SciolyFF
 
     require 'sciolyff/validator/top_level'
     require 'sciolyff/validator/tournament'
-    require 'sciolyff/validator/event'
     require 'sciolyff/validator/events'
-    require 'sciolyff/validator/team'
     require 'sciolyff/validator/teams'
-    require 'sciolyff/validator/placing'
     require 'sciolyff/validator/placings'
-    require 'sciolyff/validator/penalty'
-    require 'sciolyff/validator/raw'
+    require 'sciolyff/validator/penalties'
+    require 'sciolyff/validator/raws'
 
     def initialize(loglevel = Logger::WARN)
       @logger = Logger.new loglevel
+      @checkers = {}
     end
 
     def valid?(rep_or_file)
@@ -48,43 +46,10 @@ module SciolyFF
         return false
       end
 
-      check(TopLevel, rep, logger) &&
-        level_one_checks(rep, logger) &&
-        level_two_checks(rep, logger) &&
-        level_three_checks(rep, logger) &&
-        level_four_checks(rep, logger)
-    end
+      result = check_all(rep, logger)
 
-    def level_one_checks(rep, logger)
-      [
-        check(Tournament, rep[:Tournament], logger),
-        rep[:Events].all? { |e| check(Event, e, logger) },
-        rep[:Teams].all? { |t| check(Team, t, logger) }
-      ].all?
-    end
-
-    def level_two_checks(rep, logger)
-      events = rep[:Events]
-      teams = rep[:Teams]
-      [
-        check(Events, events, logger),
-        check(Teams, teams, logger),
-        rep[:Placings].all? { |p| check(Placing, p, logger, events, teams) },
-        rep[:Penalties]&.all? { |p| check(Penalty, p, logger, teams) }
-      ].compact.all?
-    end
-
-    def level_three_checks(rep, logger)
-      [
-        check(Placings, rep[:Placings], logger)
-      ].all?
-    end
-
-    def level_four_checks(rep, logger)
-      [
-        rep[:Placings]
-          .map { |p| p[:raw] }.compact.all? { |r| check(Raw, r, logger) }
-      ].compact.all?
+      @checkers.clear # aka this method is not thread-safe
+      result
     end
 
     def valid_file?(path, logger)
@@ -99,10 +64,28 @@ module SciolyFF
       valid_rep?(rep, logger)
     end
 
-    def check(klass, rep, logger, *restrictions)
-      anon = klass.new(*restrictions)
+    def check_all(rep, logger)
+      check(TopLevel, rep, rep, logger) &&
+        check(Tournament, rep, rep[:Tournament], logger) &&
+        [Events, Teams, Placings, Penalties].all? do |klass|
+          check_list(klass, rep, logger)
+        end &&
+        rep[:Placings].map { |p| p[:raw] }.compact.all? do |r|
+          check(Raws, rep, r, logger)
+        end
+    end
+
+    def check_list(klass, rep, logger)
+      key = klass.to_s.split('::').last.to_sym
+      return true unless rep.has_key? key # ignore optional sections
+
+      rep[key].map { |e| check(klass, rep, e, logger) }.all?
+    end
+
+    def check(klass, top_level_rep, rep, logger)
+      @checkers[klass] ||= klass.new top_level_rep
       checks = klass.instance_methods - Checker.instance_methods
-      checks.all? { |im| anon.send im, rep, logger }
+      checks.all? { |im| @checkers[klass].send im, rep, logger }
     end
   end
 end

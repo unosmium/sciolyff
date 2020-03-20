@@ -3,5 +3,7 @@
 module SciolyFF
   # An empty base class to ensure consistent inheritance. All instance methods
   # in children classes should take the arguments rep and logger.
-  class Validator::Checker; end
+  class Validator::Checker
+    def initialize(rep); end
+  end
 end

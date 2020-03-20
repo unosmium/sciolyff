@@ -4,7 +4,7 @@ require 'sciolyff/validator/checker'
 require 'sciolyff/validator/sections'
 
 module SciolyFF
-  # Tournament section of a SciolyFF file
+  # Checks for Tournament section of a SciolyFF file
   class Validator::Tournament < Validator::Checker
     include Validator::Sections
 

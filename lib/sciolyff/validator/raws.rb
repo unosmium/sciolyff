@@ -4,18 +4,16 @@ require 'sciolyff/validator/checker'
 require 'sciolyff/validator/sections'
 
 module SciolyFF
-  # One event in the Events section of a SciolyFF file
-  class Validator::Event < Validator::Checker
+  # Checks for one raw of a placing in the Placings section of a SciolyFF file
+  class Validator::Raws < Validator::Checker
     include Validator::Sections
 
     REQUIRED = {
-      name: String
+      score: Float
     }.freeze
 
     OPTIONAL = {
-      trial: [true, false],
-      trialed: [true, false],
-      scoring: %w[high low]
+      'tiebreaker rank': Integer
     }.freeze
   end
 end

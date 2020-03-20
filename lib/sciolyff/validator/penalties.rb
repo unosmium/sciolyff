@@ -4,8 +4,8 @@ require 'sciolyff/validator/checker'
 require 'sciolyff/validator/sections'
 
 module SciolyFF
-  # One event in the Events section of a SciolyFF file
-  class Validator::Penalty < Validator::Checker
+  # Checks for one penalty in the Penalties section of a SciolyFF file
+  class Validator::Penalties < Validator::Checker
     include Validator::Sections
 
     REQUIRED = {
