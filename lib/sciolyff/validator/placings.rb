@@ -52,18 +52,18 @@ module SciolyFF
       logger.error "duplicate #{placing_log(placing)}"
     end
 
-    def place_makes_sense?(placing, logger)
+    def having_a_place_makes_sense?(placing, logger)
       return true unless placing[:place] &&
                          (placing[:participated] == false ||
                           placing[:disqualified] ||
                           placing[:unknown] ||
                           placing[:raw])
 
-      logger.error "place: #{placing[:place]} does not make sense for "\
+      logger.error "having a place does not make sense for "\
         "#{placing_log(placing)}"
     end
 
-    def raw_makes_sense?(placing, logger)
+    def having_a_raw_makes_sense?(placing, logger)
       return true unless placing[:raw] &&
                          (placing[:participated] == false ||
                           placing[:disqualified] ||
