@@ -77,7 +77,7 @@ module SciolyFF
 
     def check_list(klass, rep, logger)
       key = klass.to_s.split('::').last.to_sym
-      return true unless rep.has_key? key # ignore optional sections
+      return true unless rep.key? key # ignore optional sections like Penalties
 
       rep[key].map { |e| check(klass, rep, e, logger) }.all?
     end
