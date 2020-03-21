@@ -38,5 +38,33 @@ module SciolyFF
       logger.error "'event: #{event[:name]}' has incorrect number of "\
         "placings (#{count} instead of #{@teams})"
     end
+
+    def ties_marked?(event, logger)
+      unmarked_ties = placings_by_place(event).select do |_place, placings|
+        placings.count { |p| !p[:tie] } > 1
+      end
+      return true if unmarked_ties.empty?
+
+      logger.error "'event: #{event[:name]}' has unmarked ties at "\
+        "place #{unmarked_ties.keys.join ', '}"
+    end
+
+    def ties_paired?(event, logger)
+      unpaired_ties = placings_by_place(event).select do |_place, placings|
+        placings.count { |p| p[:tie] } == 1
+      end
+      return true if unpaired_ties.empty?
+
+      logger.error "'event: #{event[:name]}' has unpaired ties at "\
+        "place #{unpaired_ties.keys.join ', '}"
+    end
+
+    private
+
+    def placings_by_place(event)
+      @placings[event[:name]]
+        .select { |p| p[:place] }
+        .group_by { |p| p[:place] }
+    end
   end
 end
