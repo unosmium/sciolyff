@@ -20,26 +20,26 @@ module SciolyFF
     end
 
     def error(msg)
-      return if @loglevel < ERROR
+      return false if @loglevel < ERROR
 
       @log << "ERROR (invalid SciolyFF): #{msg}\n"
       false # convenient for using logging the error as return value
     end
 
     def warn(msg)
-      return if @loglevel < WARN
+      return true if @loglevel < WARN
 
       @log << "WARNING (still valid SciolyFF): #{msg}\n"
     end
 
     def info(msg)
-      return if @loglevel < INFO
+      return true if @loglevel < INFO
 
       @log << "INFO: #{msg}\n"
     end
 
     def debug(msg)
-      return if @loglevel < DEBUG
+      return true if @loglevel < DEBUG
 
       @log << "DEBUG: #{msg}\n"
     end
