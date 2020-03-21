@@ -24,20 +24,21 @@ module SciolyFF
     }.freeze
 
     def initialize(rep)
-      @events = rep[:Events].map { |e| e[:name] }
-      @teams = rep[:Teams].map { |t| t[:number] }
+      @event_names = rep[:Events].map { |e| e[:name] }
+      @team_numbers = rep[:Teams].map { |t| t[:number] }
+      @events = rep[:Events]
       @placings = rep[:Placings]
     end
 
     def matching_event?(placing, logger)
-      return true if @events.include? placing[:event]
+      return true if @event_names.include? placing[:event]
 
       logger.error "'event: #{placing[:event]}' in Placings "\
         'does not match any event name in Events'
     end
 
     def matching_team?(placing, logger)
-      return true if @teams.include? placing[:team]
+      return true if @team_numbers.include? placing[:team]
 
       logger.error "'team: #{placing[:team]}' in Placings "\
         'does not match any team number in Teams'
@@ -48,8 +49,61 @@ module SciolyFF
         placing[:event] == other[:event] && placing[:team] == other[:team]
       end == 1
 
-      logger.error "duplicate placing with 'team: #{placing[:team]}' "\
-        "and 'event: #{placing[:event]}'"
+      logger.error "duplicate #{placing_log(placing)}"
+    end
+
+    def place_makes_sense?(placing, logger)
+      return true unless placing[:place] &&
+                         (placing[:participated] == false ||
+                          placing[:disqualified] ||
+                          placing[:unknown] ||
+                          placing[:raw])
+
+      logger.error "place: #{placing[:place]} does not make sense for "\
+        "#{placing_log(placing)}"
+    end
+
+    def raw_makes_sense?(placing, logger)
+      return true unless placing[:raw] &&
+                         (placing[:participated] == false ||
+                          placing[:disqualified] ||
+                          placing[:unknown] ||
+                          placing[:place])
+
+      logger.error 'having raw section does not make sense for '\
+        "#{placing_log(placing)}"
+    end
+
+    def possible_participated_disqualified_combination?(placing, logger)
+      return true unless placing[:participated] == false &&
+                         placing[:disqualified]
+
+      logger.error 'impossible participation-disqualified combination for '\
+        "#{placing_log(placing)}"
+    end
+
+    def possible_unknown_disqualified_combination?(placing, logger)
+      return true unless placing[:unknown] && placing[:disqualified]
+
+      logger.error 'impossible unknown-disqualified combination for '\
+        "#{placing_log(placing)}"
+    end
+
+    def unknown_allowed?(placing, logger)
+      event = @events.find { |e| e[:name] == placing[:event] }
+      return true unless placing[:unknown] &&
+                         !placing[:exempt] &&
+                         !event[:trial] &&
+                         !event[:trialed]
+
+      logger.error "unknown place not allowed for #{placing_log(placing)} "\
+        '(either placing must be exempt or event must be trial/trialed)'
+    end
+
+    private
+
+    def placing_log(placing)
+      "placing with 'team: #{placing[:team]}' and 'event: #{placing[:event]}'"
     end
   end
 end
