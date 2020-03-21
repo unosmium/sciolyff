@@ -41,7 +41,7 @@ module SciolyFF
     def debug(msg)
       return true if @loglevel < DEBUG
 
-      @log << "DEBUG: #{msg}\n"
+      @log << "DEBUG (possible intentional exception): #{msg}\n"
     end
   end
 end
