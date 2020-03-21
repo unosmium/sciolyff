@@ -21,12 +21,22 @@ module SciolyFF
     def initialize(rep)
       @events = rep[:Events]
       @names = @events.map { |e| e[:name] }
+      @placings = rep[:Placings].group_by { |p| p[:event] }
+      @teams = rep[:Teams].count
     end
 
     def unique_name?(event, logger)
       return true if @names.count(event[:name]) == 1
 
       logger.error "duplicate event name: #{event[:name]}"
+    end
+
+    def placings_for_all_teams?(event, logger)
+      count = @placings[event[:name]].count
+      return true if count == @teams
+
+      logger.error "'event: #{event[:name]}' has incorrect number of "\
+        "placings (#{count} instead of #{@teams})"
     end
   end
 end

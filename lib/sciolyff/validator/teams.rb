@@ -26,6 +26,8 @@ module SciolyFF
       @teams = rep[:Teams]
       @numbers = @teams.map { |t| t[:number] }
       @schools = @teams.group_by { |t| [t[:school], t[:city], t[:state]] }
+      @placings = rep[:Placings].group_by { |p| p[:team] }
+      @exempt = rep[:Tournament][:'exempt placings'] || 0
     end
 
     def unique_number?(team, logger)
@@ -53,6 +55,14 @@ module SciolyFF
 
       logger.error "city for team number #{team[:number]} is ambiguous, "\
         'value is required for unambiguity'
+    end
+
+    def correct_number_of_exempt_placings?(team, logger)
+      count = @placings[team[:number]].count { |p| p[:exempt] }
+      return true if count == @exempt
+
+      logger.error "'team: #{team[:number]}' has incorrect number of"\
+        "exempt placings (#{count} insteand of #{@exempt})"
     end
   end
 end
