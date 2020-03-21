@@ -26,7 +26,7 @@ module SciolyFF
     def initialize(rep)
       @event_names = rep[:Events].map { |e| e[:name] }
       @team_numbers = rep[:Teams].map { |t| t[:number] }
-      @events = rep[:Events]
+      @events_by_name = rep[:Events].group_by { |e| e[:name] }
       @placings = rep[:Placings]
     end
 
@@ -90,7 +90,7 @@ module SciolyFF
     end
 
     def unknown_allowed?(placing, logger)
-      event = @events.find { |e| e[:name] == placing[:event] }
+      event = @events_by_name[placing[:event]]
       return true unless placing[:unknown] &&
                          !placing[:exempt] &&
                          !event[:trial] &&
