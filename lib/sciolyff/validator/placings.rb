@@ -24,10 +24,14 @@ module SciolyFF
     }.freeze
 
     def initialize(rep)
-      @event_names = rep[:Events].map { |e| e[:name] }
-      @team_numbers = rep[:Teams].map { |t| t[:number] }
       @events_by_name = rep[:Events].group_by { |e| e[:name] }
+                                    .transform_values(&:first)
+      @teams_by_number = rep[:Teams].group_by { |t| t[:number] }
+                                    .transform_values(&:first)
+      @event_names = @events_by_name.keys
+      @team_numbers = @teams_by_number.keys
       @placings = rep[:Placings]
+      @maximum_place = rep[:Tournament][:'maximum place']
     end
 
     def matching_event?(placing, logger)
@@ -91,10 +95,8 @@ module SciolyFF
 
     def unknown_allowed?(placing, logger)
       event = @events_by_name[placing[:event]]
-      return true unless placing[:unknown] &&
-                         !placing[:exempt] &&
-                         !event[:trial] &&
-                         !event[:trialed]
+      team = @teams_by_number[placing[:team]]
+      return true unless invalid_unknown?(placing, event, team)
 
       logger.error "unknown place not allowed for #{placing_log(placing)} "\
         '(either placing must be exempt or event must be trial/trialed)'
@@ -104,6 +106,15 @@ module SciolyFF
 
     def placing_log(placing)
       "placing with 'team: #{placing[:team]}' and 'event: #{placing[:event]}'"
+    end
+
+    def invalid_unknown?(placing, event, team)
+      placing[:unknown] &&
+        @maximum_place.nil? &&
+        !placing[:exempt] &&
+        !event[:trial] &&
+        !event[:trialed] &&
+        !team[:exhibition]
     end
   end
 end
