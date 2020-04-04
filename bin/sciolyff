@@ -2,11 +2,10 @@
 # frozen_string_literal: true
 
 require 'optimist'
-require 'yaml'
 require 'sciolyff'
 
 opts = Optimist.options do
-  version 'sciolyff 0.8.0'
+  version 'sciolyff 1.0.0'
   banner <<~STRING
     Checks if a given file is in the Scioly File Format
 
@@ -15,15 +14,13 @@ opts = Optimist.options do
 
     where [options] are:
   STRING
-  opt :verbose, 'Run Minitest in verbose mode'
-end
-
-if ARGV.first.nil? || !File.exist?(ARGV.first)
-  puts "Error: file '#{ARGV.first}' not found."
-  puts 'Try --help for help.'
-  exit 1
+  opt :loglevel, 'Log verbosity from 0 to 3', default: 1
 end
 
 puts 'More than one file given, ignoring all but first.' if ARGV.length > 1
 
-SciolyFF.validate_file(ARGV.first, opts: opts)
+validator = SciolyFF::Validator.new opts[:loglevel]
+validity = validator.valid? ARGV.first
+print validator.last_log
+
+exit validity
