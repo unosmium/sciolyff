@@ -27,6 +27,10 @@ module SciolyFF
       'n offset': Integer
     }.freeze
 
+    def initialize(rep)
+      @maximum_place = rep[:Teams].count { |t| !t[:exhibition] }
+    end
+
     def name_for_not_states_or_nationals?(tournament, logger)
       level = tournament[:level]
       return true if %w[States Nationals].include?(level) || tournament[:name]
@@ -54,6 +58,14 @@ module SciolyFF
 
       logger.error "'short name: #{tournament[:'short name']}' for Tournament "\
         "is longer than normal 'name: #{tournament[:name]}'"
+    end
+
+    def maximum_place_within_range?(tournament, logger)
+      return true if tournament[:'maximum place'].nil? ||
+                     tournament[:'maximum place'].between?(1, @maximum_place)
+
+      logger.error "custom 'maximum place: #{tournament[:'maximum place']}' "\
+        "is not within range [1, #{@maximum_place}]"
     end
   end
 end
