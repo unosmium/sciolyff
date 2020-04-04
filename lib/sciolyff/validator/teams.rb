@@ -16,6 +16,7 @@ module SciolyFF
 
     OPTIONAL = {
       'school abbreviation': String,
+      subdivision: String,
       suffix: String,
       city: String,
       disqualified: [true, false],
@@ -61,7 +62,7 @@ module SciolyFF
       count = @placings[team[:number]].count { |p| p[:exempt] }
       return true if count == @exempt
 
-      logger.error "'team: #{team[:number]}' has incorrect number of"\
+      logger.error "'team: #{team[:number]}' has incorrect number of "\
         "exempt placings (#{count} insteand of #{@exempt})"
     end
   end

@@ -21,7 +21,7 @@ module SciolyFF
       state: String,
       'short name': String,
       'worst placings dropped': Integer,
-      'exempt placings dropped': Integer,
+      'exempt placings': Integer,
       'maximum place': Integer,
       'per-event n': [true, false],
       'n offset': Integer
