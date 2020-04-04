@@ -60,10 +60,7 @@ module SciolyFF
     end
 
     def no_gaps_in_places?(event, logger)
-      places = placings_by_place(event).map do |place, placings|
-        # expand ties, e.g. [6, 6, 8] -> [6, 7, 8]
-        (place..(place + (placings.size - 1))).to_a
-      end.flatten
+      places = places_with_expanded_ties(event)
       gaps = (places.min..places.max).to_a - places
       return true if gaps.empty?
 
@@ -77,6 +74,13 @@ module SciolyFF
       @placings[event[:name]]
         .select { |p| p[:place] }
         .group_by { |p| p[:place] }
+    end
+
+    def places_with_expanded_ties(event)
+      # e.g. [6, 6, 8] -> [6, 7, 8]
+      placings_by_place(event).map do |place, placings|
+        (place..(place + (placings.size - 1))).to_a
+      end.flatten
     end
   end
 end

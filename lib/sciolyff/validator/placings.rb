@@ -59,7 +59,7 @@ module SciolyFF
                           placing[:unknown] ||
                           placing[:raw])
 
-      logger.error "having a place does not make sense for "\
+      logger.error 'having a place does not make sense for '\
         "#{placing_log(placing)}"
     end
 
