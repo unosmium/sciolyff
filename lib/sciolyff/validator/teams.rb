@@ -60,7 +60,7 @@ module SciolyFF
 
     def correct_number_of_exempt_placings?(team, logger)
       count = @placings[team[:number]].count { |p| p[:exempt] }
-      return true if count == @exempt
+      return true if count == @exempt || team[:exhibition]
 
       logger.error "'team: #{team[:number]}' has incorrect number of "\
         "exempt placings (#{count} insteand of #{@exempt})"
