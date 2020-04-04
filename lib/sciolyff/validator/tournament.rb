@@ -54,7 +54,8 @@ module SciolyFF
     end
 
     def short_name_is_short?(tournament, logger)
-      return true if tournament[:'short name'].length < tournament[:name].length
+      return true if tournament[:'short name'].nil? ||
+                     tournament[:'short name'].length < tournament[:name].length
 
       logger.error "'short name: #{tournament[:'short name']}' for Tournament "\
         "is longer than normal 'name: #{tournament[:name]}'"

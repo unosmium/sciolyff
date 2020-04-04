@@ -61,6 +61,8 @@ module SciolyFF
 
     def no_gaps_in_places?(event, logger)
       places = places_with_expanded_ties(event)
+      return true if places.empty?
+
       gaps = (places.min..places.max).to_a - places
       return true if gaps.empty?
 
