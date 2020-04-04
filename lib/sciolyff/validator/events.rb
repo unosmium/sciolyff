@@ -70,7 +70,7 @@ module SciolyFF
 
     def places_start_at_one?(event, logger)
       lowest_place = @placings[event[:name]].map { |p| p[:place] }.compact.min
-      return true if lowest_place == 1
+      return true if lowest_place == 1 || lowest_place.nil?
 
       logger.error "places for 'event: #{event[:name]}' start at "\
         "#{lowest_place} instead of 1"
