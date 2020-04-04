@@ -59,6 +59,18 @@ module SciolyFF
         "place #{unpaired_ties.keys.join ', '}"
     end
 
+    def no_gaps_in_places?(event, logger)
+      places = placings_by_place(event).map do |place, placings|
+        # expand ties, e.g. [6, 6, 8] -> [6, 7, 8]
+        (place..(place + (placings.size - 1))).to_a
+      end.flatten
+      gaps = (places.min..places.max).to_a - places
+      return true if gaps.empty?
+
+      logger.error "'event: #{event[:name]}' has gaps in "\
+        "place #{gaps.join ', '}"
+    end
+
     private
 
     def placings_by_place(event)
