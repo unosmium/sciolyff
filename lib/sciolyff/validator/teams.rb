@@ -24,12 +24,9 @@ module SciolyFF
     }.freeze
 
     def initialize(rep)
-      @teams = rep[:Teams]
-      @numbers = @teams.map { |t| t[:number] }
-      @schools = @teams.group_by { |t| [t[:school], t[:city], t[:state]] }
+      initialize_teams_info(rep[:Teams])
       @placings = rep[:Placings].group_by { |p| p[:team] }
       @exempt = rep[:Tournament][:'exempt placings'] || 0
-      @subdivisions = @teams.find { |t| t[:subdivision] }
     end
 
     def unique_number?(team, logger)
@@ -71,6 +68,14 @@ module SciolyFF
       return true unless @subdivisions && !team[:subdivision]
 
       logger.error "missing subdivision for 'team: #{team[:number]}'"
+    end
+
+    private
+
+    def initialize_teams_info(teams)
+      @numbers = teams.map { |t| t[:number] }
+      @schools = teams.group_by { |t| [t[:school], t[:city], t[:state]] }
+      @subdivisions = teams.find { |t| t[:subdivision] }
     end
   end
 end
