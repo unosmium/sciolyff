@@ -16,6 +16,11 @@ module SciolyFF
     attr_reader :tournament, :events, :teams, :placings, :penalties
 
     def initialize(rep)
+      if rep.instance_of? String
+        rep = YAML.safe_load(File.read(rep),
+                             permitted_classes: [Date],
+                             symbolize_names: true)
+      end
       create_models(@rep = rep)
       link_models(self)
 

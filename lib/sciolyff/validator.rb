@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'yaml'
-require 'date'
-
 module SciolyFF
   # Checks if SciolyFF YAML files and/or representations (i.e. hashes that can
   # be directly converted to YAML) comply with spec (i.e. safe for interpreting)
