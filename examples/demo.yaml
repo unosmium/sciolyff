@@ -1,4 +1,4 @@
-# sciolyff 0.8.0 <- (kinda) semantic versioning, may be checked for?
+# sciolyff 0.9.0 <- (kinda) semantic versioning, may be checked for?
 #
 # An incomplete but demonstrative example file for the sciolyff standard.
 #
@@ -11,19 +11,19 @@ Tournament:
   # next line is optional for Nats or States
   name: MIT Science Olympiad Invitational  # full name of the tournament
   short name: MIT Invitational  # shorter, colloquial name of the tournament
-  location: Massachusetts Institute of Technology
+  location: Massachusetts Institute of Technology # host building / campus
   level: Invitational  # must be Invitational, Regionals, States, or Nationals
-  # next line is required for Regionals and States, optional otherwise
+  # next line is required for all non-Nationals tournaments
   state: MA  # two-character state code
-  division: C  # must be B or C
+  division: C  # must be A, B, or C
   year: 2017  # year of the rules manual being used, might not be same as date
   date: 2017-01-21  # YYYY-MM-DD format, others may work but aren't tested
   # next line is optional if worst placings are not dropped (value of zero)
   worst placings dropped: 5  # ignore x worst placings for team points
   # next line is optional if no events are allowed to exempted (audited)
-  exempt placings: 5  # exempt placings per team (those not counted for points)
+  exempt placings: 0  # exempt placings per team (those not counted for points)
   # next line is optional if equal to the number of competing teams
-  maximum place: 50
+  maximum place: 1
   # next line is optional if not using Delaware-style scoring for non-placings
   per-event n: false
   # next line is optional if zero
@@ -34,38 +34,20 @@ Events:
     # next two lines are optional if the answer is no
     trial: false  # event was originally intended to be a trial event
     trialed: false  # event became trial event due to unforeseen circumstances
-    # next line is only required if using Scores and scoring is lowest wins
+    # next line is only required if using raw scores and scoring is lowest wins
     scoring: high  # must be either high or low, as in (high|low)est-score wins
-    # next line is only required if number of tiers > 1 and using Scores
-    tiers: 1  # number of tiers, higher tiers ranked behind lower tiers
   - name: Astronomy
-  - name: Chemistry Lab
-  - name: Disease Detectives
-  - name: Dynamic Planet
-  - name: Ecology
-  - name: Electric Vehicle
-  - name: Experimental Design
-  - name: Forensics
-  - name: Game On
-  - name: Helicopters
-  - name: Hovercraft
-  - name: Hydrogeology
-  - name: Invasive Species
-  - name: Materials Science
-  - name: Microbe Mission
-  - name: Optics
-  - name: Remote Sensing
-  - name: Robot Arm
-  - name: Rocks & Minerals
-  - name: Towers
-  - name: Wind Power
-  - name: Write It Do It
+    # .
+    # .
+    # .
+    # (rest of events not shown)
 
 Teams:
   - school: Solon High School  # full school name, no abbreviations (see below)
-    # next three lines are optional
+    # next two lines are optional
     school abbreviation: SHS  # only for long, unique names, e.g. TJHSST or LASA
     suffix: A  # can be anything, not just A, B, C, etc. -- use quotes for nums
+    # optional if there are no teams in a subdivision
     subdivision: V  # can be anything, used for Varsity / Junior Varisity labels
     # next line is optional if false
     exhibition: false  # if the team's placings don't affect other team's scores
@@ -89,34 +71,14 @@ Placings:
     unknown: false  # only allowed for Trial/Trialed events or exempt placings
     tie: false  # if placing has identical place as another placing in the event
     # next line is optional only if PO, NS, DQ, or exempt
-    place: 22  # range between 1 and # of teams at tournament, unique per event
+    place: 1  # range between 1 and # of teams at tournament, unique per event
   - event: Astronomy
     team: 58
-    place: 9
+    place: 1
     # .
     # .
     # .
     # (rest of Placings not shown, each team must have a placing for each event)
-
-# Optional, should correspond directly to Placings but this is not verified
-Scores:
-  - event: Anatomy and Physiology
-    team: 58
-    # next four lines are optional if the answers are yes-no-no, respectively
-    participated: true
-    disqualified: false
-    exempt: false  # team does not earn any points for the event if exempt
-    unknown: false  # if score is unknown, allowed for any event
-    # next line is optional only if PO, NS, DQ, or exempt
-    score: 57  # raw score without tiebreakers
-    # next line is necessary only if there was a tie
-    tiebreaker place: 1  # range between 1 and # of teams involved in tie
-    # next line is necessary only if tier > 1 and the event has a tiers value
-    tier: 1  # range between 1 and # of tiers specified in Events
-    # .
-    # .
-    # .
-    # (rest of Scores not shown, each team must have a score for each event)
 
 # Penalties section is optional if no penalties were given to any teams
 Penalties:
