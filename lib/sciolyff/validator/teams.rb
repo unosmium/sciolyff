@@ -29,6 +29,7 @@ module SciolyFF
       @schools = @teams.group_by { |t| [t[:school], t[:city], t[:state]] }
       @placings = rep[:Placings].group_by { |p| p[:team] }
       @exempt = rep[:Tournament][:'exempt placings'] || 0
+      @subdivisions = @teams.find { |t| t.key[:subdivision] }
     end
 
     def unique_number?(team, logger)
@@ -64,6 +65,12 @@ module SciolyFF
 
       logger.error "'team: #{team[:number]}' has incorrect number of "\
         "exempt placings (#{count} insteand of #{@exempt})"
+    end
+
+    def in_a_subdivision_if_possible?(team, logger)
+      return true unless @subdivisions && !team[:subdivision]
+
+      logger.error "missing subdivision for 'team: #{team[:number]}'"
     end
   end
 end
