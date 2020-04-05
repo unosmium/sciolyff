@@ -10,6 +10,9 @@ module SciolyFF
     require 'sciolyff/interpreter/placing'
     require 'sciolyff/interpreter/penalty'
 
+    require 'sciolyff/interpreter/tiebreaks'
+    require 'sciolyff/interpreter/subdivisions'
+
     attr_reader :tournament, :events, :teams, :placings, :penalties
 
     def initialize(rep)
@@ -69,63 +72,7 @@ module SciolyFF
       @teams.map!.with_index { |_, i| sorted[i] }
     end
 
-    def sort_teams_by_points(teams)
-      teams.sort do |team_a, team_b|
-        cmp = team_a.points <=> team_b.points
-        cmp.zero? ? break_tie(team_a, team_b) : cmp
-      end
-    end
-
-    def break_tie(team_a, team_b)
-      team_a.medal_counts
-            .zip(team_b.medal_counts)
-            .map { |counts| counts.last - counts.first }
-            .find(proc { break_second_tie(team_a, team_b) }, &:nonzero?)
-    end
-
-    def break_second_tie(team_a, team_b)
-      cmp = team_a.trial_event_points <=> team_b.trial_event_points
-      cmp.zero? ? break_third_tie(team_a, team_b) : cmp
-    end
-
-    def break_third_tie(team_a, team_b)
-      team_a.trial_event_medal_counts
-            .zip(team_b.trial_event_medal_counts)
-            .map { |counts| counts.last - counts.first }
-            .find(proc { team_a.number <=> team_b.number }, &:nonzero?)
-    end
-
-    def subdivision_rep(sub)
-      # make a deep copy of rep and remove teams not in the subdivision
-      rep = Marshal.load(Marshal.dump(@rep))
-      rep[:Teams].select! { |t| t.delete(:subdivision) == sub }
-
-      team_numbers = rep[:Teams].map { |t| t[:number] }
-      rep[:Placings].select! { |p| team_numbers.include? p[:team] }
-
-      fix_placings_for_existing_teams(rep)
-      rep
-    end
-
-    def fix_placings_for_existing_teams(rep)
-      rep[:Placings]
-        .group_by { |p| p[:event] }
-        .each { |_, ep| fix_event_placings(ep) }
-    end
-
-    def fix_event_placings(event_placings)
-      event_placings
-        .select { |p| p[:place] }
-        .sort_by { |p| p[:place] }
-        .each_with_index { |p, i| p[:temp_place] = i + 1 }
-        .each { |p| fix_placing_ties(p, event_placings) }
-        .each { |p| p.delete(:temp_place) }
-    end
-
-    def fix_placing_ties(placing, event_placings)
-      ties = event_placings.select { |o| o[:place] == placing[:place] }
-      placing[:place] = ties.map { |t| t[:temp_place] }.max - ties.count + 1
-      ties.count > 1 ? placing[:tie] = true : placing.delete(:tie)
-    end
+    include Interpreter::Tiebreaks
+    include Interpreter::Subdivisions
   end
 end
