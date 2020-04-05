@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'psych'
+require 'yaml'
 require 'date'
 
 module SciolyFF
@@ -53,7 +53,7 @@ module SciolyFF
     end
 
     def valid_file?(path, logger)
-      rep = Psych.safe_load(
+      rep = YAML.safe_load(
         File.read(path),
         permitted_classes: [Date],
         symbolize_names: true
