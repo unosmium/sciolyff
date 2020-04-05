@@ -5,7 +5,7 @@ require 'optimist'
 require 'sciolyff'
 
 opts = Optimist.options do
-  version 'sciolyff 1.0.0'
+  version 'sciolyff 0.9.0'
   banner <<~STRING
     Checks if a given file is in the Scioly File Format
 
