@@ -67,7 +67,7 @@ module SciolyFF
     def in_a_subdivision_if_possible?(team, logger)
       return true unless @subdivisions && !team[:subdivision]
 
-      logger.error "missing subdivision for 'team: #{team[:number]}'"
+      logger.warn "missing subdivision for 'team: #{team[:number]}'"
     end
 
     private
