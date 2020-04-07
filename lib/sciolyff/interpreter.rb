@@ -12,6 +12,7 @@ module SciolyFF
 
     require 'sciolyff/interpreter/tiebreaks'
     require 'sciolyff/interpreter/subdivisions'
+    require 'sciolyff/interpreter/html'
 
     attr_reader :tournament, :events, :teams, :placings, :penalties
 
@@ -79,5 +80,6 @@ module SciolyFF
 
     include Interpreter::Tiebreaks
     include Interpreter::Subdivisions
+    include Interpreter::HTML
   end
 end

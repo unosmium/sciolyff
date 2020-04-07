@@ -3,6 +3,7 @@ AllCops:
   # Ignore test script
   Exclude:
     - !ruby/regexp /ztestscript[0-9]?\.rb$/
+    - 'lib/sciolyff/interpreter/html/*'
 
 # Ignore mix of compact and nested styles
 Style/ClassAndModuleChildren:

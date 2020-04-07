@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.files    = FileList['lib/sciolyff.rb',
                         'lib/sciolyff/*.rb',
                         'lib/sciolyff/interpreter/*.rb',
+                        'lib/sciolyff/interpreter/html/*',
                         'lib/sciolyff/validator/*.rb',
                         'bin/*']
   s.license  = 'MIT'
