@@ -8,7 +8,12 @@ module SciolyFF
 
     def html
       helpers = Interpreter::HTML::Helpers.new
-      ERB.new(helpers.template).result(helpers.get_binding(self)) +
+      ERB.new(
+        helpers.template,
+        trim_mode: '<>'
+      ).result(helpers.get_binding(self))
+         .gsub(/^\s*$/, '')   # remove empty lines
+         .gsub(/\s+$/, '') +  # remove trailing whitespace
         "<yaml hidden>\n#{yaml}</yaml>"
     end
 
