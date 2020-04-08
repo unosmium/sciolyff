@@ -50,7 +50,11 @@ module SciolyFF
     end
 
     def date
-      @rep[:date]
+      @date ||= if @rep[:date].instance_of?(Date)
+                  @rep[:date]
+                else
+                  Date.parse(@rep[:date])
+                end
     end
 
     def worst_placings_dropped?

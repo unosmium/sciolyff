@@ -23,10 +23,19 @@ module SciolyFF
       rep.all? do |key, value|
         correct = correct_types[key]
         next true if (correct.instance_of?(Array) && correct.include?(value)) ||
-                     (value.instance_of? correct)
+                     (value.instance_of? correct) ||
+                     correct_date?(correct, value)
 
         logger.error "#{key}: #{value} is not #{correct}"
       end
+    end
+
+    private
+
+    def correct_date?(correct, value)
+      correct == Date && Date.parse(value)
+    rescue StandardError
+      false
     end
   end
 end
