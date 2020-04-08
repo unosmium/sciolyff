@@ -7,7 +7,7 @@ module SciolyFF
       File.read(File.join(__dir__, 'template.html.erb'))
     end
 
-    def get_binding(interpreter)
+    def get_binding(interpreter, hide_raw)
       i = interpreter
       binding
     end
