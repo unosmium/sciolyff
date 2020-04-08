@@ -23,7 +23,7 @@ module SciolyFF
       stringify_keys(@rep).to_yaml
     end
 
-    def json(pretty: true)
+    def json(pretty: false)
       return JSON.pretty_generate(@rep) if pretty
 
       @rep.to_json
