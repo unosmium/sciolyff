@@ -8,7 +8,7 @@ module SciolyFF
     require 'sciolyff/interpreter/html/helpers'
     require 'json'
 
-    def html
+    def to_html
       helpers = Interpreter::HTML::Helpers.new
       ERB.new(
         helpers.template,
@@ -18,11 +18,11 @@ module SciolyFF
          .gsub(/\s+$/, '')    # remove trailing whitespace
     end
 
-    def yaml
+    def to_yaml
       stringify_keys(@rep).to_yaml
     end
 
-    def json(pretty: false)
+    def to_json(pretty: false)
       return JSON.pretty_generate(@rep) if pretty
 
       @rep.to_json
