@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module SciolyFF
   # Holds helper methods used in template.html.erb
   class Interpreter::HTML::Helpers
@@ -12,6 +13,61 @@ module SciolyFF
     end
 
     private
+
+    STATES_BY_POSTAL_CODE = {
+      AK: 'Alaska',
+      AZ: 'Arizona',
+      AR: 'Arkansas',
+      CA: 'California',
+      nCA: 'Northern California',
+      sCA: 'Southern California',
+      CO: 'Colorado',
+      CT: 'Connecticut',
+      DE: 'Delaware',
+      DC: 'District of Columbia',
+      FL: 'Florida',
+      GA: 'Georgia',
+      HI: 'Hawaii',
+      ID: 'Idaho',
+      IL: 'Illinois',
+      IN: 'Indiana',
+      IA: 'Iowa',
+      KS: 'Kansas',
+      KY: 'Kentucky',
+      LA: 'Louisiana',
+      ME: 'Maine',
+      MD: 'Maryland',
+      MA: 'Massachusetts',
+      MI: 'Michigan',
+      MN: 'Minnesota',
+      MS: 'Mississippi',
+      MO: 'Missouri',
+      MT: 'Montana',
+      NE: 'Nebraska',
+      NV: 'Nevada',
+      NH: 'New Hampshire',
+      NJ: 'New Jersey',
+      NM: 'New Mexico',
+      NY: 'New York',
+      NC: 'North Carolina',
+      ND: 'North Dakota',
+      OH: 'Ohio',
+      OK: 'Oklahoma',
+      OR: 'Oregon',
+      PA: 'Pennsylvania',
+      RI: 'Rhode Island',
+      SC: 'South Carolina',
+      SD: 'South Dakota',
+      TN: 'Tennessee',
+      TX: 'Texas',
+      UT: 'Utah',
+      VT: 'Vermont',
+      VA: 'Virginia',
+      WA: 'Washington',
+      WV: 'West Virginia',
+      WI: 'Wisconsin',
+      WY: 'Wyoming'
+    }.freeze
 
     def tournament_title(t_info)
       return t_info.name if t_info.name
@@ -44,6 +100,10 @@ module SciolyFF
             .select { |w| /^[[:upper:]]/.match(w) }
             .map { |w| w[0] }
             .join
+    end
+
+    def expand_state_name(postal_code)
+      STATES_BY_POSTAL_CODE[postal_code.to_sym]
     end
 
     def format_school(team)
@@ -123,7 +183,7 @@ module SciolyFF
         ('placed behind exhibition teams'\
          if placing.points_affected_by_exhibition? && place - points > 1),
         ('dropped'\
-         if placing.dropped_as_part_of_worst_placings?),
+         if placing.dropped_as_part_of_worst_placings?)
       ].compact.join(', ').capitalize
     end
   end
