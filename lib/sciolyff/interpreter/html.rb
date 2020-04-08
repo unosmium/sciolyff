@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 module SciolyFF
-  # Grants ability to convert a SciolyFF file into stand-alone HTML
+  # Grants ability to convert a SciolyFF file into stand-alone HTML and other
+  # formats (YAML, JSON)
   module Interpreter::HTML
     require 'erb'
     require 'sciolyff/interpreter/html/helpers'
+    require 'json'
 
     def html
       helpers = Interpreter::HTML::Helpers.new
@@ -19,6 +21,12 @@ module SciolyFF
 
     def yaml
       stringify_keys(@rep).to_yaml
+    end
+
+    def json(pretty: true)
+      return JSON.pretty_generate(@rep) if pretty
+
+      @rep.to_json
     end
 
     private
