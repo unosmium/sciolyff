@@ -54,7 +54,9 @@ Inside Ruby code, e.g.
 ```ruby
 require 'sciolyff'
 
-SciolyFF.validate_file('examples/nats_c_2017.yaml') #=> true
+validator = SciolyFF::Validator.new
+puts validator.valid? 'examples/nats_c_2017.yaml' #=> true
+print validator.last_log #=> error or warning messages
 ```
 
 ### Parsing
@@ -71,8 +73,7 @@ the output of Ruby's yaml parser. For example:
 require 'sciolyff'
 require 'yaml'
 
-rep = YAML.load(File.read('examples/nats_c_2017.yaml'), symbolize_names: true)
-i = SciolyFF::Interpreter.new(rep)
+i = SciolyFF::Interpreter.new('example/nats_c_2017.yaml')
 
 a_and_p = i.events.find { |e| e.name == 'Anatomy and Physiology' }
 a_and_p.trialed? #=> false
