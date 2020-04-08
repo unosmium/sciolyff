@@ -18,7 +18,7 @@ module SciolyFF
 
     def initialize(rep)
       if rep.instance_of? String
-        rep = YAML.safe_load(File.read(rep),
+        rep = YAML.safe_load(rep,
                              permitted_classes: [Date],
                              symbolize_names: true)
       end

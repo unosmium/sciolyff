@@ -21,13 +21,13 @@ module SciolyFF
       @checkers = {}
     end
 
-    def valid?(rep_or_file)
+    def valid?(rep_or_yaml)
       @logger.flush
 
-      if rep_or_file.instance_of? String
-        valid_file?(rep_or_file, @logger)
+      if rep_or_yaml.instance_of? String
+        valid_yaml?(rep_or_yaml, @logger)
       else
-        valid_rep?(rep_or_file, @logger)
+        valid_rep?(rep_or_yaml, @logger)
       end
     end
 
@@ -49,14 +49,14 @@ module SciolyFF
       result
     end
 
-    def valid_file?(path, logger)
+    def valid_yaml?(yaml, logger)
       rep = YAML.safe_load(
-        File.read(path),
+        yaml,
         permitted_classes: [Date],
         symbolize_names: true
       )
     rescue StandardError => e
-      logger.error "could not read file as YAML:\n#{e.message}"
+      logger.error "could not read input as YAML:\n#{e.message}"
     else
       valid_rep?(rep, logger)
     end
