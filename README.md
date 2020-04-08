@@ -46,7 +46,7 @@ format.
 From the command line, e.g.
 
 ```
-sciolyff examples/nats_c_2017.yaml
+sciolyff 2017-05-20_nationals_c.yaml
 ```
 
 Inside Ruby code, e.g.
@@ -55,7 +55,7 @@ Inside Ruby code, e.g.
 require 'sciolyff'
 
 validator = SciolyFF::Validator.new
-puts validator.valid? 'examples/nats_c_2017.yaml' #=> true
+puts validator.valid? '2017-05-20_nationals_c.yaml' #=> true
 print validator.last_log #=> error or warning messages
 ```
 
@@ -73,7 +73,7 @@ the output of Ruby's yaml parser. For example:
 require 'sciolyff'
 require 'yaml'
 
-i = SciolyFF::Interpreter.new('example/nats_c_2017.yaml')
+i = SciolyFF::Interpreter.new('2017-05-20_nationals_c.yaml')
 
 a_and_p = i.events.find { |e| e.name == 'Anatomy and Physiology' }
 a_and_p.trialed? #=> false
