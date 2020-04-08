@@ -15,8 +15,7 @@ module SciolyFF
         trim_mode: '<>'
       ).result(helpers.get_binding(self))
          .gsub(/^\s*$/, '')   # remove empty lines
-         .gsub(/\s+$/, '') +  # remove trailing whitespace
-        "<yaml hidden>\n#{yaml}</yaml>"
+         .gsub(/\s+$/, '')    # remove trailing whitespace
     end
 
     def yaml
