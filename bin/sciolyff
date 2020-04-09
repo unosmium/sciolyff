@@ -20,7 +20,7 @@ end
 puts 'More than one file given, ignoring all but first.' if ARGV.length > 1
 
 validator = SciolyFF::Validator.new opts[:loglevel]
-validity = validator.valid? ARGV.first
+validity = validator.valid? File.read(ARGV.first)
 print validator.last_log
 
 exit validity
