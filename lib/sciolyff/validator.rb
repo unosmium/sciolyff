@@ -80,7 +80,7 @@ module SciolyFF
     end
 
     def check(klass, top_level_rep, rep, logger)
-      @checkers[klass] ||= klass.new top_level_rep
+      @checkers[klass] ||= klass.new top_level_rep, logger
       checks = klass.instance_methods - Checker.instance_methods
       checks.map { |im| @checkers[klass].send im, rep, logger }.all?
     end
