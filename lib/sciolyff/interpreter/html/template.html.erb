@@ -10,7 +10,7 @@
   "#{tournament_title_short(i.tournament)} " \
   "(Div. #{i.tournament.division}) | Unosmium Results"
     %></title>
-<% if i.tournament.teams > 1 %>
+<% if i.tournament.teams.count > 1 %>
 <% champion = i.tournament.teams[0] %>
 <% runnerup = i.tournament.teams[1] %>
     <meta name="Description" content="<%=
