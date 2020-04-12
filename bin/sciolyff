@@ -17,10 +17,18 @@ opts = Optimist.options do
   opt :loglevel, 'Log verbosity from 0 to 3', default: 1
 end
 
+Optimist.educate if ARGV.empty?
 puts 'More than one file given, ignoring all but first.' if ARGV.length > 1
 
+begin
+  contents = File.read(ARGV.first)
+rescue StandardError => e
+  puts "Could not read file: #{e}"
+  exit 1
+end
+
 validator = SciolyFF::Validator.new opts[:loglevel]
-validity = validator.valid? File.read(ARGV.first)
+validity = validator.valid? contents
 print validator.last_log
 
 exit validity
