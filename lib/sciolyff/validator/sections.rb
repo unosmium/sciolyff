@@ -28,9 +28,10 @@ module SciolyFF
       correct_types = self.class::REQUIRED.merge self.class::OPTIONAL
       rep.all? do |key, value|
         correct = correct_types[key]
-        next true if (correct.instance_of?(Array) && correct.include?(value)) ||
-                     (value.instance_of? correct) ||
-                     correct_date?(correct, value)
+        next true if
+        (correct.instance_of?(Array) && correct.include?(value)) ||
+        (correct.instance_of?(Class) && value.instance_of?(correct)) ||
+        correct_date?(correct, value)
 
         logger.error "#{key}: #{value} is not #{correct}"
       end
