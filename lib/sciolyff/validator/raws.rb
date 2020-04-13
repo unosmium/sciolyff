@@ -13,6 +13,7 @@ module SciolyFF
     }.freeze
 
     OPTIONAL = {
+      'tier': Integer,
       'tiebreaker rank': Integer
     }.freeze
   end
