@@ -32,7 +32,7 @@ module SciolyFF
     end
 
     def placings_for_all_teams?(event, logger)
-      count = @placings[event[:name]].count
+      count = @placings[event[:name]]&.count || 0
       return true if count == @teams
 
       logger.error "'event: #{event[:name]}' has incorrect number of "\
