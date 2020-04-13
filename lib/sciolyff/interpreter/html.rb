@@ -8,12 +8,12 @@ module SciolyFF
     require 'sciolyff/interpreter/html/helpers'
     require 'json'
 
-    def to_html(hide_raw: false)
+    def to_html(hide_raw: false, color: '#000000')
       helpers = Interpreter::HTML::Helpers.new
       ERB.new(
         helpers.template,
         trim_mode: '<>'
-      ).result(helpers.get_binding(self, hide_raw))
+      ).result(helpers.get_binding(self, hide_raw, color))
          .gsub(/^\s*$/, '')   # remove empty lines
          .gsub(/\s+$/, '')    # remove trailing whitespace
     end
