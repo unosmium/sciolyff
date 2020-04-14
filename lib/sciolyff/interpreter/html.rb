@@ -35,18 +35,19 @@ module SciolyFF
     def hidden_raw_rep
       @hidden_raw_rep || begin
         @hidden_raw_rep = Marshal.load(Marshal.dump(@rep))
-        rep[:Placings].each { |p| hide_and_replace_raw(p) }
+        @hidden_raw_rep[:Placings].each { |p| hide_and_replace_raw(p) }
         @hidden_raw_rep
       end
     end
 
     def hide_and_replace_raw(placing_rep)
-      place = placings.find do |placing|
-        placing.event.name == placing_rep[:event] &&
-          placing.team.number == placing_rep[:team]
-      end.place
-      placing.delete :raw
-      placing[:place] = place if place
+      placing = placings.find do |p|
+        p.event.name == placing_rep[:event] &&
+          p.team.number == placing_rep[:team]
+      end
+      placing_rep.delete :raw
+      placing_rep[:tie] = true if placing.tie?
+      placing_rep[:place] = placing.place if placing.place
     end
 
     def stringify_keys(hash)
