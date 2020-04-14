@@ -19,8 +19,8 @@ module SciolyFF
     def initialize(rep)
       if rep.instance_of? String
         rep = Psych.safe_load(rep,
-                             permitted_classes: [Date],
-                             symbolize_names: true)
+                              permitted_classes: [Date],
+                              symbolize_names: true)
       end
       create_models(@rep = rep)
       link_models(self)

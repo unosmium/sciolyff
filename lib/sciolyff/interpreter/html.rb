@@ -12,8 +12,8 @@ module SciolyFF
       helpers = Interpreter::HTML::Helpers.new
       src = Erubi::Engine.new(helpers.template).src
       helpers.eval_with_binding(src, self, hide_raw, color)
-         .gsub(/^\s*$/, '')   # remove empty lines
-         .gsub(/\s+$/, '')    # remove trailing whitespace
+             .gsub(/^\s*$/, '')   # remove empty lines
+             .gsub(/\s+$/, '')    # remove trailing whitespace
     end
 
     def to_yaml(hide_raw: false)
