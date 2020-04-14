@@ -78,6 +78,13 @@ module SciolyFF
         "#{placing_log(placing)}"
     end
 
+    def having_a_tie_makes_sense?(placing, logger)
+      return true unless placing.key?(:tie) && placing[:raw]
+
+      logger.error 'having a tie value does make sense for '\
+        "#{placing_log(placing)}"
+    end
+
     def possible_participated_disqualified_combination?(placing, logger)
       return true unless placing[:participated] == false &&
                          placing[:disqualified]
