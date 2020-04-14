@@ -4,16 +4,14 @@ module SciolyFF
   # Grants ability to convert a SciolyFF file into stand-alone HTML and other
   # formats (YAML, JSON)
   module Interpreter::HTML
-    require 'erb'
+    require 'erubi'
     require 'sciolyff/interpreter/html/helpers'
     require 'json'
 
     def to_html(hide_raw: false, color: '#000000')
       helpers = Interpreter::HTML::Helpers.new
-      ERB.new(
-        helpers.template,
-        trim_mode: '<>'
-      ).result(helpers.get_binding(self, hide_raw, color))
+      src = Erubi::Engine.new(helpers.template).src
+      helpers.eval_with_binding(src, self, hide_raw, color)
          .gsub(/^\s*$/, '')   # remove empty lines
          .gsub(/\s+$/, '')    # remove trailing whitespace
     end

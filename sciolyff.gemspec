@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.version  = '0.9.1'
   s.executables << 'sciolyff'
   s.add_runtime_dependency 'psych', '~> 3.1'
+  s.add_runtime_dependency 'erubi', '~> 1.9'
   s.add_runtime_dependency 'optimist', '~> 3.0'
   s.required_ruby_version = '>= 2.5'
 end

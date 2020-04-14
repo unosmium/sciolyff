@@ -7,9 +7,9 @@ module SciolyFF
       File.read(File.join(__dir__, 'template.html.erb'))
     end
 
-    def get_binding(interpreter, hide_raw, color)
+    def eval_with_binding(src, interpreter, hide_raw, color)
       i = interpreter
-      binding
+      eval(src)
     end
 
     private
