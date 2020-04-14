@@ -71,7 +71,6 @@ the output of Ruby's yaml parser. For example:
 
 ```ruby
 require 'sciolyff'
-require 'yaml'
 
 i = SciolyFF::Interpreter.new(File.read('2017-05-20_nationals_c.yaml'))
 

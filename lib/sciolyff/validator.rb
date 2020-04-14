@@ -50,7 +50,7 @@ module SciolyFF
     end
 
     def valid_yaml?(yaml, logger)
-      rep = YAML.safe_load(
+      rep = Psych.safe_load(
         yaml,
         permitted_classes: [Date],
         symbolize_names: true

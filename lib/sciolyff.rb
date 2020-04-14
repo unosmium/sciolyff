@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'yaml'
+require 'psych'
 require 'date'
 
 require 'sciolyff/interpreter'
