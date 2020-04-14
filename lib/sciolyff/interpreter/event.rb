@@ -42,7 +42,7 @@ module SciolyFF
     def maximum_place
       @maximum_place ||=
         if tournament.per_event_n?
-          competing_teams_count
+          [competing_teams_count, tournament.maximum_place].min
         elsif trial?
           placings.size
         else
