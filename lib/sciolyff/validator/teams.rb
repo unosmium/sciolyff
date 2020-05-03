@@ -46,6 +46,14 @@ module SciolyFF
         'as another team from the same school'
     end
 
+    def suffix_needed?(team, logger)
+      rep = [team[:school], team[:city], team[:state]]
+      return true unless team[:suffix] && @schools[rep].count == 1
+
+      logger.warn "team number #{team[:number]} may have unnecessary "\
+        "suffix: #{team[:suffix]}"
+    end
+
     def unambiguous_cities_per_school?(team, logger)
       return true unless @schools.keys.find do |other|
         team[:city].nil? && !other[1].nil? &&
