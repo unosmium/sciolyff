@@ -2,6 +2,7 @@
 
 require 'sciolyff/validator/checker'
 require 'sciolyff/validator/sections'
+require 'sciolyff/validator/canonical'
 
 module SciolyFF
   # Checks for one team in the Teams section of a SciolyFF file
@@ -68,6 +69,16 @@ module SciolyFF
       return true unless @subdivisions && !team[:subdivision]
 
       logger.warn "missing subdivision for 'team: #{team[:number]}'"
+    end
+
+    include Validator::Canonical
+
+    def in_canonical_list?(team, logger)
+      rep = [team[:school], team[:city], team[:state]]
+      return true if canonical?(rep, 'schools.csv', logger)
+
+      location = rep[1..-1].compact.join ', '
+      logger.warn "non-canonical school: #{team[:school]} in #{location}"
     end
 
     private

@@ -2,6 +2,7 @@
 
 require 'sciolyff/validator/checker'
 require 'sciolyff/validator/sections'
+require 'sciolyff/validator/canonical'
 
 module SciolyFF
   # Checks for one event in the Events section of a SciolyFF file
@@ -76,6 +77,15 @@ module SciolyFF
 
       logger.error "places for 'event: #{event[:name]}' start at "\
         "#{lowest_place} instead of 1"
+    end
+
+    include Validator::Canonical
+
+    def in_canonical_list?(event, logger)
+      rep = [event[:name]]
+      return true if canonical?(rep, 'events.csv', logger)
+
+      logger.warn "non-canonical event: #{event[:name]}"
     end
 
     private
