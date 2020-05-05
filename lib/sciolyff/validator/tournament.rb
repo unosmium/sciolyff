@@ -19,6 +19,7 @@ module SciolyFF
     OPTIONAL = {
       name: String,
       state: String,
+      medals: Integer,
       'short name': String,
       'worst placings dropped': Integer,
       'exempt placings': Integer,
@@ -67,6 +68,15 @@ module SciolyFF
 
       logger.error "custom 'maximum place: #{tournament[:'maximum place']}' "\
         "is not within range [1, #{@maximum_place}]"
+    end
+
+    def medals_within_range?(tournament, logger)
+      max = [@maximum_place, tournament[:'maximum place']].compact.min
+      return true if tournament[:medals].nil? ||
+                     tournament[:medals].between?(1, max)
+
+      logger.error "custom 'medals: #{tournament[:medals]}' "\
+        "is not within range [1, #{max}]"
     end
   end
 end

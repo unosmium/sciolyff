@@ -57,6 +57,10 @@ module SciolyFF
                 end
     end
 
+    def medals
+      @rep[:medals] || [6, maximum_place].min
+    end
+
     def worst_placings_dropped?
       worst_placings_dropped.positive?
     end
