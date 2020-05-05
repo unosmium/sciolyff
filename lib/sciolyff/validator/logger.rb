@@ -8,10 +8,11 @@ module SciolyFF
     INFO  = 2
     DEBUG = 3
 
-    attr_reader :log
+    attr_reader :log, :options
 
-    def initialize(loglevel)
+    def initialize(loglevel, **options)
       @loglevel = loglevel
+      @options = options
       flush
     end
 

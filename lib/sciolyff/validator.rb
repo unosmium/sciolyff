@@ -16,8 +16,8 @@ module SciolyFF
     require 'sciolyff/validator/penalties'
     require 'sciolyff/validator/raws'
 
-    def initialize(loglevel = Logger::WARN)
-      @logger = Logger.new loglevel
+    def initialize(loglevel: Logger::WARN, canonical: true)
+      @logger = Logger.new loglevel, canonical_checks: canonical
       @checkers = {}
     end
 

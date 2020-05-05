@@ -15,6 +15,7 @@ opts = Optimist.options do
     where [options] are:
   STRING
   opt :loglevel, 'Log verbosity from 0 to 3', default: 1
+  opt :nocanon, 'Disable canonical name checks'
 end
 
 Optimist.educate if ARGV.empty?
@@ -27,7 +28,10 @@ rescue StandardError => e
   exit 1
 end
 
-validator = SciolyFF::Validator.new opts[:loglevel]
+validator = SciolyFF::Validator.new(
+  loglevel: opts[:loglevel],
+  canonical: !opts[:nocanon]
+)
 validity = validator.valid? contents
 print validator.last_log
 

@@ -8,7 +8,7 @@ module SciolyFF
     private
 
     def canonical?(rep, file, logger)
-      return true if @canonical_warned
+      return true if @canonical_warned || !logger.options[:canonical_checks]
 
       @canonical_list ||= CSV.parse(URI.open(BASE + file))
       # don't try to make this more efficient, harder than it looks because of
