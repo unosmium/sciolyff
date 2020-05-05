@@ -25,7 +25,7 @@ module SciolyFF
     end
 
     def tiebreaker_rank
-      @rep[:'tiebreaker rank'] || Float::INFINITY
+      @rep[:'tiebreaker rank'] || 1
     end
 
     def ==(other)
