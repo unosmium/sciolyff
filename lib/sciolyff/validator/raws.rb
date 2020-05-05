@@ -16,5 +16,19 @@ module SciolyFF
       'tier': Integer,
       'tiebreaker rank': Integer
     }.freeze
+
+    def positive_tier?(rep, logger)
+      tier = rep[:tier]
+      return true if tier.nil? || tier.positive?
+
+      logger.error "'tier: #{tier}' is not positive"
+    end
+
+    def positive_tiebreaker_rank?(rep, logger)
+      rank = rep[:'tiebreaker rank']
+      return true if rank.nil? || rank.positive?
+
+      logger.error "'tiebreaker rank: #{rank}' is not positive"
+    end
   end
 end
