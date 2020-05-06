@@ -58,11 +58,11 @@ module SciolyFF
     end
 
     def medals
-      @rep[:medals] || [6, maximum_place].min
+      @rep[:medals] || [calc_medals, maximum_place].min
     end
 
     def trophies
-      @rep[:trophies] || [10, nonexhibition_teams_count].min
+      @rep[:trophies] || [calc_trophies, nonexhibition_teams_count].min
     end
 
     def worst_placings_dropped?
@@ -115,6 +115,16 @@ module SciolyFF
 
     def nonexhibition_teams_count
       @nonexhibition_teams_count ||= @teams.count { |t| !t.exhibition? }
+    end
+
+    private
+
+    def calc_medals
+      [(nonexhibition_teams_count / 10r).ceil, 3].max
+    end
+
+    def calc_trophies
+      [(nonexhibition_teams_count / 6r).ceil, 3].max
     end
   end
 end
