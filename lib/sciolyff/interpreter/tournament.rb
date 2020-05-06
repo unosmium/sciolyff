@@ -61,6 +61,10 @@ module SciolyFF
       @rep[:medals] || [6, maximum_place].min
     end
 
+    def trophies
+      @rep[:trophies] || [10, nonexhibition_teams_count].min
+    end
+
     def worst_placings_dropped?
       worst_placings_dropped.positive?
     end
@@ -78,13 +82,13 @@ module SciolyFF
     end
 
     def custom_maximum_place?
-      maximum_place != @teams.count { |t| !t.exhibition? }
+      maximum_place != nonexhibition_teams_count
     end
 
     def maximum_place
       return @rep[:'maximum place'] if @rep[:'maximum place']
 
-      @teams.count { |t| !t.exhibition? }
+      nonexhibition_teams_count
     end
 
     def per_event_n?
@@ -107,6 +111,10 @@ module SciolyFF
 
     def subdivisions?
       !@subdivisions.empty?
+    end
+
+    def nonexhibition_teams_count
+      @nonexhibition_teams_count ||= @teams.count { |t| !t.exhibition? }
     end
   end
 end
