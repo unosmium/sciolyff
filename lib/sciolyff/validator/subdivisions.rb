@@ -39,12 +39,20 @@ module SciolyFF
     include Validator::Range
 
     def medals_within_range?(subdivision, logger)
-      max = [@maximum_place, subdivision[:'maximum place']].compact.min
+      max = [team_count(subdivision), subdivision[:'maximum place']].compact.min
       within_range?(subdivision, :medals, logger, 1, max)
     end
 
     def trophies_within_range?(subdivision, logger)
-      within_range?(subdivision, :trophies, logger, 1, @maximum_place)
+      within_range?(subdivision, :trophies, logger, 1, team_count(subdivision))
+    end
+
+    private
+
+    def team_count(subdivision)
+      @teams[subdivision[:name]].count do |t|
+        t[:subdivision] == subdivision[:name] && !t[:exhibition]
+      end
     end
   end
 end
