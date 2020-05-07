@@ -65,6 +65,10 @@ module SciolyFF
       @rep[:trophies] || [calc_trophies, nonexhibition_teams_count].min
     end
 
+    def qualifying_schools
+      @rep[:'qualifying schools'] || 0
+    end
+
     def worst_placings_dropped?
       worst_placings_dropped.positive?
     end
@@ -115,6 +119,12 @@ module SciolyFF
 
     def nonexhibition_teams_count
       @nonexhibition_teams_count ||= @teams.count { |t| !t.exhibition? }
+    end
+
+    def top_teams_per_school
+      @top_teams_per_school ||= @teams.uniq do |t|
+        [t.school, t.city, t.state]
+      end
     end
 
     private

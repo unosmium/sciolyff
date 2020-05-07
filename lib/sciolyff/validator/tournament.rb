@@ -21,6 +21,7 @@ module SciolyFF
       state: String,
       medals: Integer,
       trophies: Integer,
+      'qualifying schools': Integer,
       'short name': String,
       'worst placings dropped': Integer,
       'exempt placings': Integer,
@@ -31,6 +32,9 @@ module SciolyFF
 
     def initialize(rep)
       @maximum_place = rep[:Teams].count { |t| !t[:exhibition] }
+      @schools_count = rep[:Teams].uniq do |t|
+        [t[:school], t[:city], t[:state]]
+      end.count
     end
 
     def name_for_not_states_or_nationals?(tournament, logger)
@@ -46,6 +50,15 @@ module SciolyFF
 
       logger.error 'state for Tournament required '\
         "('level: #{tournament[:level]}' is not Nationals)"
+    end
+
+    def qualifying_schools_for_regionals_or_states?(tournament, logger)
+      level = tournament[:level]
+      return true if tournament[:'qualifying schools'].nil? ||
+                     %w[Regionals States].include?(level)
+
+      logger.error "'qualifying schools:' does not make sense for "\
+        "level: #{level}"
     end
 
     def short_name_is_relevant?(tournament, logger)
@@ -86,6 +99,14 @@ module SciolyFF
 
       logger.error "custom 'trophies: #{tournament[:trophies]}' "\
         "is not within range [1, #{@maximum_place}]"
+    end
+
+    def qualifying_schools_within_range?(tournament, logger)
+      qual = tournament[:'qualifying schools']
+      return true if qual.nil? || qual.between?(1, @schools_count)
+
+      logger.error "'qualifying schools: #{qual}' "\
+        "is not within range [1, #{@schools_count}]"
     end
   end
 end

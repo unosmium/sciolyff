@@ -65,6 +65,11 @@ module SciolyFF
       @points ||= placings.sum(&:points) + penalties.sum(&:points)
     end
 
+    def qualified?
+      school_rank = @tournament.top_teams_per_school.find_index(self)
+      !school_rank.nil? && school_rank < @tournament.qualifying_schools
+    end
+
     def worst_placings_to_be_dropped
       return [] if @tournament.worst_placings_dropped.zero?
 
