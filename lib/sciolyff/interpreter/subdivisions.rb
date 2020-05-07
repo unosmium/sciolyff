@@ -13,8 +13,29 @@ module SciolyFF
       team_numbers = rep[:Teams].map { |t| t[:number] }
       rep[:Placings].select! { |p| team_numbers.include? p[:team] }
 
+      fix_subdivision_tournament_fields(rep, sub)
       fix_placings_for_existing_teams(rep)
       rep
+    end
+
+    def fix_subdivision_tournament_fields(rep, sub)
+      tournament_rep = rep[:Tournament]
+      sub_rep = rep[:Subdivisions].find { |s| s[:name] == sub }
+      team_count = rep[:Teams].count { |t| !t[:exhibition] }
+
+      replace_tournament_fields(tournament_rep, sub_rep)
+
+      if tournament_rep[:'maximum place'] > team_count
+        tournament_rep.delete(:'maximum place')
+      end
+      tournament_rep.delete(:'qualifying schools')
+      rep.delete(:Subdivisions)
+    end
+
+    def replace_tournament_fields(tournament_rep, sub_rep)
+      [:medals, :trophies, :'maximum place'].each do |key|
+        tournament_rep[key] = sub_rep[key] if sub_rep.key?(key)
+      end
     end
 
     def fix_placings_for_existing_teams(rep)
