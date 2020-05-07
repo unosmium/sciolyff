@@ -2,6 +2,7 @@
 
 require 'sciolyff/validator/checker'
 require 'sciolyff/validator/sections'
+require 'sciolyff/validator/range'
 
 module SciolyFF
   # Checks for Tournament section of a SciolyFF file
@@ -76,37 +77,23 @@ module SciolyFF
         "is longer than normal 'name: #{tournament[:name]}'"
     end
 
-    def maximum_place_within_range?(tournament, logger)
-      return true if tournament[:'maximum place'].nil? ||
-                     tournament[:'maximum place'].between?(1, @maximum_place)
+    include Validator::Range
 
-      logger.error "custom 'maximum place: #{tournament[:'maximum place']}' "\
-        "is not within range [1, #{@maximum_place}]"
+    def maximum_place_within_range?(tournament, logger)
+      within_range?(tournament, :'maximum place', logger, 1, @maximum_place)
     end
 
     def medals_within_range?(tournament, logger)
       max = [@maximum_place, tournament[:'maximum place']].compact.min
-      return true if tournament[:medals].nil? ||
-                     tournament[:medals].between?(1, max)
-
-      logger.error "custom 'medals: #{tournament[:medals]}' "\
-        "is not within range [1, #{max}]"
+      within_range?(tournament, :medals, logger, 1, max)
     end
 
     def trophies_within_range?(tournament, logger)
-      return true if tournament[:trophies].nil? ||
-                     tournament[:trophies].between?(1, @maximum_place)
-
-      logger.error "custom 'trophies: #{tournament[:trophies]}' "\
-        "is not within range [1, #{@maximum_place}]"
+      within_range?(tournament, :trophies, logger, 1, @maximum_place)
     end
 
-    def qualifying_schools_within_range?(tournament, logger)
-      qual = tournament[:'qualifying schools']
-      return true if qual.nil? || qual.between?(1, @schools_count)
-
-      logger.error "'qualifying schools: #{qual}' "\
-        "is not within range [1, #{@schools_count}]"
+    def qualifying_schools_within_range?(tourna, logger)
+      within_range?(tourna, :'qualifying schools', logger, 1, @schools_count)
     end
   end
 end
