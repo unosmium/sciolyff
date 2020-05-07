@@ -26,6 +26,7 @@ module SciolyFF
 
     def initialize(rep)
       initialize_teams_info(rep[:Teams])
+      @subdivisions = rep[:Subdivisions]&.map { |s| s[:name] } || []
       @placings = rep[:Placings].group_by { |p| p[:team] }
       @exempt = rep[:Tournament][:'exempt placings'] || 0
     end
@@ -73,8 +74,16 @@ module SciolyFF
         "exempt placings (#{count} insteand of #{@exempt})"
     end
 
+    def matching_subdivision?(team, logger)
+      sub = team[:subdivision]
+      return true if sub.nil? || @subdivisions.include?(sub)
+
+      logger.error "'subdivision: #{sub}' does not match any name in "\
+        'section Subdivisions'
+    end
+
     def in_a_subdivision_if_possible?(team, logger)
-      return true unless @subdivisions && !team[:subdivision]
+      return true unless !@subdivisions.empty? && !team[:subdivision]
 
       logger.warn "missing subdivision for 'team: #{team[:number]}'"
     end
@@ -94,7 +103,6 @@ module SciolyFF
     def initialize_teams_info(teams)
       @numbers = teams.map { |t| t[:number] }
       @schools = teams.group_by { |t| [t[:school], t[:city], t[:state]] }
-      @subdivisions = teams.find { |t| t[:subdivision] }
     end
   end
 end
