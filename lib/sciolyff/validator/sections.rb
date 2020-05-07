@@ -27,20 +27,24 @@ module SciolyFF
     def sections_are_correct_type?(rep, logger)
       correct_types = self.class::REQUIRED.merge self.class::OPTIONAL
       rep.all? do |key, value|
-        correct = correct_types[key]
-        next true if
-        (correct.instance_of?(Array) && correct.include?(value)) ||
-        (correct.instance_of?(Class) && value.instance_of?(correct)) ||
-        correct_date?(correct, value)
+        type = correct_types[key]
+        next true if correct_type?(type, value)
 
-        logger.error "#{key}: #{value} is not #{correct}"
+        logger.error "#{key}: #{value} is not #{type}"
       end
     end
 
     private
 
-    def correct_date?(correct, value)
-      correct == Date && Date.parse(value)
+    def correct_type?(type, value)
+      type.nil? ||
+        (type.instance_of?(Array) && type.include?(value)) ||
+        (type.instance_of?(Class) && value.instance_of?(type)) ||
+        correct_date?(type, value)
+    end
+
+    def correct_date?(type, value)
+      type == Date && Date.parse(value)
     rescue StandardError
       false
     end
