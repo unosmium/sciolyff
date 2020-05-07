@@ -19,7 +19,14 @@ module SciolyFF
     }.freeze
 
     def initialize(rep)
+      @names = rep[:Subdivisions].map { |s| s[:name] }
       @teams = rep[:Teams].group_by { |t| t[:subdivision] }
+    end
+
+    def unique_name?(subdivision, logger)
+      return true if @names.count(subdivision[:name]) == 1
+
+      logger.error "duplicate subdivision name: #{subdivision[:name]}"
     end
 
     def matching_teams?(subdivision, logger)
