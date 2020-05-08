@@ -6,17 +6,21 @@ module SciolyFF
     private
 
     def subdivision_rep(sub)
-      # make a deep copy of rep and remove teams not in the subdivision
+      # make a deep copy of rep
       rep = Marshal.load(Marshal.dump(@rep))
-      rep[:Teams].select! { |t| t.delete(:subdivision) == sub }
 
-      team_numbers = rep[:Teams].map { |t| t[:number] }
-      rep[:Placings].select! { |p| team_numbers.include? p[:team] }
-
+      remove_teams_not_in_subdivision(rep, sub)
       fix_subdivision_tournament_fields(rep, sub)
       limit_maximum_place(rep)
       fix_placings_for_existing_teams(rep)
       rep
+    end
+
+    def remove_teams_not_in_subdivision(rep, sub)
+      rep[:Teams].select! { |t| t.delete(:subdivision) == sub }
+
+      team_numbers = rep[:Teams].map { |t| t[:number] }
+      rep[:Placings].select! { |p| team_numbers.include? p[:team] }
     end
 
     def fix_subdivision_tournament_fields(rep, sub)
