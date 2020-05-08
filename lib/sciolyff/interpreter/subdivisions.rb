@@ -14,6 +14,7 @@ module SciolyFF
       rep[:Placings].select! { |p| team_numbers.include? p[:team] }
 
       fix_subdivision_tournament_fields(rep, sub)
+      limit_maximum_place(rep)
       fix_placings_for_existing_teams(rep)
       rep
     end
@@ -21,13 +22,9 @@ module SciolyFF
     def fix_subdivision_tournament_fields(rep, sub)
       tournament_rep = rep[:Tournament]
       sub_rep = rep[:Subdivisions].find { |s| s[:name] == sub }
-      team_count = rep[:Teams].count { |t| !t[:exhibition] }
 
       replace_tournament_fields(tournament_rep, sub_rep)
 
-      if tournament_rep[:'maximum place'] > team_count
-        tournament_rep.delete(:'maximum place')
-      end
       tournament_rep.delete(:'qualifying schools')
       rep.delete(:Subdivisions)
     end
@@ -36,6 +33,14 @@ module SciolyFF
       [:medals, :trophies, :'maximum place'].each do |key|
         tournament_rep[key] = sub_rep[key] if sub_rep.key?(key)
       end
+    end
+
+    def limit_maximum_place(rep)
+      max_place = rep[:Tournament][:'maximum place']
+      team_count = rep[:Teams].count { |t| !t[:exhibition] }
+
+      rep[:Tournament].delete(:'maximum place') if
+        !max_place.nil? && max_place > team_count
     end
 
     def fix_placings_for_existing_teams(rep)
