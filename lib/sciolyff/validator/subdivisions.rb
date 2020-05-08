@@ -15,7 +15,8 @@ module SciolyFF
 
     OPTIONAL = {
       medals: Integer,
-      trophies: Integer
+      trophies: Integer,
+      'maximum place': Integer
     }.freeze
 
     def initialize(rep)
@@ -37,6 +38,11 @@ module SciolyFF
     end
 
     include Validator::Range
+
+    def maximum_place_within_range?(subdivision, logger)
+      max = team_count(subdivision)
+      within_range?(subdivision, :'maximum place', logger, 1, max)
+    end
 
     def medals_within_range?(subdivision, logger)
       max = [team_count(subdivision), subdivision[:'maximum place']].compact.min
