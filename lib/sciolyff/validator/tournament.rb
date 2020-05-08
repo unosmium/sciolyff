@@ -55,10 +55,16 @@ module SciolyFF
 
     def bids_for_regionals_or_states?(tournament, logger)
       level = tournament[:level]
-      return true if tournament[:bids].nil? ||
-                     %w[Regionals States].include?(level)
 
-      logger.error "bids: does not make sense for level: #{level}"
+      if %w[Regionals States].include?(level)
+        return true if tournament.key? :bids
+
+        logger.error "field 'bids:' required for level: #{level}"
+      else
+        return true unless tournament.key? :bids
+
+        logger.error "bids: does not make sense for level: #{level}"
+      end
     end
 
     def short_name_is_relevant?(tournament, logger)
