@@ -65,9 +65,9 @@ module SciolyFF
       @points ||= placings.sum(&:points) + penalties.sum(&:points)
     end
 
-    def qualified?
+    def earned_bid?
       school_rank = @tournament.top_teams_per_school.find_index(self)
-      !school_rank.nil? && school_rank < @tournament.qualifying_schools
+      !school_rank.nil? && school_rank < @tournament.bids
     end
 
     def worst_placings_to_be_dropped

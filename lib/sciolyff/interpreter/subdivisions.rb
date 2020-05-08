@@ -25,7 +25,7 @@ module SciolyFF
 
       replace_tournament_fields(tournament_rep, sub_rep)
 
-      tournament_rep.delete(:'qualifying schools')
+      tournament_rep.delete(:bids)
       rep.delete(:Subdivisions)
     end
 

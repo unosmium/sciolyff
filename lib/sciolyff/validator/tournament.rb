@@ -22,7 +22,7 @@ module SciolyFF
       state: String,
       medals: Integer,
       trophies: Integer,
-      'qualifying schools': Integer,
+      bids: Integer,
       'short name': String,
       'worst placings dropped': Integer,
       'exempt placings': Integer,
@@ -53,13 +53,12 @@ module SciolyFF
         "('level: #{tournament[:level]}' is not Nationals)"
     end
 
-    def qualifying_schools_for_regionals_or_states?(tournament, logger)
+    def bids_for_regionals_or_states?(tournament, logger)
       level = tournament[:level]
-      return true if tournament[:'qualifying schools'].nil? ||
+      return true if tournament[:bids].nil? ||
                      %w[Regionals States].include?(level)
 
-      logger.error "'qualifying schools:' does not make sense for "\
-        "level: #{level}"
+      logger.error "bids: does not make sense for level: #{level}"
     end
 
     def short_name_is_relevant?(tournament, logger)
@@ -92,8 +91,8 @@ module SciolyFF
       within_range?(tournament, :trophies, logger, 1, @maximum_place)
     end
 
-    def qualifying_schools_within_range?(tourna, logger)
-      within_range?(tourna, :'qualifying schools', logger, 1, @schools_count)
+    def bids_within_range?(tournament, logger)
+      within_range?(tournament, :bids, logger, 1, @schools_count)
     end
   end
 end
