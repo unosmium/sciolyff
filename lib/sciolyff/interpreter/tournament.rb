@@ -21,32 +21,16 @@ module SciolyFF
 
     undef tournament
 
-    def name
-      @rep[:name]
-    end
-
-    def short_name
-      @rep[:'short name']
-    end
-
-    def location
-      @rep[:location]
-    end
-
-    def level
-      @rep[:level]
-    end
-
-    def state
-      @rep[:state]
-    end
-
-    def division
-      @rep[:division]
-    end
-
-    def year
-      @rep[:year]
+    [
+      :name,
+      :'short name',
+      :location,
+      :level,
+      :state,
+      :division,
+      :year
+    ].each do |sym|
+      define_method(sym) { @rep[sym] }
     end
 
     def date
