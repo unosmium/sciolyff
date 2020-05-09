@@ -23,7 +23,7 @@ module SciolyFF
       medals: Integer,
       trophies: Integer,
       bids: Integer,
-      'per-team bids': [true, false],
+      'bids per school': Integer,
       'short name': String,
       'worst placings dropped': Integer,
       'exempt placings': Integer,
@@ -68,11 +68,18 @@ module SciolyFF
       end
     end
 
-    def per_team_bids_relevant?(tournament, logger)
-      return true unless tournament[:'per-team bids'] &&
+    def bids_per_school_positive?(tournament, logger)
+      bids = tournament[:'bids per school']
+      return true if bids.nil? || tournament[:'bids per school'].positive?
+
+      logger.error "'bids per school: #{bids}' is not positive"
+    end
+
+    def bids_per_school_relevant?(tournament, logger)
+      return true unless tournament[:'bids per school'] &&
                          !tournament.key?(:bids)
 
-      logger.error "field 'per-team bids:' not relevant without field 'bids:'"
+      logger.error "field 'bids per school:' not relevant without field 'bids:'"
     end
 
     def short_name_is_relevant?(tournament, logger)

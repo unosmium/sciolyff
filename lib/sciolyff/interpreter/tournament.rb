@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'sciolyff/interpreter/model'
+require 'sciolyff/interpreter/bids'
 
 module SciolyFF
   # Models a Science Olympiad tournament
@@ -56,8 +57,8 @@ module SciolyFF
       @rep[:bids] || 0
     end
 
-    def per_team_bids?
-      @rep[:'per-team bids'] || false
+    def bids_per_school
+      @rep[:'bids per school'] || 1
     end
 
     def worst_placings_dropped?
@@ -112,11 +113,7 @@ module SciolyFF
       @nonexhibition_teams_count ||= @teams.count { |t| !t.exhibition? }
     end
 
-    def top_teams_per_school
-      @top_teams_per_school ||= @teams.uniq do |t|
-        [t.school, t.city, t.state]
-      end
-    end
+    include Interpreter::Bids
 
     private
 

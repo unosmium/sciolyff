@@ -66,9 +66,7 @@ module SciolyFF
     end
 
     def earned_bid?
-      return rank <= @tournament.bids if @tournament.per_team_bids?
-
-      school_rank = @tournament.top_teams_per_school.find_index(self)
+      school_rank = @tournament.teams_eligible_for_bids.find_index(self)
       !school_rank.nil? && school_rank < @tournament.bids
     end
 
