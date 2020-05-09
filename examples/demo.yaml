@@ -28,6 +28,19 @@ Tournament:
   per-event n: false
   # next line is optional if zero
   n offset: 0  # points to add to standard PO, NS, and DQ point values
+  # next two lines are optional, will be automatically scaled to # of teams
+  trophies: 1  # trophies awarded to this many of the top teams overall
+  medals: 1  # medals (or ribbons) awarded to this many teams per event
+  # next two lines are only for level Regionals and States
+  # bids: 0  # number of schools/teams advancing to next level of competition
+  # bids per school: 1  # the number of the above bids that can go to same school
+
+# Subdivisions section is optional if subdivisions were not used
+Subdivisions:
+  - name: V  # can be anything, typically used for Varsity / JV labels
+    # next two lines are optional
+    trophies: 1  # trophies for subdivision, see above
+    medals: 1  # medals for subdivision, see above
 
 Events:
   - name: Anatomy and Physiology
@@ -48,7 +61,7 @@ Teams:
     school abbreviation: SHS  # only for long, unique names, e.g. TJHSST or LASA
     suffix: A  # can be anything, not just A, B, C, etc. -- use quotes for nums
     # optional if there are no teams in a subdivision
-    subdivision: V  # can be anything, used for Varsity / Junior Varisity labels
+    subdivision: V  # must match a name of a subdivision in section above
     # next line is optional if false
     exhibition: false  # if the team's placings don't affect other team's scores
     disqualified: false  # if a team should rank behind all other non-DQ teams
