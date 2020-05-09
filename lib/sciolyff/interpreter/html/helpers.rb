@@ -9,6 +9,8 @@ module SciolyFF
 
     def eval_with_binding(src, interpreter, hide_raw, color)
       i = interpreter
+      css_file_content = File.read(File.join(__dir__, 'main.css'))
+      js_file_content = File.read(File.join(__dir__, 'main.js'))
       eval(src)
     end
 
@@ -68,6 +70,35 @@ module SciolyFF
       WI: 'Wisconsin',
       WY: 'Wyoming'
     }.freeze
+
+    def trophy_and_medal_colors
+      %w[
+        #ffee58
+        #cfd8dc
+        #d8bf99
+        #ffefc0
+        #dcedc8
+        #f8bbd0
+        #eeccff
+        #fdd5b4
+        #ebedd8
+        #d4f0f1
+      ]
+    end
+
+    def trophy_and_medal_css(trophies, medals)
+      trophy_and_medal_colors.map.with_index do |color, i|
+        [
+          ("td.event-points[data-points='#{i+1}'] div" if i < medals),
+          ("td.event-points-focus[data-points='#{i+1}'] div" if i < medals),
+          ("div#team-detail tr[data-points='#{i+1}']" if i < medals),
+          ("td.rank[data-points='#{i+1}'] div" if i < trophies)
+        ].compact.join(',') + "{background-color: #{color};border-radius: 1em;}"
+      end.join +
+      trophy_and_medal_colors.map.with_index do |color, i|
+        "div#team-detail tr[data-points='#{i+1}'] td:first-child" if i < medals
+      end.compact.join(',') + "{padding-left: 0.5em;}"
+    end
 
     def tournament_title(t_info)
       return t_info.name if t_info.name
@@ -163,6 +194,22 @@ module SciolyFF
       return '' unless tie || exempt
 
       "<sup>#{'◊' if exempt}#{'*' if tie}</sup>"
+    end
+
+    def bids_sup_tag(team)
+      return '' unless team.earned_bid?
+
+      "<sup>✧</sup>"
+    end
+
+    def bids_sup_tag_note(tournament)
+      next_tournament = if tournament.level == 'Regionals'
+                          "#{tournament.state} State Tournament"
+                        else
+                          "National Tournament"
+                        end
+      qualifiee = tournament.bids_per_school > 1 ? 'team' : 'school'
+      "Qualified #{qualifiee} for the #{tournament.year} #{next_tournament}"
     end
 
     def placing_notes(placing)
