@@ -18,19 +18,19 @@ module SciolyFF
     attr_reader :event, :team, :subdivision_placing
 
     def participated?
-      @rep[:participated] == true || @rep[:participated].nil?
+      @rep[:participated] || @rep[:participated].nil?
     end
 
     def disqualified?
-      @rep[:disqualified] == true
+      @rep[:disqualified] || false
     end
 
     def exempt?
-      @rep[:exempt] == true
+      @rep[:exempt] || false
     end
 
     def unknown?
-      @rep[:unknown] == true
+      @rep[:unknown] || false
     end
 
     def tie?

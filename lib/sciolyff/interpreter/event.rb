@@ -20,11 +20,11 @@ module SciolyFF
     end
 
     def trial?
-      @rep[:trial] == true
+      @rep[:trial] || false
     end
 
     def trialed?
-      @rep[:trialed] == true
+      @rep[:trialed] || false
     end
 
     def high_score_wins?

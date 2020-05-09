@@ -54,7 +54,7 @@ module SciolyFF
     end
 
     def per_team_bids?
-      @rep[:'per-team bids']
+      @rep[:'per-team bids'] || false
     end
 
     def worst_placings_dropped?
@@ -84,7 +84,7 @@ module SciolyFF
     end
 
     def per_event_n?
-      @rep[:'per-event n']
+      @rep[:'per-event n'] || false
     end
 
     def n_offset

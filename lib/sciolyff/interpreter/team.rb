@@ -34,11 +34,11 @@ module SciolyFF
     end
 
     def exhibition?
-      @rep[:exhibition] == true
+      @rep[:exhibition] || false
     end
 
     def disqualified?
-      @rep[:disqualified] == true
+      @rep[:disqualified] || false
     end
 
     def number
