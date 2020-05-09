@@ -69,6 +69,10 @@ module SciolyFF
       @rep[:bids] || 0
     end
 
+    def per_team_bids?
+      @rep[:'per-team bids']
+    end
+
     def worst_placings_dropped?
       worst_placings_dropped.positive?
     end

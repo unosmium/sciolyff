@@ -23,6 +23,7 @@ module SciolyFF
       medals: Integer,
       trophies: Integer,
       bids: Integer,
+      'per-team bids': [true, false],
       'short name': String,
       'worst placings dropped': Integer,
       'exempt placings': Integer,
@@ -65,6 +66,13 @@ module SciolyFF
 
         logger.error "bids: does not make sense for level: #{level}"
       end
+    end
+
+    def per_team_bids_relevant?(tournament, logger)
+      return true unless tournament[:'per-team bids'] &&
+                         !tournament.key?(:bids)
+
+      logger.error "field 'per-team bids:' not relevant without field 'bids:'"
     end
 
     def short_name_is_relevant?(tournament, logger)
