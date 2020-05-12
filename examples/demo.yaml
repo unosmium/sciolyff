@@ -25,7 +25,7 @@ Tournament:
   # next line is optional if equal to the number of competing teams
   maximum place: 1
   # next line is optional if not using Delaware-style scoring for non-placings
-  per-event n: false
+  per-event n: place  # either "place" or "participated", adjusts where n starts
   # next line is optional if zero
   n offset: 0  # points to add to standard PO, NS, and DQ point values
   # next two lines are optional, will be automatically scaled to # of teams
