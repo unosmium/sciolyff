@@ -87,8 +87,12 @@ module SciolyFF
       nonexhibition_teams_count
     end
 
+    def per_event_n
+      @rep[:'per-event n']
+    end
+
     def per_event_n?
-      @rep[:'per-event n'] || false
+      @rep.key? :'per-event n'
     end
 
     def n_offset

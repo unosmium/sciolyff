@@ -44,7 +44,7 @@ module SciolyFF
         if trial?
           placings.size
         elsif tournament.per_event_n?
-          [competing_teams_count, tournament.maximum_place].min
+          [per_event_maximum_place, tournament.maximum_place].min
         else
           tournament.maximum_place
         end
@@ -56,10 +56,18 @@ module SciolyFF
 
     private
 
-    def competing_teams_count
-      return placings.count { |p| !p.place.nil? } if trial?
+    def per_event_maximum_place
+      return competing_teams_count if tournament.per_event_n == 'participation'
 
-      placings.count { |p| !(p.team.exhibition? || p.exempt? || p.place.nil?) }
+      placings.map(&:place).compact.max + 1
+    end
+
+    def competing_teams_count
+      return placings.count(&:participated?) if trial?
+
+      placings.count do |p|
+        p.participated? && !(p.team.exhibition? || p.exempt?)
+      end
     end
   end
 end

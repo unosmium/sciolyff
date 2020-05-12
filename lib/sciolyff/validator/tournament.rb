@@ -28,7 +28,7 @@ module SciolyFF
       'worst placings dropped': Integer,
       'exempt placings': Integer,
       'maximum place': Integer,
-      'per-event n': [true, false],
+      'per-event n': %w[place participation],
       'n offset': Integer
     }.freeze
 
