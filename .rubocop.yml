@@ -11,6 +11,12 @@ Style/ClassAndModuleChildren:
     - 'lib/sciolyff/interpreter/*'
     - 'lib/sciolyff/validator/*'
 
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Gemspec/DuplicatedAssignment:
+  Enabled: false
+
 Style/HashEachMethods:
   Enabled: true
 
