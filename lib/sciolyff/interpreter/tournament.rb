@@ -82,9 +82,7 @@ module SciolyFF
     end
 
     def maximum_place
-      return @rep[:'maximum place'] if @rep[:'maximum place']
-
-      nonexhibition_teams_count
+      @rep[:'maximum place'] || nonexhibition_teams_count
     end
 
     def per_event_n
@@ -104,9 +102,9 @@ module SciolyFF
     end
 
     def ties_outside_of_maximum_places?
-      @ties_outside_of_maximum_places ||= placings.map do |p|
+      @ties_outside_of_maximum_places ||= placings.any? do |p|
         p.tie? && !p.points_limited_by_maximum_place?
-      end.any?
+      end
     end
 
     def subdivisions?
