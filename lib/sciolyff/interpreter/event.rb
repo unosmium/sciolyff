@@ -50,10 +50,6 @@ module SciolyFF
         end
     end
 
-    def maximum_points
-      maximum_place + 2
-    end
-
     private
 
     def per_event_maximum_place
