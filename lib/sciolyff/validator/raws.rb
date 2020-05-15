@@ -17,6 +17,12 @@ module SciolyFF
       'tiebreaker rank': Integer
     }.freeze
 
+    def score_is_not_nan?(raw, logger)
+      return true unless raw[:score].nan?
+
+      logger.error "'score: .nan' (not a number) is not permitted"
+    end
+
     def positive_tier?(raw, logger)
       tier = raw[:tier]
       return true if tier.nil? || tier.positive?
