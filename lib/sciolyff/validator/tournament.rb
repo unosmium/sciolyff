@@ -99,6 +99,13 @@ module SciolyFF
 
     include Validator::Range
 
+    def n_offset_within_range?(tournament, logger)
+      # not a perfect check, can still have event maximum place be lower
+      # probably should add warning for use of n offset anyways?
+      min = -[@maximum_place, tournament[:'maximum place']].compact.min
+      within_range?(tournament, :'n offset', logger, min, Float::INFINITY)
+    end
+
     def maximum_place_within_range?(tournament, logger)
       within_range?(tournament, :'maximum place', logger, 1, @maximum_place)
     end
