@@ -30,6 +30,7 @@ module SciolyFF
       replace_tournament_fields(tournament_rep, sub_rep)
 
       tournament_rep.delete(:bids)
+      tournament_rep.delete(:'bids per school')
       rep.delete(:Subdivisions)
     end
 
