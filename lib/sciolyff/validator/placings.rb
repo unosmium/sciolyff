@@ -24,14 +24,13 @@ module SciolyFF
     }.freeze
 
     def initialize(rep)
-      @events_by_name = rep[:Events].group_by { |e| e[:name] }
-                                    .transform_values(&:first)
-      @teams_by_number = rep[:Teams].group_by { |t| t[:number] }
-                                    .transform_values(&:first)
+      @events_by_name = group(rep[:Events], :name)
+      @teams_by_number = group(rep[:Teams], :number)
       @event_names = @events_by_name.keys
       @team_numbers = @teams_by_number.keys
       @placings = rep[:Placings]
       @maximum_place = rep[:Tournament][:'maximum place']
+      @has_places = rep[:Placings].any? { |p| p[:place] }
     end
 
     def matching_event?(placing, logger)
@@ -109,6 +108,12 @@ module SciolyFF
         '(either placing must be exempt or event must be trial/trialed)'
     end
 
+    def no_mix_of_raws_and_places(placing, logger)
+      return true unless @has_places && placing.key?(:raw)
+
+      logger.error "cannot mix 'raw:' and 'place:' in same file"
+    end
+
     private
 
     def placing_log(placing)
@@ -122,6 +127,10 @@ module SciolyFF
         !event[:trial] &&
         !event[:trialed] &&
         !team[:exhibition]
+    end
+
+    def group(arr, key)
+      arr.group_by { |e| e[key] }.transform_values(&:first)
     end
   end
 end

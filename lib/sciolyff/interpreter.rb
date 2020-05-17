@@ -38,6 +38,10 @@ module SciolyFF
              .to_h
     end
 
+    def raws?
+      placings.none?(&:place)
+    end
+
     private
 
     def create_models(rep)

@@ -12,7 +12,7 @@ module SciolyFF
       remove_teams_not_in_subdivision(rep, sub)
       fix_subdivision_tournament_fields(rep, sub)
       limit_maximum_place(rep)
-      fix_placings_for_existing_teams(rep)
+      fix_placings_for_existing_teams(rep) unless raws?
       rep
     end
 
