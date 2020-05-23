@@ -126,13 +126,6 @@ module SciolyFF
       end
     end
 
-    def acronymize(phrase)
-      phrase.split(' ')
-            .select { |w| /^[[:upper:]]/.match(w) }
-            .map { |w| w[0] }
-            .join
-    end
-
     def expand_state_name(postal_code)
       STATES_BY_POSTAL_CODE[postal_code.to_sym]
     end
