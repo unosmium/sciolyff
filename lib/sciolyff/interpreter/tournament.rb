@@ -120,11 +120,11 @@ module SciolyFF
     private
 
     def calc_medals
-      [(nonexhibition_teams_count / 10r).ceil, 3].max
+      (nonexhibition_teams_count / 10r).ceil.clamp(3, 10)
     end
 
     def calc_trophies
-      [(nonexhibition_teams_count / 6r).ceil, 3].max
+      (nonexhibition_teams_count / 6r).ceil.clamp(3, 10)
     end
   end
 end
