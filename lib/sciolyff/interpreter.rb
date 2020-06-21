@@ -39,7 +39,7 @@ module SciolyFF
     end
 
     def raws?
-      placings.none?(&:place)
+      placings.any?(&:raw?)
     end
 
     private
