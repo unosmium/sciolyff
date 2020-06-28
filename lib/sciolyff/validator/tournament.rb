@@ -60,7 +60,7 @@ module SciolyFF
       if %w[Regionals States].include?(level)
         return true if tournament.key? :bids
 
-        logger.error "field 'bids:' required for level: #{level}"
+        logger.warn "field 'bids:' recommended for level: #{level}"
       else
         return true unless tournament.key? :bids
 
