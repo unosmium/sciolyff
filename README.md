@@ -39,9 +39,8 @@ gem install ./sciolyff-0.12.0.gem
 ### Validation
 
 A Ruby gem provided in this repository contains a command line utility that can
-validate if a given file meets the SciolyFF. The validation uses Minitest, and
-thus the files found in `lib/sciolyff` also serve as the specification for the
-format.
+validate if a given file meets the SciolyFF. The files found in
+`lib/sciolyff/validator` also serve as the specification for the format.
 
 From the command line, e.g.
 
